@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QThreadPool>
 
+#include "handlerrequest.h"
 
 class ClientSocket : public QObject
 {

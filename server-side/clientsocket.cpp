@@ -4,7 +4,7 @@
 ClientSocket::ClientSocket(QObject *parent)
     : QObject{parent}
 {
-
+    QThreadPool::globalInstance()->setMaxThreadCount(3);
 }
 
 void ClientSocket::setSocket(int descriptor)
@@ -35,9 +35,19 @@ void ClientSocket::readyRead()
 {
     qDebug() << "event ready read";
     qDebug() << socket->readAll();
+
+    HandlerRequest *handlerRequest = new HandlerRequest();
+    handlerRequest->setAutoDelete(true);
+    connect(handlerRequest, SIGNAL(result(int)), this, SLOT(requestResult(int)), Qt::QueuedConnection);
+
+    QThreadPool::globalInstance()->start(handlerRequest);
 }
 
 void ClientSocket::requestResult(int number)
 {
+    QByteArray buffer;
+    buffer.append("\r\nHey I am answer ");
+    buffer.append(QString::number(number).toUtf8());
 
+    socket->write(buffer);
 }

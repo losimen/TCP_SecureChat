@@ -4,4 +4,6 @@ list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/main.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/myrunnable.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/myrunnable.h
                           ${CMAKE_CURRENT_LIST_DIR}/clientsocket.cpp
-                          ${CMAKE_CURRENT_LIST_DIR}/clientsocket.h)
+                          ${CMAKE_CURRENT_LIST_DIR}/clientsocket.h
+                          ${CMAKE_CURRENT_LIST_DIR}/handlerrequest.cpp
+                          ${CMAKE_CURRENT_LIST_DIR}/handlerrequest.h)
