@@ -1,8 +1,12 @@
 #include <QCoreApplication>
+#include "listener.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    qDebug() << "hello it is test server";
+    Listener listener;
+    listener.startServer();
+
+    return a.exec();
 }
