@@ -28,10 +28,9 @@ void ClientSocket::disconnected()
 
 void ClientSocket::readyRead()
 {
-    qDebug() << socket->readAll();
-
     HandlerRequest *handlerRequest = new HandlerRequest();
     handlerRequest->setAutoDelete(false);
+    handlerRequest->setBuffer(socket->readAll());
 
     connect(handlerRequest, SIGNAL(on_finishRequest(int,HandlerRequest*)), SLOT(requestResult(int,HandlerRequest*)), Qt::QueuedConnection);
 

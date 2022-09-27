@@ -4,6 +4,8 @@
 #include <QRunnable>
 #include <QObject>
 #include <QDebug>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 
 class HandlerRequest : public QObject, public QRunnable
@@ -12,6 +14,7 @@ class HandlerRequest : public QObject, public QRunnable
 
 public:
     HandlerRequest();
+    void setBuffer(QByteArray buffer);
 
 signals:
     void on_finishRequest(int number, HandlerRequest *handlerRequest);
@@ -19,6 +22,8 @@ signals:
 protected:
     void run();
 
+private:
+    QByteArray buffer;
 };
 
 #endif // HANDLERREQUEST_H
