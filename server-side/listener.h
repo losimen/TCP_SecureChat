@@ -19,10 +19,6 @@ public:
 protected:
     void incomingConnection(qintptr handle);
 
-private:
-    void setSocket(int descriptor);
-
-    QThreadPool *pool;
 };
 
 #endif // LISTENER_H

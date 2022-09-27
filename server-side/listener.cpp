@@ -4,8 +4,7 @@
 Listener::Listener(QObject *parent) :
     QTcpServer(parent)
 {
-    pool = new QThreadPool(this);
-    pool->setMaxThreadCount(3);
+
 }
 
 
@@ -23,15 +22,4 @@ void Listener::incomingConnection(qintptr handle)
 
     ClientSocket *client = new ClientSocket(this);
     client->setSocket(handle);
-
-//    MyRunnable *task = new MyRunnable();
-//    task->setAutoDelete(true);
-
-//    task->socketDescriptor = handle;
-//    pool->start(task);
-}
-
-void Listener::setSocket(int descriptor)
-{
-
 }

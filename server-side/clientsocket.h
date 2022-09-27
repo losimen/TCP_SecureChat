@@ -14,16 +14,16 @@ class ClientSocket : public QObject
 public:
     explicit ClientSocket(QObject *parent = nullptr);
     void setSocket(int descriptor);
-signals:
 
 public slots:
-    void connected();
     void disconnected();
     void readyRead();
-    void requestResult(int number);
+    void requestResult(int number, HandlerRequest *handlerRequest);
 
 private:
     QTcpSocket *socket;
+
+    static const qint8 AMOUNT_OT_THREADS;
 };
 
 #endif // CLIENTSOCKET_H

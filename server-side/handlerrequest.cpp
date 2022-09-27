@@ -7,7 +7,7 @@ HandlerRequest::HandlerRequest()
 
 void HandlerRequest::run()
 {
-    qDebug() << "handle request";
+    // Do request job here...
 
-    emit result(34);
+    emit on_finishRequest(34, this);
 }

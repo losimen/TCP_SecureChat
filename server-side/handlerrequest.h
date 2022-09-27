@@ -9,14 +9,16 @@
 class HandlerRequest : public QObject, public QRunnable
 {
     Q_OBJECT
+
 public:
     HandlerRequest();
 
 signals:
-    void result(int number);
+    void on_finishRequest(int number, HandlerRequest *handlerRequest);
 
 protected:
     void run();
+
 };
 
 #endif // HANDLERREQUEST_H
