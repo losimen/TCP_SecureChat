@@ -1,4 +1,5 @@
 #include "listener.h"
+#include "clientsocket.h"
 
 
 Listener::Listener(QObject *parent) :
@@ -15,6 +16,7 @@ void Listener::startServer()
     else
         qDebug() << "Server didn't start";
 }
+
 
 void Listener::incomingConnection(qintptr handle)
 {

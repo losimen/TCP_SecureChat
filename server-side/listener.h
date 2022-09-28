@@ -5,8 +5,6 @@
 #include <QObject>
 #include <QThreadPool>
 
-#include "clientsocket.h"
-
 
 class Listener : public QTcpServer
 {
