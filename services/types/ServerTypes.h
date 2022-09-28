@@ -17,7 +17,7 @@ private:
 
 public:
     void parseData(const QString &username, const QString &password);
-    QByteArray serializeData();
+    QByteArray serializeData() const;
 
 };
 
@@ -30,7 +30,7 @@ private:
 
 public:
     void parseData(const QString &username, const QString &password);
-    QByteArray serializeData();
+    QByteArray serializeData() const;
 
 };
 
