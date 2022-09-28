@@ -1,0 +1,4 @@
+#ifndef SERVERTYPES_H
+#define SERVERTYPES_H
+
+#endif // SERVERTYPES_H
