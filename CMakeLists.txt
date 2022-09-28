@@ -33,6 +33,8 @@ if(BUILD_SERVER)
     add_executable(SecureChat ${myApp_SOURCES})
 endif()
 
+include_directories(${myApp_INCLUDES})
+
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Network)
 
