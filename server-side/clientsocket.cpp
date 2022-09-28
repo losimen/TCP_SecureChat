@@ -28,7 +28,7 @@ void ClientSocket::disconnected()
 
 void ClientSocket::readyRead()
 {
-    HandlerRequest *handlerRequest = new HandlerRequest();
+    RequestHandler *handlerRequest = new RequestHandler();
     handlerRequest->setAutoDelete(false);
     handlerRequest->setBuffer(socket->readAll());
 
@@ -37,7 +37,7 @@ void ClientSocket::readyRead()
     QThreadPool::globalInstance()->start(handlerRequest);
 }
 
-void ClientSocket::requestResult(int number, HandlerRequest *handlerRequest)
+void ClientSocket::requestResult(int number, RequestHandler *handlerRequest)
 {
     QByteArray buffer;
 

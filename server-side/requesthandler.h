@@ -8,16 +8,16 @@
 #include <QJsonDocument>
 
 
-class HandlerRequest : public QObject, public QRunnable
+class RequestHandler : public QObject, public QRunnable
 {
     Q_OBJECT
 
 public:
-    HandlerRequest();
+    RequestHandler();
     void setBuffer(QByteArray buffer);
 
 signals:
-    void on_finishRequest(int number, HandlerRequest *handlerRequest);
+    void on_finishRequest(int number, RequestHandler *handlerRequest);
 
 protected:
     void run();

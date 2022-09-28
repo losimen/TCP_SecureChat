@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QThreadPool>
 
-#include "handlerrequest.h"
+#include "requesthandler.h"
 
 class ClientSocket : public QObject
 {
@@ -18,7 +18,7 @@ public:
 public slots:
     void disconnected();
     void readyRead();
-    void requestResult(int number, HandlerRequest *handlerRequest);
+    void requestResult(int number, RequestHandler *handlerRequest);
 
 private:
     QTcpSocket *socket;
