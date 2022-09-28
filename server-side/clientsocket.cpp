@@ -1,12 +1,15 @@
 #include "clientsocket.h"
 
+
 const qint8 ClientSocket::AMOUNT_OT_THREADS = 3;
+
 
 ClientSocket::ClientSocket(QObject *parent)
     : QObject{parent}
 {
     QThreadPool::globalInstance()->setMaxThreadCount(AMOUNT_OT_THREADS);
 }
+
 
 void ClientSocket::setSocket(int descriptor)
 {
@@ -26,6 +29,7 @@ void ClientSocket::disconnected()
     socket->close();
 }
 
+
 void ClientSocket::readyRead()
 {
     RequestHandler *handlerRequest = new RequestHandler();
@@ -36,6 +40,7 @@ void ClientSocket::readyRead()
 
     QThreadPool::globalInstance()->start(handlerRequest);
 }
+
 
 void ClientSocket::requestResult(int number, RequestHandler *handlerRequest)
 {
