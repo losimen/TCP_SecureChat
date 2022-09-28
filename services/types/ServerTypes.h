@@ -6,19 +6,32 @@
 #include <QJsonObject>
 
 
-namespace ServerTypes {
+namespace ServerTypes
+{
 
-struct LogIn {
-    qint64 user_id;
+struct LogIn
+{
+private:
+    QString username;
     QString password;
 
-    LogIn parseData(QJsonObject jsonObject);
+public:
+    void parseData(const QString &username, const QString &password);
+    QByteArray serializeData();
+
 };
 
 
-struct SignUp {
-    qint64 user_id;
+struct SignUp
+{
+private:
+    QString username;
     QString password;
+
+public:
+    void parseData(const QString &username, const QString &password);
+    QByteArray serializeData();
+
 };
 
 }

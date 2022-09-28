@@ -4,7 +4,8 @@
 #include <QString>
 
 
-struct RequestMethods {
+struct RequestMethods
+{
     static const QString logIn;
     static const QString signUp;
 

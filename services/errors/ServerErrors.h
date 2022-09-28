@@ -6,7 +6,8 @@
 #include <QString>
 #include <QDebug>
 
-namespace ServerErrors {
+namespace ServerErrors
+{
 
 class InvalidFormat : public std::exception
 {
@@ -35,7 +36,7 @@ public:
 
     MissingArgument(const QString &argName)
     {
-        MissingArgument::argName = argName;
+        MissingArgument::argName = "Missing argument: " + argName;
     }
 };
 

@@ -1,15 +1,17 @@
 #include "servertypes.h"
-#include "servererrors.h"
 
 using namespace ServerTypes;
 
-
-LogIn LogIn::parseData(QJsonObject jsonObject)
+void LogIn::parseData(const QString &username, const QString &password)
 {
-    QJsonObject::const_iterator endIt = jsonObject.constEnd();
-
-    if (jsonObject.find("request") == endIt)
-        throw ServerErrors::MissingArgument("request");
-
-    return LogIn();
+    LogIn::username = username;
+    LogIn::password = password;
 }
+
+
+void SignUp::parseData(const QString &username, const QString &password)
+{
+    SignUp::username = username;
+    SignUp::password = password;
+}
+
