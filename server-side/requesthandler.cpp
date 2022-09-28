@@ -12,13 +12,13 @@ void RequestHandler::setBuffer(QByteArray buffer)
 
 void RequestHandler::run()
 {
-    // Do request job here...    
-    QJsonDocument itemDoc = QJsonDocument::fromJson(RequestHandler::buffer);
-    qDebug() << "utf-8 " << QString(RequestHandler::buffer).toUtf8();
+    QJsonParseError *err = nullptr;
+    QJsonDocument itemDoc = QJsonDocument::fromJson(RequestHandler::buffer, err);
+
     QJsonObject rootObject = itemDoc.object();
 
     qDebug() << RequestHandler::buffer;
-    qDebug() << rootObject.length();
+    qDebug() << rootObject.length() << " " << rootObject["responce"].toDouble();
 
     emit on_finishRequest(34, this);
 }

@@ -32,7 +32,7 @@ void ClientSocket::readyRead()
     handlerRequest->setAutoDelete(false);
     handlerRequest->setBuffer(socket->readAll());
 
-    connect(handlerRequest, SIGNAL(on_finishRequest(int,HandlerRequest*)), SLOT(requestResult(int,HandlerRequest*)), Qt::QueuedConnection);
+    connect(handlerRequest, SIGNAL(on_finishRequest(int,RequestHandler*)), SLOT(requestResult(int,RequestHandler*)), Qt::QueuedConnection);
 
     QThreadPool::globalInstance()->start(handlerRequest);
 }
