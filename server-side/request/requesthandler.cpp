@@ -1,4 +1,10 @@
 #include "requesthandler.h"
+#include "requestexecutor.h"
+#include "requestvalidator.h"
+#include "requestmethods.h"
+#include "servertypes.h"
+#include "servererrors.h"
+
 
 RequestHandler::RequestHandler()
 {
@@ -12,13 +18,31 @@ void RequestHandler::setBuffer(QByteArray buffer)
 
 void RequestHandler::run()
 {
-    QJsonParseError *err = nullptr;
-    QJsonDocument itemDoc = QJsonDocument::fromJson(RequestHandler::buffer, err);
+    try {
+        QJsonObject object = RequestValidator::format(RequestHandler::buffer);
+        const QString REQUEST_METHOD = object["method"].toString();
 
-    QJsonObject rootObject = itemDoc.object();
+        if (REQUEST_METHOD == RequestMethods::logIn)
+        {
+            ServerTypes::LogIn logIn_server = RequestValidator::logIn(object);
+            RequestExecutor::logIn(logIn_server);
+        }
+        else if (REQUEST_METHOD == RequestMethods::signUp)
+        {
+            RequestValidator::signUp(object);
+        }
 
-    qDebug() << RequestHandler::buffer;
-    qDebug() << rootObject.length() << " " << rootObject["responce"].toDouble();
+    } catch (ServerErrors::InvalidFormat) {
+        // build responce invalid format
+        ;
+    } catch (ServerErrors::MissingArgument) {
+        // build responce missing argument
+        ;
+    } catch (...) {
+        // build responce internal error
+        ;
+    }
+
 
     emit on_finishRequest(34, this);
 }
