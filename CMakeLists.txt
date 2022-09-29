@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 set(BUILD_SERVER FALSE)
@@ -36,7 +37,9 @@ endif()
 include_directories(${myApp_INCLUDES})
 
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Sql)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Network)
+
 
 install(TARGETS SecureChat
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
