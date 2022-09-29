@@ -13,28 +13,51 @@ namespace ClientTypes
 
 struct LogIn
 {
-private:
-    StatusCodes statusCode;
+    StatusCodesInterface statusCode;
     QString accessToken;
 
-public:
     void parseData(const StatusCodes &statusCode, const QString &accessToken);
     QByteArray serializeData() const;
-
 };
 
 
 struct SignUp
 {
-private:
-    StatusCodes statusCode;
+    StatusCodesInterface statusCode;
     QString accessToken;
 
-public:
     void parseData(const StatusCodes &statusCode, const QString &accessToken);
     QByteArray serializeData() const;
-
 };
+
+
+struct InvalidFormat
+{
+    StatusCodesInterface statusCode;
+    QString what;
+
+    void parseData(const StatusCodes &statusCode, const QString &what);
+    QByteArray serializeData() const;
+};
+
+
+struct MissingAgument {
+    StatusCodesInterface statusCode;
+    QString what;
+
+    void parseData(const StatusCodes &statusCode, const QString &what);
+    QByteArray serializeData() const;
+};
+
+
+struct InternalError {
+    StatusCodesInterface statusCode;
+    QString what;
+
+    void parseData(const StatusCodes &statusCode, const QString &what);
+    QByteArray serializeData() const;
+};
+
 }
 
 #endif // CLIENTTYPES_H

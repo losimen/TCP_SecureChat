@@ -18,31 +18,42 @@ void RequestHandler::setBuffer(QByteArray buffer)
 
 void RequestHandler::run()
 {
+    QByteArray answer;
+
     try {
         QJsonObject object = RequestValidator::format(RequestHandler::buffer);
         const QString REQUEST_METHOD = object["method"].toString();
 
         if (REQUEST_METHOD == RequestMethods::logIn)
         {
-            ServerTypes::LogIn logIn_server = RequestValidator::logIn(object);
-            RequestExecutor::logIn(logIn_server);
+            const ServerTypes::LogIn logIn_server = RequestValidator::logIn(object);
+            const ClientTypes::LogIn logIn_client = RequestExecutor::logIn(logIn_server);
+
+            answer = logIn_client.serializeData();
         }
         else if (REQUEST_METHOD == RequestMethods::signUp)
         {
             RequestValidator::signUp(object);
         }
+        else
+        {
+            // build responce notfound
+        }
 
-    } catch (ServerErrors::InvalidFormat) {
-        // build responce invalid format
-        ;
-    } catch (ServerErrors::MissingArgument) {
-        // build responce missing argument
-        ;
+    } catch (ServerErrors::InvalidFormat err) {
+        const ClientTypes::InvalidFormat invalidFormat_client = RequestExecutor::invalidFormat(err.what());
+
+        answer = invalidFormat_client.serializeData();
+    } catch (ServerErrors::MissingArgument err) {
+        const ClientTypes::InvalidFormat invalidFormat_client = RequestExecutor::invalidFormat(err.what());
+
+        answer = invalidFormat_client.serializeData();
     } catch (...) {
-        // build responce internal error
-        ;
+        const ClientTypes::InvalidFormat invalidFormat_client = RequestExecutor::invalidFormat("Internal error");
+
+        answer = invalidFormat_client.serializeData();
     }
 
 
-    emit on_finishRequest(34, this);
+    emit on_finishRequest(answer, this);
 }

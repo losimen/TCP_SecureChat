@@ -11,11 +11,9 @@ namespace ServerTypes
 
 struct LogIn
 {
-private:
     QString username;
     QString password;
 
-public:
     void parseData(const QString &username, const QString &password);
     QByteArray serializeData() const;
 
@@ -24,14 +22,11 @@ public:
 
 struct SignUp
 {
-private:
     QString username;
     QString password;
 
-public:
     void parseData(const QString &username, const QString &password);
     QByteArray serializeData() const;
-
 };
 
 }

@@ -1,15 +1,34 @@
 #include "statuscodes.h"
 
-const QString StatusCodes::OK = "OK";
-const QString StatusCodes::FAIL = "FAIL";
 
-
-void StatusCodes::setCurrentStatusCode(QString &toSet)
+StatusCodesInterface::StatusCodesInterface()
 {
-    StatusCodes::currentStatusCode = toSet;
+    StatusCodesInterface::currentStatusCode = StatusCodes::notFound;
 }
 
-const QString &StatusCodes::getCurrentStatusCode() const
+
+void StatusCodesInterface::setCurrentStatusCode(StatusCodes &toSet)
 {
-    return currentStatusCode;
+    StatusCodesInterface::currentStatusCode = toSet;
+}
+
+
+const StatusCodes &StatusCodesInterface::getCurrentStatusCode() const
+{
+    return StatusCodesInterface::currentStatusCode;
+}
+
+StatusCodesInterface StatusCodesInterface::operator=(StatusCodes &toSet)
+{
+    StatusCodesInterface::currentStatusCode = toSet;
+
+    return *this;
+}
+
+
+StatusCodesInterface StatusCodesInterface::operator=(const StatusCodes &toSet)
+{
+    StatusCodesInterface::currentStatusCode = toSet;
+
+    return *this;
 }

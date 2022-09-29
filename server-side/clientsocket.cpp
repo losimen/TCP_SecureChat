@@ -32,23 +32,19 @@ void ClientSocket::disconnected()
 
 void ClientSocket::readyRead()
 {
-    RequestHandler *handlerRequest = new RequestHandler();
-    handlerRequest->setAutoDelete(false);
-    handlerRequest->setBuffer(socket->readAll());
+    RequestHandler *requestHandler = new RequestHandler();
+    requestHandler->setAutoDelete(false);
+    requestHandler->setBuffer(socket->readAll());
 
-    connect(handlerRequest, SIGNAL(on_finishRequest(int,RequestHandler*)), SLOT(requestResult(int,RequestHandler*)), Qt::QueuedConnection);
+    connect(requestHandler, SIGNAL(on_finishRequest(QByteArray,RequestHandler*)), SLOT(requestResult(QByteArray,RequestHandler*)), Qt::QueuedConnection);
 
-    QThreadPool::globalInstance()->start(handlerRequest);
+    QThreadPool::globalInstance()->start(requestHandler);
 }
 
 
-void ClientSocket::requestResult(int number, RequestHandler *handlerRequest)
+void ClientSocket::requestResult(QByteArray toSend, RequestHandler *handlerRequest)
 {
-    QByteArray buffer;
-
-    buffer.append("\r\nHey I am answer ");
-    buffer.append(QString::number(number).toUtf8());
-    socket->write(buffer);
+    socket->write(toSend);
 
     delete handlerRequest;
 }

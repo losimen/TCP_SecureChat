@@ -2,19 +2,31 @@
 #define STATUSCODES_H
 
 #include <QString>
+#include <QMap>
 
 
-struct StatusCodes
+enum StatusCodes {
+    badRequest = 400,
+    unathorized = 401,
+    notFound = 404,
+    ok = 200,
+    internalError = 500
+};
+
+
+class StatusCodesInterface
 {
 private:
-    const QString currentStatusCode;
+    StatusCodes currentStatusCode;
 
 public:
-    static const QString OK;
-    static const QString FAIL;
+    StatusCodesInterface();
 
-    void setCurrentStatusCode(QString &toSet);
-    const QString &getCurrentStatusCode() const;
+    void setCurrentStatusCode(StatusCodes &toSet);
+    const StatusCodes &getCurrentStatusCode() const;
+
+    StatusCodesInterface operator=(StatusCodes &toSet);
+    StatusCodesInterface operator=(const StatusCodes &toSet);
 };
 
 #endif // STATUSCODES_H

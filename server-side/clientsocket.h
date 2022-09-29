@@ -19,7 +19,7 @@ public:
 public slots:
     void disconnected();
     void readyRead();
-    void requestResult(int number, RequestHandler *handlerRequest);
+    void requestResult(QByteArray number, RequestHandler *handlerRequest);
 
 private:
     QTcpSocket *socket;

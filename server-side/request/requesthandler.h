@@ -17,7 +17,7 @@ public:
     void setBuffer(QByteArray buffer);
 
 signals:
-    void on_finishRequest(int number, RequestHandler *handlerRequest);
+    void on_finishRequest(QByteArray number, RequestHandler *handlerRequest);
 
 protected:
     void run();
