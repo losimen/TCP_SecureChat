@@ -8,6 +8,11 @@ QString ClientTypes::putTagInQuotes(const QString &name) {
 }
 
 
+QString ClientTypes::putStrInQuotes(const QString &name) {
+    return QString("\"" + name + "\"");
+}
+
+
 void LogIn::parseData(const StatusCodes &statusCode, const QString &accessToken)
 {
     LogIn::statusCode = statusCode;
@@ -17,12 +22,14 @@ void LogIn::parseData(const StatusCodes &statusCode, const QString &accessToken)
 
 QByteArray LogIn::serializeData() const
 {
-   QString result;
+    QString result;
 
-   result = "{\n statusCode: " + QString::number(LogIn::statusCode.getCurrentStatusCode()) + ",\n";
-   result += LogIn::accessToken + "}\n";
+    result = "{";
+    result += putTagInQuotes("statusCode") + QString::number(LogIn::statusCode.getCurrentStatusCode()) + ",";
+    result += putTagInQuotes("asccessToken") + putStrInQuotes(LogIn::accessToken);
+    result += "\n}\n";
 
-   return result.toUtf8();
+    return result.toUtf8();
 }
 
 
@@ -46,7 +53,8 @@ QByteArray Error::serializeData() const
 
     result = "{" ;
     result += putTagInQuotes("statusCode") + QString::number(Error::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("msg") + Error::what + "\n}\n";
+    result += putTagInQuotes("msg") + putStrInQuotes(what);
+    result += "\n}\n";
 
     return result.toUtf8();
 }

@@ -48,6 +48,27 @@ public:
     }
 };
 
+
+class NotFound: public std::exception
+{
+private:
+    QString argName;
+
+public:
+    const char *what() const throw()
+    {
+        QByteArray ba = argName.toLocal8Bit();
+        const char *what = ba.data();
+        return what;
+    }
+
+    NotFound(const QString &argName)
+    {
+        NotFound::argName = argName;
+    }
+};
+
+
 }
 
 

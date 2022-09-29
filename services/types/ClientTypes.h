@@ -11,6 +11,7 @@
 namespace ClientTypes
 {
 QString putTagInQuotes(const QString &name);
+QString putStrInQuotes(const QString &name);
 
 
 struct LogIn

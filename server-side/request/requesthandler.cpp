@@ -21,7 +21,8 @@ void RequestHandler::run()
 {
     QByteArray answer;
 
-    try {
+    try
+    {
         QJsonObject object = RequestValidator::format(RequestHandler::buffer);
         const QString REQUEST_METHOD = object["method"].toString();
 
@@ -38,23 +39,30 @@ void RequestHandler::run()
         }
         else
         {
-            // build responce notfound
+            throw ServerErrors::NotFound("There is no such method");
         }
 
-    } catch (ServerErrors::InvalidFormat err) {
+    }
+    catch (ServerErrors::InvalidFormat err)
+    {
         const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
-
-        answer = invalidFormat_client.serializeData();
-    } catch (ServerErrors::MissingArgument err) {
-        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
-
-        answer = invalidFormat_client.serializeData();
-    } catch (...) {
-        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
-
         answer = invalidFormat_client.serializeData();
     }
-
+    catch (ServerErrors::MissingArgument err)
+    {
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
+        answer = invalidFormat_client.serializeData();
+    }
+    catch (ServerErrors::NotFound err)
+    {
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::notFound, err.what());
+        answer = invalidFormat_client.serializeData();
+    }
+    catch (...)
+    {
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
+        answer = invalidFormat_client.serializeData();
+    }
 
     emit on_finishRequest(answer, this);
 }
