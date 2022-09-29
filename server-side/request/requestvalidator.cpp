@@ -14,10 +14,10 @@ QJsonObject RequestValidator::format(const QByteArray &buffer)
     QJsonObject jsonObject = jsonDocument.object();
 
     if (jsonObject.isEmpty())
-        throw ServerErrors::InvalidFormat();
+        throw ServerErrors::InvalidFormat("Inavlid request format");
 
     if (jsonObject.find("method") == jsonObject.constEnd())
-        throw ServerErrors::InvalidFormat();
+        throw ServerErrors::InvalidFormat("Not found request method");
 
     return jsonObject;
 }

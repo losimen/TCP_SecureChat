@@ -12,9 +12,7 @@ class RequestExecutor
 public:
     RequestExecutor();
 
-    static ClientTypes::InvalidFormat invalidFormat(const QString what);
-    static ClientTypes::MissingAgument missingArgument(const QString what);
-    static ClientTypes::InternalError internalError(const QString what);
+    static ClientTypes::Error error(const StatusCodes &statusCode, const QString &what);
 
     static ClientTypes::LogIn logIn(const ServerTypes::LogIn &logIn_server);
 };

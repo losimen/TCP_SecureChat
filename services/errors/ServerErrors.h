@@ -9,19 +9,27 @@
 namespace ServerErrors
 {
 
-class InvalidFormat : public std::exception
+class InvalidFormat: public std::exception
 {
+private:
+    QString _what;
+
 public:
     const char *what() const throw()
     {
-        return "\r\nInvalid JSON format\r\n";
+        QByteArray ba = _what.toLocal8Bit();
+        const char *what = ba.data();
+        return what;
     }
 
-    InvalidFormat() {}
+    InvalidFormat(const QString &what)
+    {
+        InvalidFormat::_what = what;
+    }
 };
 
 
-class MissingArgument : public std::exception
+class MissingArgument: public std::exception
 {
 private:
     QString argName;

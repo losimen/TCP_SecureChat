@@ -3,6 +3,11 @@
 using namespace ClientTypes;
 
 
+QString ClientTypes::putTagInQuotes(const QString &name) {
+    return QString("\n\"" + name + "\": ");
+}
+
+
 void LogIn::parseData(const StatusCodes &statusCode, const QString &accessToken)
 {
     LogIn::statusCode = statusCode;
@@ -28,55 +33,20 @@ void SignUp::parseData(const StatusCodes &statusCode, const QString &accessToken
 }
 
 
-void InvalidFormat::parseData(const StatusCodes &statusCode, const QString &what)
+void Error::parseData(const StatusCodes &statusCode, const QString &what)
 {
-    InvalidFormat::statusCode = statusCode;
-    InvalidFormat::what = what;
+    Error::statusCode = statusCode;
+    Error::what = what;
 }
 
 
-QByteArray InvalidFormat::serializeData() const
+QByteArray Error::serializeData() const
 {
     QString result;
 
-    result = "{\n statusCode: " + QString::number(InvalidFormat::statusCode.getCurrentStatusCode())  + ",\n";
-    result += " msg: " + InvalidFormat::what + "}\n";
-
-    return result.toUtf8();
-}
-
-
-void MissingAgument::parseData(const StatusCodes &statusCode, const QString &what)
-{
-    MissingAgument::statusCode = statusCode;
-    MissingAgument::what = what;
-}
-
-
-QByteArray MissingAgument::serializeData() const
-{
-    QString result;
-
-    result = "{\n statusCode: " + QString::number(MissingAgument::statusCode.getCurrentStatusCode())  + ",\n";
-    result += " msg: " + MissingAgument::what + "}\n";
-
-    return result.toUtf8();
-}
-
-
-void InternalError::parseData(const StatusCodes &statusCode, const QString &what)
-{
-    InternalError::statusCode = statusCode;
-    InternalError::what = what;
-}
-
-
-QByteArray InternalError::serializeData() const
-{
-    QString result;
-
-    result = "{\n statusCode: " + QString::number(InternalError::statusCode.getCurrentStatusCode())  + ",\n";
-    result += " msg: " + InternalError::what + "}\n";
+    result = "{" ;
+    result += putTagInQuotes("statusCode") + QString::number(Error::statusCode.getCurrentStatusCode()) + ",";
+    result += putTagInQuotes("msg") + Error::what + "\n}\n";
 
     return result.toUtf8();
 }

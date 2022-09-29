@@ -10,6 +10,8 @@
 
 namespace ClientTypes
 {
+QString putTagInQuotes(const QString &name);
+
 
 struct LogIn
 {
@@ -31,26 +33,8 @@ struct SignUp
 };
 
 
-struct InvalidFormat
+struct Error
 {
-    StatusCodesInterface statusCode;
-    QString what;
-
-    void parseData(const StatusCodes &statusCode, const QString &what);
-    QByteArray serializeData() const;
-};
-
-
-struct MissingAgument {
-    StatusCodesInterface statusCode;
-    QString what;
-
-    void parseData(const StatusCodes &statusCode, const QString &what);
-    QByteArray serializeData() const;
-};
-
-
-struct InternalError {
     StatusCodesInterface statusCode;
     QString what;
 

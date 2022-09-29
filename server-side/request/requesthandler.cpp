@@ -4,6 +4,7 @@
 #include "requestmethods.h"
 #include "servertypes.h"
 #include "servererrors.h"
+#include "statuscodes.h"
 
 
 RequestHandler::RequestHandler()
@@ -41,15 +42,15 @@ void RequestHandler::run()
         }
 
     } catch (ServerErrors::InvalidFormat err) {
-        const ClientTypes::InvalidFormat invalidFormat_client = RequestExecutor::invalidFormat(err.what());
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
 
         answer = invalidFormat_client.serializeData();
     } catch (ServerErrors::MissingArgument err) {
-        const ClientTypes::InvalidFormat invalidFormat_client = RequestExecutor::invalidFormat(err.what());
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
 
         answer = invalidFormat_client.serializeData();
     } catch (...) {
-        const ClientTypes::InvalidFormat invalidFormat_client = RequestExecutor::invalidFormat("Internal error");
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
 
         answer = invalidFormat_client.serializeData();
     }
