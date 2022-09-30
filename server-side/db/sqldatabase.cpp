@@ -1,3 +1,6 @@
+#include <QThread>
+#include <QString>
+
 #include "sqldatabase.h"
 #include "dberrors.h"
 
@@ -18,7 +21,8 @@ void SQLDatabase::execQuery(QSqlQuery &query)
 
 SQLDatabase::SQLDatabase()
 {
-    SQLDatabase::db = QSqlDatabase::addDatabase("QMYSQL");
+    qint32 *a = (int*)QThread::currentThreadId();
+    SQLDatabase::db = QSqlDatabase::addDatabase("QMYSQL", QString::number((*a)));
 
     db.setHostName("localhost");
     db.setDatabaseName("SecureChat");
@@ -33,7 +37,7 @@ qint64 SQLDatabase::saveUser(const QString &username, const QString &password)
 {
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query;
+    QSqlQuery query(SQLDatabase::db);
 
     query.prepare("INSERT INTO Users (Username, Password) "
                   "VALUES (:Username, :Password)");
@@ -51,7 +55,7 @@ qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &pass
 {
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query;
+    QSqlQuery query(SQLDatabase::db);
 
     query.prepare("SELECT ID FROM Users WHERE Username = :Username AND Password = :Password");
     query.bindValue(":Username", username);
@@ -59,7 +63,7 @@ qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &pass
 
     SQLDatabase::execQuery(query);
 
-    bool f = query.first();
+    query.first();
 
     return query.value(0).toInt();
 }
@@ -69,7 +73,7 @@ qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 {
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query;
+    QSqlQuery query(SQLDatabase::db);
 
     query.prepare("SELECT ID FROM Users WHERE Username = :Username");
     query.bindValue(":Username", username);
@@ -86,7 +90,7 @@ QString SQLDatabase::generateAccessToken(const qint64 userId)
     // TODO: use SHA256
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query;
+    QSqlQuery query(SQLDatabase::db);
     QString accessToken = "accessToken_" + QString::number(userId);
 
     query.prepare("INSERT INTO AccessTokens (AccessToken, UserID) "
@@ -105,7 +109,7 @@ QString SQLDatabase::getUserAccessToken(const qint64 userId)
 {
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query;
+    QSqlQuery query(SQLDatabase::db);
 
     query.prepare("SELECT AccessToken FROM AccessTokens WHERE UserID = :UserID");
     query.bindValue(":UserID", userId);
@@ -119,6 +123,10 @@ QString SQLDatabase::getUserAccessToken(const qint64 userId)
 
 SQLDatabase::~SQLDatabase()
 {
+    qint32 *a = (int*)QThread::currentThreadId();
+
     db.close();
-    db.removeDatabase("QMYSQL");
+    db = QSqlDatabase();
+
+    QSqlDatabase::removeDatabase(QString::number((*a)));
 }
