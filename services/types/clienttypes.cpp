@@ -40,6 +40,19 @@ void SignUp::parseData(const StatusCodes &statusCode, const QString &accessToken
 }
 
 
+QByteArray SignUp::serializeData() const
+{
+    QString result;
+
+    result = "{";
+    result += putTagInQuotes("statusCode") + QString::number(SignUp::statusCode.getCurrentStatusCode()) + ",";
+    result += putTagInQuotes("asccessToken") + putStrInQuotes(SignUp::accessToken);
+    result += "\n}\n";
+
+    return result.toUtf8();
+}
+
+
 void Error::parseData(const StatusCodes &statusCode, const QString &what)
 {
     Error::statusCode = statusCode;

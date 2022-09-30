@@ -15,6 +15,7 @@ public:
     static ClientTypes::Error error(const StatusCodes &statusCode, const QString &what);
 
     static ClientTypes::LogIn logIn(const ServerTypes::LogIn &logIn_server);
+    static ClientTypes::SignUp signUp(const ServerTypes::SignUp &signUp_server);
 };
 
 #endif // REQUESTEXECUTOR_H

@@ -23,19 +23,22 @@ void RequestHandler::run()
 
     try
     {
-        QJsonObject object = RequestValidator::format(RequestHandler::buffer);
-        const QString REQUEST_METHOD = object["method"].toString();
+        QJsonObject jsonObject = RequestValidator::format(RequestHandler::buffer);
+        const QString REQUEST_METHOD = jsonObject["method"].toString();
 
         if (REQUEST_METHOD == RequestMethods::logIn)
         {
-            const ServerTypes::LogIn logIn_server = RequestValidator::logIn(object);
+            const ServerTypes::LogIn logIn_server = RequestValidator::logIn(jsonObject);
             const ClientTypes::LogIn logIn_client = RequestExecutor::logIn(logIn_server);
 
             answer = logIn_client.serializeData();
         }
         else if (REQUEST_METHOD == RequestMethods::signUp)
         {
-            RequestValidator::signUp(object);
+            const ServerTypes::SignUp signUp_server = RequestValidator::signUp(jsonObject);
+            const ClientTypes::SignUp signUp_client = RequestExecutor::signUp(signUp_server);
+
+            answer = signUp_client.serializeData();
         }
         else
         {
