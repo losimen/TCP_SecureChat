@@ -1,15 +1,14 @@
 #ifndef SERVERERRORS_H
 #define SERVERERRORS_H
 
-#include <exception>
-
+#include <QException>
 #include <QString>
 #include <QDebug>
 
 namespace ServerErrors
 {
 
-class InvalidFormat: public std::exception
+class InvalidFormat: public QException
 {
 private:
     QString _what;
@@ -29,7 +28,7 @@ public:
 };
 
 
-class MissingArgument: public std::exception
+class MissingArgument: public QException
 {
 private:
     QString argName;
@@ -49,7 +48,7 @@ public:
 };
 
 
-class NotFound: public std::exception
+class NotFound: public QException
 {
 private:
     QString argName;

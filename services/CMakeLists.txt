@@ -1,6 +1,7 @@
 list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/types/servertypes.h
                           ${CMAKE_CURRENT_LIST_DIR}/types/clienttypes.h
                           ${CMAKE_CURRENT_LIST_DIR}/errors/servererrors.h
+                          ${CMAKE_CURRENT_LIST_DIR}/errors/dberrors.h
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/requestmethods.h
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/statuscodes.h)
 
