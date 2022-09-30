@@ -61,11 +61,11 @@ void RequestHandler::run()
         const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::notFound, err.what());
         answer = invalidFormat_client.serializeData();
     }
-    catch (...)
-    {
-        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
-        answer = invalidFormat_client.serializeData();
-    }
+//    catch (...)
+//    {
+//        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
+//        answer = invalidFormat_client.serializeData();
+//    }
 
     emit on_finishRequest(answer, this);
 }

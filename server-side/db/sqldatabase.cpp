@@ -9,9 +9,10 @@ void SQLDatabase::validateIsOpen()
 }
 
 
-void SQLDatabase::validateIsSucess()
+void SQLDatabase::execQuery(QSqlQuery &query)
 {
-
+    if (!query.exec())
+        qDebug() << "Error in executing request: " + query.lastError().text();
 }
 
 
@@ -40,7 +41,7 @@ qint64 SQLDatabase::saveUser(const QString &username, const QString &password)
     query.bindValue(":Username", username);
     query.bindValue(":Password", password);
 
-    query.exec();
+    SQLDatabase::execQuery(query);
 
     return SQLDatabase::getUserIdByUsername(username);
 }
@@ -49,13 +50,15 @@ qint64 SQLDatabase::saveUser(const QString &username, const QString &password)
 qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 {
     SQLDatabase::validateIsOpen();
-
     QSqlQuery query;
 
-    bool isSucess = query.exec("SELECT ID FROM Users WHERE Username = :Username");
-    query.bindValue(":Username", username);    
+    query.prepare("SELECT ID FROM Users WHERE Username = 'top'");
+    query.bindValue(":username", username);
 
-    return query.first();
+    SQLDatabase::execQuery(query);
+
+    query.first();
+    return query.value(0).toInt();
 }
 
 
@@ -72,6 +75,8 @@ QString SQLDatabase::generateAccessToken(const qint64 userId)
 
     query.bindValue(":AccessToken", accessToken);
     query.bindValue(":UserID", userId);
+
+    SQLDatabase::execQuery(query);
 
     return accessToken;
 }

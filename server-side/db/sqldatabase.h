@@ -13,7 +13,7 @@ private:
     bool ok;
 
     void validateIsOpen();
-    void validateIsSucess();
+    void execQuery(QSqlQuery &query);
 
 public:
     SQLDatabase();
