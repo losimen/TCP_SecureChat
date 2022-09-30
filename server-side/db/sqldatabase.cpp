@@ -47,13 +47,32 @@ qint64 SQLDatabase::saveUser(const QString &username, const QString &password)
 }
 
 
+qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &password)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query;
+
+    query.prepare("SELECT ID FROM Users WHERE Username = :Username AND Password = :Password");
+    query.bindValue(":Username", username);
+    query.bindValue(":Password", password);
+
+    SQLDatabase::execQuery(query);
+
+    bool f = query.first();
+
+    return query.value(0).toInt();
+}
+
+
 qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 {
     SQLDatabase::validateIsOpen();
+
     QSqlQuery query;
 
-    query.prepare("SELECT ID FROM Users WHERE Username = 'top'");
-    query.bindValue(":username", username);
+    query.prepare("SELECT ID FROM Users WHERE Username = :Username");
+    query.bindValue(":Username", username);
 
     SQLDatabase::execQuery(query);
 
@@ -68,7 +87,7 @@ QString SQLDatabase::generateAccessToken(const qint64 userId)
     SQLDatabase::validateIsOpen();
 
     QSqlQuery query;
-    QString accessToken = "accessToken";
+    QString accessToken = "accessToken_" + QString::number(userId);
 
     query.prepare("INSERT INTO AccessTokens (AccessToken, UserID) "
                   "VALUES (:AccessToken, :UserID)");
@@ -79,6 +98,22 @@ QString SQLDatabase::generateAccessToken(const qint64 userId)
     SQLDatabase::execQuery(query);
 
     return accessToken;
+}
+
+
+QString SQLDatabase::getUserAccessToken(const qint64 userId)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query;
+
+    query.prepare("SELECT AccessToken FROM AccessTokens WHERE UserID = :UserID");
+    query.bindValue(":UserID", userId);
+
+    SQLDatabase::execQuery(query);
+
+    query.first();
+    return query.value(0).toString();
 }
 
 

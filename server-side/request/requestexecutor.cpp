@@ -24,8 +24,14 @@ ClientTypes::Error RequestExecutor::error(const StatusCodes &statusCode, const Q
 ClientTypes::LogIn RequestExecutor::logIn(const ServerTypes::LogIn &logIn_server)
 {
     ClientTypes::LogIn logIn_client;
+    SQLDatabase db;
+    qint64 userId;
+    QString userAccessToken;
 
-    logIn_client.parseData(StatusCodes::ok, logIn_server.username);
+    userId = db.getUserIdByAuth(logIn_server.username, logIn_server.password);
+    userAccessToken = db.getUserAccessToken(userId);
+
+    logIn_client.parseData(StatusCodes::ok, userAccessToken);
 
     return logIn_client;
 }

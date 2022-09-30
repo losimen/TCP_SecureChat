@@ -19,9 +19,10 @@ public:
     SQLDatabase();
 
     qint64 saveUser(const QString &username, const QString &password);
+    qint64 getUserIdByAuth(const QString &username, const QString &password);
     qint64 getUserIdByUsername(const QString &username);
     QString generateAccessToken(const qint64 userId);
-
+    QString getUserAccessToken(const qint64 userId);
 
     ~SQLDatabase();
 };
