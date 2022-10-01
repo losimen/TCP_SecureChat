@@ -10,7 +10,8 @@ enum StatusCodes {
     unathorized = 401,
     notFound = 404,
     ok = 200,
-    internalError = 500
+    internalError = 500,
+    serviceUnavalibale = 503
 };
 
 
