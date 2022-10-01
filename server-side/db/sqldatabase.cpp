@@ -8,14 +8,21 @@
 void SQLDatabase::validateIsOpen()
 {
     if (!SQLDatabase::db.isOpen())
+    {
+        qDebug() << db.lastError();
         throw DBErrors::Open("Error in connecting to the DB please contact admin.");
+    }
+
 }
 
 
 void SQLDatabase::execQuery(QSqlQuery &query)
 {
     if (!query.exec())
+    {
+        qDebug() << query.lastError();
         throw DBErrors::Exec("Error in executing request please contact admin.");
+    }
 }
 
 

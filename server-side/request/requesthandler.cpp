@@ -43,6 +43,13 @@ void RequestHandler::run()
 
             answer = signUp_client.serializeData();
         }
+        else if (REQUEST_METHOD == RequestMethods::signUp)
+        {
+            const ServerTypes::SignUp signUp_server = RequestValidator::signUp(db, jsonObject);
+            const ClientTypes::SignUp signUp_client = RequestExecutor::signUp(db, signUp_server);
+
+            answer = signUp_client.serializeData();
+        }
         else
         {
             throw ServerErrors::NotFound("There is no such method");

@@ -39,7 +39,7 @@ ServerTypes::LogIn RequestValidator::logIn(SQLDatabase &db, const QJsonObject &b
 
     try
     {
-        db.getUserIdByAuth(logIn_server.username, logIn_server.password);
+        logIn_server._userId = db.getUserIdByAuth(logIn_server.username, logIn_server.password);
     }
     catch (DBErrors::GetValue &err)
     {
