@@ -25,6 +25,7 @@ public:
     qint64 insertUser(const QString &username, const QString &password);
     qint64 insertChat(const qint64 &userId, const QString &chatName);
     void insertMember(const qint64 &chatId, const qint64 &memberId);
+    void insertMessage(const qint64 &chatId, const qint64 &senderId, const QString &msgText);
 
     qint64 getUserIdByAuth(const QString &username, const QString &password);
     qint64 getUserIdByUsername(const QString &username);

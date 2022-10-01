@@ -69,7 +69,20 @@ ClientTypes::AddMember RequestExecutor::addMember(SQLDatabase &db, const ServerT
     ClientTypes::AddMember addMember_client;
 
     db.insertMember(addMember_server._chatId, addMember_server._userIdToAdd);
+
     addMember_client.statusCode = StatusCodes::ok;
 
     return addMember_client;
+}
+
+
+ClientTypes::SendMessage RequestExecutor::sendMessage(SQLDatabase &db, const ServerTypes::SendMessage &sendMessage_server)
+{
+    ClientTypes::SendMessage sendMessage_client;
+
+    db.insertMessage(sendMessage_server.chatId, sendMessage_server._senderId, sendMessage_server.msgText);
+
+    sendMessage_client.statusCode = StatusCodes::ok;
+
+    return sendMessage_client;
 }

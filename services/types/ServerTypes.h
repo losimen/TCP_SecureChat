@@ -56,6 +56,18 @@ struct AddMember
 };
 
 
+struct SendMessage
+{
+    QString accessToken;
+    QString msgText;
+    qint64 chatId;
+
+    qint64 _senderId;
+
+    QByteArray serializeData() const;
+};
+
+
 }
 
 

@@ -59,6 +59,13 @@ void RequestHandler::run()
 
             answer = addMember_client.serializeData();
         }
+        else if (REQUEST_METHOD == RequestMethods::sendMessage)
+        {
+            const ServerTypes::SendMessage sendMessage_server = RequestValidator::sendMessage(db, jsonObject);
+            const ClientTypes::SendMessage sendMessage_client = RequestExecutor::sendMessage(db, sendMessage_server);
+
+            answer = sendMessage_client.serializeData();
+        }
         else
         {
             throw ServerErrors::NotFound("There is no such method");

@@ -89,6 +89,22 @@ void SQLDatabase::insertMember(const qint64 &chatId, const qint64 &memberId)
 }
 
 
+void SQLDatabase::insertMessage(const qint64 &chatId, const qint64 &senderId, const QString &msgText)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("INSERT INTO Messages (SenderID, ChatID, MsgText) "
+                  "VALUES (:SenderID, :ChatID, :MsgText)");
+    query.bindValue(":SenderID", senderId);
+    query.bindValue(":ChatID", chatId);
+    query.bindValue(":MsgText", msgText);
+
+    SQLDatabase::execQuery(query);
+}
+
+
 qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &password)
 {
     SQLDatabase::validateIsOpen();

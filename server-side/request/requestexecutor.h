@@ -19,6 +19,7 @@ public:
     static ClientTypes::SignUp signUp(SQLDatabase &db, const ServerTypes::SignUp &signUp_server);
     static ClientTypes::CreateChat createChat(SQLDatabase &db, const ServerTypes::CreateChat &createChat_server);
     static ClientTypes::AddMember addMember(SQLDatabase &db, const ServerTypes::AddMember &addMember_server);
+    static ClientTypes::SendMessage sendMessage(SQLDatabase &db, const ServerTypes::SendMessage &sendMessage_server);
 };
 
 #endif // REQUESTEXECUTOR_H

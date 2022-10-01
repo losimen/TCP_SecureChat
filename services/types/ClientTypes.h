@@ -10,6 +10,9 @@
 
 namespace ClientTypes
 {
+// Param with '_' at the beginning are additional information parameters
+// and not used for serialazation and parsing
+
 QString putTagInQuotes(const QString &name);
 QString putStrInQuotes(const QString &name);
 
@@ -51,6 +54,14 @@ struct CreateChat
 
 
 struct AddMember
+{
+    StatusCodesInterface statusCode;
+
+    QByteArray serializeData() const;
+};
+
+
+struct SendMessage
 {
     StatusCodesInterface statusCode;
 

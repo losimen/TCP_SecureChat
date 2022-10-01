@@ -10,7 +10,7 @@ struct RequestMethods
     static const QString signUp;
     static const QString createChat;
     static const QString addMember;
-    static const QString sendMessageToChat;
+    static const QString sendMessage;
 
 };
 

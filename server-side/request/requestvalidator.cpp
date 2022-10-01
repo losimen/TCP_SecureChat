@@ -54,6 +54,57 @@ qint64 RequestValidator::validateChatName(SQLDatabase &db, const qint64 userId, 
 }
 
 
+DBModelUser RequestValidator::validateUserId(SQLDatabase &db, const qint64 userId)
+{
+    DBModelUser userModel;
+
+    try
+    {
+        userModel = db.getUserInfo(userId);
+    }
+    catch (DBErrors::GetValue &err)
+    {
+        throw ServerErrors::NotFound("There is no such user id");
+    }
+
+    return userModel;
+}
+
+
+DBModelChat RequestValidator::validateChatId(SQLDatabase &db, const qint64 chatId)
+{
+    DBModelChat chatModel;
+
+    try
+    {
+        chatModel = db.getChatInfo(chatId);
+    }
+    catch (DBErrors::GetValue &err)
+    {
+        throw ServerErrors::NotFound("There is no such chat id");
+    }
+
+    return chatModel;
+}
+
+
+DBModelMessage RequestValidator::validateMessageId(SQLDatabase &db, const qint64 messageId)
+{
+    DBModelMessage messageModel;
+
+    try
+    {
+        messageModel = db.getMessageInfo(messageId);
+    }
+    catch (DBErrors::GetValue &err)
+    {
+        throw ServerErrors::NotFound("There is no such message id");
+    }
+
+    return messageModel;
+}
+
+
 RequestValidator::RequestValidator()
 {
 
@@ -168,4 +219,27 @@ ServerTypes::AddMember RequestValidator::addMember(SQLDatabase &db, const QJsonO
     addMember_server._chatId = RequestValidator::validateChatName(db, creatorId, addMember_server.chatName);
 
     return addMember_server;
+}
+
+ServerTypes::SendMessage RequestValidator::sendMessage(SQLDatabase &db, const QJsonObject &buffer)
+{
+    ServerTypes::SendMessage sendMessage_server;
+
+    if (buffer.find("accessToken") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("accessToken");
+
+    if (buffer.find("msgText") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("msgText");
+
+    if (buffer.find("chatId") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("chatId");
+
+    sendMessage_server.accessToken = buffer["accessToken"].toString();
+    sendMessage_server.msgText = buffer["msgText"].toString();
+    sendMessage_server.chatId = buffer["chatId"].toInt();
+
+    RequestValidator::validateChatId(db, sendMessage_server.chatId);
+    sendMessage_server._senderId = RequestValidator::validateAccessToken(db, sendMessage_server.accessToken);
+
+    return sendMessage_server;
 }

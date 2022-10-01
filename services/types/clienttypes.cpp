@@ -74,3 +74,14 @@ QByteArray AddMember::serializeData() const
 
     return result.toUtf8();
 }
+
+QByteArray SendMessage::serializeData() const
+{
+    QString result;
+
+    result = "{" ;
+    result += putTagInQuotes("statusCode") + QString::number(SendMessage::statusCode.getCurrentStatusCode());
+    result += "\n}\n";
+
+    return result.toUtf8();
+}
