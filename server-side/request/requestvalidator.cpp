@@ -74,3 +74,29 @@ ServerTypes::SignUp RequestValidator::signUp(SQLDatabase &db, const QJsonObject 
 
     throw ServerErrors::Conflict("User already exists with such username");
 }
+
+
+ServerTypes::CreateChat RequestValidator::createChat(SQLDatabase &db, const QJsonObject &buffer)
+{
+    ServerTypes::CreateChat createChat_server;
+
+    if (buffer.find("accessToken") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("accessToken");
+
+    if (buffer.find("chatName") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("chatName");
+
+    createChat_server.accessToken = buffer["accessToken"].toString();
+    createChat_server.chatName = buffer["chatName"].toString();
+
+    try
+    {
+        createChat_server._creatorId = db.getUserIdByAccessToken(createChat_server.accessToken);
+    }
+    catch (DBErrors::GetValue &err)
+    {
+        throw ServerErrors::NotFound("Auth error");
+    }
+
+    return createChat_server;
+}

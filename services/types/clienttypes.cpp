@@ -51,3 +51,15 @@ QByteArray Error::serializeData() const
 
     return result.toUtf8();
 }
+
+QByteArray CreateChat::serializeData() const
+{
+    QString result;
+
+    result = "{" ;
+    result += putTagInQuotes("statusCode") + QString::number(CreateChat::statusCode.getCurrentStatusCode()) + ",";
+    result += putTagInQuotes("chatID") + QString::number(CreateChat::chatId) + ",";
+    result += "\n}\n";
+
+    return result.toUtf8();
+}

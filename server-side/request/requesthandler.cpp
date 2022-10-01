@@ -14,10 +14,12 @@ RequestHandler::RequestHandler()
 
 }
 
+
 void RequestHandler::setBuffer(QByteArray buffer)
 {
     RequestHandler::buffer = buffer;
 }
+
 
 void RequestHandler::run()
 {
@@ -43,12 +45,12 @@ void RequestHandler::run()
 
             answer = signUp_client.serializeData();
         }
-        else if (REQUEST_METHOD == RequestMethods::signUp)
+        else if (REQUEST_METHOD == RequestMethods::createChat)
         {
-            const ServerTypes::SignUp signUp_server = RequestValidator::signUp(db, jsonObject);
-            const ClientTypes::SignUp signUp_client = RequestExecutor::signUp(db, signUp_server);
+            const ServerTypes::CreateChat createChat_server = RequestValidator::createChat(db, jsonObject);
+            const ClientTypes::CreateChat createChat_client = RequestExecutor::createChat(db, createChat_server);
 
-            answer = signUp_client.serializeData();
+            answer = createChat_client.serializeData();
         }
         else
         {

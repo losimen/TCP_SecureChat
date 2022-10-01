@@ -40,6 +40,14 @@ struct Error
     QByteArray serializeData() const;
 };
 
+struct CreateChat
+{
+    StatusCodesInterface statusCode;
+    qint64 chatId;
+
+    QByteArray serializeData() const;
+};
+
 }
 
 #endif // CLIENTTYPES_H

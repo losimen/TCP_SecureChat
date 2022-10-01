@@ -8,6 +8,9 @@ struct RequestMethods
 {
     static const QString logIn;
     static const QString signUp;
+    static const QString createChat;
+    static const QString addChatMember;
+    static const QString sendMessageToChat;
 
 };
 

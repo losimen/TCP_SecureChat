@@ -40,7 +40,7 @@ SQLDatabase::SQLDatabase()
 }
 
 
-qint64 SQLDatabase::saveUser(const QString &username, const QString &password)
+qint64 SQLDatabase::insertUser(const QString &username, const QString &password)
 {
     SQLDatabase::validateIsOpen();
 
@@ -48,13 +48,29 @@ qint64 SQLDatabase::saveUser(const QString &username, const QString &password)
 
     query.prepare("INSERT INTO Users (Username, Password) "
                   "VALUES (:Username, :Password)");
-
     query.bindValue(":Username", username);
     query.bindValue(":Password", password);
 
     SQLDatabase::execQuery(query);
 
     return SQLDatabase::getUserIdByUsername(username);
+}
+
+
+qint64 SQLDatabase::insertChat(const qint64 &userId, const QString &chatName)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("INSERT INTO Chats (CreatorID, ChatName) "
+                  "VALUES (:CreatorID, :ChatName)");
+    query.bindValue(":CreatorID", userId);
+    query.bindValue(":ChatName", chatName);
+
+    SQLDatabase::execQuery(query);
+
+    return SQLDatabase::getChatId(userId, chatName);
 }
 
 
@@ -85,6 +101,23 @@ qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 
     query.prepare("SELECT ID FROM Users WHERE Username = :Username");
     query.bindValue(":Username", username);
+
+    SQLDatabase::execQuery(query);
+
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
+    return query.value(0).toInt();
+}
+
+qint64 SQLDatabase::getUserIdByAccessToken(const QString &accessToken)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("SELECT UserID FROM AccessTokens WHERE AccessToken = :AccessToken");
+    query.bindValue(":AccessToken", accessToken);
 
     SQLDatabase::execQuery(query);
 
@@ -130,6 +163,25 @@ QString SQLDatabase::getUserAccessToken(const qint64 userId)
         throw DBErrors::GetValue("There is no such record");
 
     return query.value(0).toString();
+}
+
+
+qint64 SQLDatabase::getChatId(const qint64 &userId, const QString &chatName)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("SELECT ID FROM Chats WHERE CreatorID = :CreatorID AND ChatName = :ChatName");
+    query.bindValue(":CreatorID", userId);
+    query.bindValue(":ChatName", chatName);
+
+    SQLDatabase::execQuery(query);
+
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
+    return query.value(0).toInt();
 }
 
 

@@ -18,6 +18,7 @@ public:
 
     static ServerTypes::LogIn logIn(SQLDatabase &db, const QJsonObject &buffer);
     static ServerTypes::SignUp signUp(SQLDatabase &db, const QJsonObject &buffer);
+    static ServerTypes::CreateChat createChat(SQLDatabase &db, const QJsonObject &buffer);
 };
 
 #endif // REQUESTVALIDATOR_H

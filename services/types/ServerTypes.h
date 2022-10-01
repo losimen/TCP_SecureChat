@@ -8,7 +8,7 @@
 
 namespace ServerTypes
 {
-// Param with '_' are additional information parameters
+// Param with '_' at the beginning are additional information parameters
 // and not used for serialazation and parsing
 
 struct LogIn
@@ -30,6 +30,18 @@ struct SignUp
 
     QByteArray serializeData() const;
 };
+
+
+struct CreateChat
+{
+    QString accessToken;
+    QString chatName;
+
+    qint64 _creatorId;
+
+    QByteArray serializeData() const;
+};
+
 
 }
 

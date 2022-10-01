@@ -38,15 +38,26 @@ ClientTypes::LogIn RequestExecutor::logIn(SQLDatabase &db, const ServerTypes::Lo
 
 ClientTypes::SignUp RequestExecutor::signUp(SQLDatabase &db, const ServerTypes::SignUp &signUp_server)
 {
-    QString accessToken;
     ClientTypes::SignUp signUp_client;
+    QString accessToken;
     qint64 userId;
 
-    userId = db.saveUser(signUp_server.username, signUp_server.password);
+    userId = db.insertUser(signUp_server.username, signUp_server.password);
     accessToken = db.generateAccessToken(userId);
 
     signUp_client.statusCode = StatusCodes::ok;
     signUp_client.accessToken = accessToken;
 
     return signUp_client;
+}
+
+
+ClientTypes::CreateChat RequestExecutor::createChat(SQLDatabase &db, const ServerTypes::CreateChat &createChat_server)
+{
+    ClientTypes::CreateChat createChat_client;
+
+    createChat_client.statusCode = StatusCodes::ok;
+    createChat_client.chatId = db.insertChat(createChat_server._creatorId, createChat_server.chatName);
+
+    return createChat_client;
 }
