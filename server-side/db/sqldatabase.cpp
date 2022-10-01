@@ -63,7 +63,8 @@ qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &pass
 
     SQLDatabase::execQuery(query);
 
-    query.first();
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
 
     return query.value(0).toInt();
 }
@@ -80,7 +81,9 @@ qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 
     SQLDatabase::execQuery(query);
 
-    query.first();
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
     return query.value(0).toInt();
 }
 
@@ -116,7 +119,9 @@ QString SQLDatabase::getUserAccessToken(const qint64 userId)
 
     SQLDatabase::execQuery(query);
 
-    query.first();
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
     return query.value(0).toString();
 }
 

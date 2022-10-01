@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 
 #include "servertypes.h"
+#include "sqldatabase.h"
 
 
 class RequestValidator
@@ -15,8 +16,8 @@ public:
 
     static QJsonObject format(const QByteArray &buffer);
 
-    static ServerTypes::LogIn logIn(const QJsonObject &buffer);
-    static ServerTypes::SignUp signUp(const QJsonObject &buffer);
+    static ServerTypes::LogIn logIn(SQLDatabase &db, const QJsonObject &buffer);
+    static ServerTypes::SignUp signUp(SQLDatabase &db, const QJsonObject &buffer);
 };
 
 #endif // REQUESTVALIDATOR_H

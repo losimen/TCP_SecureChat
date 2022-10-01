@@ -51,19 +51,39 @@ public:
 class NotFound: public QException
 {
 private:
-    QString argName;
+    QString _what;
 
 public:
     const char *what() const throw()
     {
-        QByteArray ba = argName.toLocal8Bit();
+        QByteArray ba = _what.toLocal8Bit();
         const char *what = ba.data();
         return what;
     }
 
     NotFound(const QString &argName)
     {
-        NotFound::argName = argName;
+        NotFound::_what = argName;
+    }
+};
+
+
+class Conflict: public QException
+{
+private:
+    QString _what;
+
+public:
+    const char *what() const throw()
+    {
+        QByteArray ba = _what.toLocal8Bit();
+        const char *what = ba.data();
+        return what;
+    }
+
+    Conflict(const QString &argName)
+    {
+        Conflict::_what = argName;
     }
 };
 

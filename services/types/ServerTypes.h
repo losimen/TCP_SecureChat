@@ -8,13 +8,16 @@
 
 namespace ServerTypes
 {
+// Param with '_' are additional information parameters
+// and not used for serialazation and parsing
 
 struct LogIn
 {
     QString username;
     QString password;
 
-    void parseData(const QString &username, const QString &password);
+    qint64 _userId;
+
     QByteArray serializeData() const;
 
 };
@@ -25,7 +28,6 @@ struct SignUp
     QString username;
     QString password;
 
-    void parseData(const QString &username, const QString &password);
     QByteArray serializeData() const;
 };
 

@@ -19,7 +19,6 @@ struct LogIn
     StatusCodesInterface statusCode;
     QString accessToken;
 
-    void parseData(const StatusCodes &statusCode, const QString &accessToken);
     QByteArray serializeData() const;
 };
 
@@ -29,7 +28,6 @@ struct SignUp
     StatusCodesInterface statusCode;
     QString accessToken;
 
-    void parseData(const StatusCodes &statusCode, const QString &accessToken);
     QByteArray serializeData() const;
 };
 
@@ -39,7 +37,6 @@ struct Error
     StatusCodesInterface statusCode;
     QString what;
 
-    void parseData(const StatusCodes &statusCode, const QString &what);
     QByteArray serializeData() const;
 };
 

@@ -5,6 +5,7 @@
 
 #include "servertypes.h"
 #include "clienttypes.h"
+#include "sqldatabase.h"
 
 
 class RequestExecutor
@@ -14,8 +15,8 @@ public:
 
     static ClientTypes::Error error(const StatusCodes &statusCode, const QString &what);
 
-    static ClientTypes::LogIn logIn(const ServerTypes::LogIn &logIn_server);
-    static ClientTypes::SignUp signUp(const ServerTypes::SignUp &signUp_server);
+    static ClientTypes::LogIn logIn(SQLDatabase &db, const ServerTypes::LogIn &logIn_server);
+    static ClientTypes::SignUp signUp(SQLDatabase &db, const ServerTypes::SignUp &signUp_server);
 };
 
 #endif // REQUESTEXECUTOR_H

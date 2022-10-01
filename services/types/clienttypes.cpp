@@ -13,13 +13,6 @@ QString ClientTypes::putStrInQuotes(const QString &name) {
 }
 
 
-void LogIn::parseData(const StatusCodes &statusCode, const QString &accessToken)
-{
-    LogIn::statusCode = statusCode;
-    LogIn::accessToken = accessToken;
-}
-
-
 QByteArray LogIn::serializeData() const
 {
     QString result;
@@ -33,12 +26,6 @@ QByteArray LogIn::serializeData() const
 }
 
 
-void SignUp::parseData(const StatusCodes &statusCode, const QString &accessToken)
-{
-    SignUp::statusCode = statusCode;
-    SignUp::accessToken = accessToken;
-}
-
 
 QByteArray SignUp::serializeData() const
 {
@@ -50,13 +37,6 @@ QByteArray SignUp::serializeData() const
     result += "\n}\n";
 
     return result.toUtf8();
-}
-
-
-void Error::parseData(const StatusCodes &statusCode, const QString &what)
-{
-    Error::statusCode = statusCode;
-    Error::what = what;
 }
 
 

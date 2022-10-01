@@ -1,5 +1,6 @@
 #include "requestvalidator.h"
 #include "servererrors.h"
+#include "dberrors.h"
 
 
 RequestValidator::RequestValidator()
@@ -23,9 +24,9 @@ QJsonObject RequestValidator::format(const QByteArray &buffer)
 }
 
 
-ServerTypes::LogIn RequestValidator::logIn(const QJsonObject &buffer)
+ServerTypes::LogIn RequestValidator::logIn(SQLDatabase &db, const QJsonObject &buffer)
 {
-    ServerTypes::LogIn logIn_data;
+    ServerTypes::LogIn logIn_server;
 
     if (buffer.find("username") == buffer.constEnd())
         throw ServerErrors::MissingArgument("username");
@@ -33,15 +34,25 @@ ServerTypes::LogIn RequestValidator::logIn(const QJsonObject &buffer)
     if (buffer.find("password") == buffer.constEnd())
         throw ServerErrors::MissingArgument("password");
 
-    logIn_data.parseData(buffer["username"].toString(),buffer["password"].toString());
+    logIn_server.username = buffer["username"].toString();
+    logIn_server.password = buffer["password"].toString();
 
-    return logIn_data;
+    try
+    {
+        db.getUserIdByAuth(logIn_server.username, logIn_server.password);
+    }
+    catch (DBErrors::GetValue &err)
+    {
+        throw ServerErrors::NotFound("Invalid login or password");
+    }
+
+    return logIn_server;
 }
 
 
-ServerTypes::SignUp RequestValidator::signUp(const QJsonObject &buffer)
+ServerTypes::SignUp RequestValidator::signUp(SQLDatabase &db, const QJsonObject &buffer)
 {
-    ServerTypes::SignUp signUp_data;
+    ServerTypes::SignUp signUp_server;
 
     if (buffer.find("username") == buffer.constEnd())
         throw ServerErrors::MissingArgument("username");
@@ -49,7 +60,17 @@ ServerTypes::SignUp RequestValidator::signUp(const QJsonObject &buffer)
     if (buffer.find("password") == buffer.constEnd())
         throw ServerErrors::MissingArgument("password");
 
-    signUp_data.parseData(buffer["username"].toString(),buffer["password"].toString());
+    signUp_server.username = buffer["username"].toString();
+    signUp_server.password = buffer["password"].toString();
 
-    return signUp_data;
+    try
+    {
+        db.getUserIdByUsername(signUp_server.username);
+    }
+    catch (DBErrors::GetValue &err)
+    {
+        return signUp_server;
+    }
+
+    throw ServerErrors::Conflict("User already exists with such username");
 }

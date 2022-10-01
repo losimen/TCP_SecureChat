@@ -15,39 +15,38 @@ ClientTypes::Error RequestExecutor::error(const StatusCodes &statusCode, const Q
 {
     ClientTypes::Error invalidFormat_client;
 
-    invalidFormat_client.parseData(statusCode, what);
+    invalidFormat_client.statusCode = statusCode;
+    invalidFormat_client.what = what;
 
     return invalidFormat_client;
 }
 
 
-ClientTypes::LogIn RequestExecutor::logIn(const ServerTypes::LogIn &logIn_server)
+ClientTypes::LogIn RequestExecutor::logIn(SQLDatabase &db, const ServerTypes::LogIn &logIn_server)
 {
     ClientTypes::LogIn logIn_client;
-    SQLDatabase db;
-    qint64 userId;
-    QString userAccessToken;
+    QString accessToken;
 
-    userId = db.getUserIdByAuth(logIn_server.username, logIn_server.password);
-    userAccessToken = db.getUserAccessToken(userId);
+    accessToken = db.getUserAccessToken(logIn_server._userId);
 
-    logIn_client.parseData(StatusCodes::ok, userAccessToken);
+    logIn_client.statusCode = StatusCodes::ok;
+    logIn_client.accessToken = accessToken;
 
     return logIn_client;
 }
 
 
-ClientTypes::SignUp RequestExecutor::signUp(const ServerTypes::SignUp &signUp_server)
+ClientTypes::SignUp RequestExecutor::signUp(SQLDatabase &db, const ServerTypes::SignUp &signUp_server)
 {
     QString accessToken;
     ClientTypes::SignUp signUp_client;
-    SQLDatabase db;
     qint64 userId;
 
     userId = db.saveUser(signUp_server.username, signUp_server.password);
     accessToken = db.generateAccessToken(userId);
 
-    signUp_client.parseData(StatusCodes::ok, accessToken);
+    signUp_client.statusCode = StatusCodes::ok;
+    signUp_client.accessToken = accessToken;
 
     return signUp_client;
 }
