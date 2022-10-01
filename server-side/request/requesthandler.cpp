@@ -79,11 +79,11 @@ void RequestHandler::run()
         const ClientTypes::Error open_client = RequestExecutor::error(StatusCodes::serviceUnavalibale, err.what());
         answer = open_client.serializeData();
     }
-//    catch (...)
-//    {
-//        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
-//        answer = invalidFormat_client.serializeData();
-//    }
+    catch (...)
+    {
+        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::internalError ,"Internal error");
+        answer = invalidFormat_client.serializeData();
+    }
 
     emit on_finishRequest(answer, this);
 }
