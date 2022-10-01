@@ -1,0 +1,4 @@
+#ifndef DBMODELMESSAGE_H
+#define DBMODELMESSAGE_H
+
+#endif // DBMODELMESSAGE_H

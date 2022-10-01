@@ -27,6 +27,8 @@ public:
     qint64 getUserIdByAccessToken(const QString &accessToken);
     QString getUserAccessToken(const qint64 userId);
 
+
+
     qint64 getChatId(const qint64 &userId, const QString &chatName);
 
     QString generateAccessToken(const qint64 userId);

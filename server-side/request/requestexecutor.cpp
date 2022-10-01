@@ -58,6 +58,7 @@ ClientTypes::CreateChat RequestExecutor::createChat(SQLDatabase &db, const Serve
 
     createChat_client.statusCode = StatusCodes::ok;
     createChat_client.chatId = db.insertChat(createChat_server._creatorId, createChat_server.chatName);
+    db.insertMember(createChat_client.chatId, createChat_server._creatorId);
 
     return createChat_client;
 }

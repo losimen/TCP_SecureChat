@@ -1,0 +1,4 @@
+#ifndef DBMODELUSER_H
+#define DBMODELUSER_H
+
+#endif // DBMODELUSER_H
