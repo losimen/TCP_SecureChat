@@ -5,6 +5,10 @@
 #include <QDebug>
 #include <QString>
 
+#include "dbmodelchat.h"
+#include "dbmodeluser.h"
+#include "dbmodelmessage.h"
+
 
 class SQLDatabase
 {
@@ -27,7 +31,9 @@ public:
     qint64 getUserIdByAccessToken(const QString &accessToken);
     QString getUserAccessToken(const qint64 userId);
 
-
+    DBModelUser getUserInfo(const qint64 &userId);
+    DBModelChat getChatInfo(const qint64 &chatId);
+    DBModelMessage getMessageInfo(const qint64 &messageId);
 
     qint64 getChatId(const qint64 &userId, const QString &chatName);
 

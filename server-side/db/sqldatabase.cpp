@@ -125,6 +125,7 @@ qint64 SQLDatabase::getUserIdByUsername(const QString &username)
     return query.value(0).toInt();
 }
 
+
 qint64 SQLDatabase::getUserIdByAccessToken(const QString &accessToken)
 {
     SQLDatabase::validateIsOpen();
@@ -178,6 +179,78 @@ QString SQLDatabase::getUserAccessToken(const qint64 userId)
         throw DBErrors::GetValue("There is no such record");
 
     return query.value(0).toString();
+}
+
+
+DBModelUser SQLDatabase::getUserInfo(const qint64 &userId)
+{
+    DBModelUser userModel;
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("SELECT * FROM Users WHERE ID = :UserID");
+    query.bindValue(":UserID", userId);
+
+    SQLDatabase::execQuery(query);
+
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
+    userModel.id = query.value(0).toInt();
+    userModel.username = query.value(1).toString();
+    userModel.password = query.value(2).toString();
+    userModel.createdAt = query.value(3).toString();
+
+    return userModel;
+}
+
+
+DBModelChat SQLDatabase::getChatInfo(const qint64 &chatId)
+{
+    DBModelChat chatModel;
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("SELECT * FROM Chats WHERE ID = :ChatID");
+    query.bindValue(":ChatID", chatId);
+
+    SQLDatabase::execQuery(query);
+
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
+    chatModel.id = query.value(0).toInt();
+    chatModel.creatorId = query.value(1).toInt();
+    chatModel.chatName = query.value(2).toString();
+    chatModel.createdAt = query.value(3).toString();
+
+    return chatModel;
+}
+
+
+DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
+{
+    DBModelMessage messageModel;
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("SELECT * FROM Messages WHERE ID = :MessageID");
+    query.bindValue(":ChatID", messageId);
+
+    SQLDatabase::execQuery(query);
+
+    if (!query.first())
+        throw DBErrors::GetValue("There is no such record");
+
+    messageModel.id = query.value(0).toInt();
+    messageModel.senderId = query.value(1).toInt();
+    messageModel.chatId = query.value(2).toInt();
+    messageModel.createdAt = query.value(3).toString();
+
+    return messageModel;
 }
 
 
