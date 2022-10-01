@@ -61,3 +61,14 @@ ClientTypes::CreateChat RequestExecutor::createChat(SQLDatabase &db, const Serve
 
     return createChat_client;
 }
+
+
+ClientTypes::AddMember RequestExecutor::addMember(SQLDatabase &db, const ServerTypes::AddMember &addMember_server)
+{
+    ClientTypes::AddMember addMember_client;
+
+    db.insertMember(addMember_server._chatId, addMember_server._userIdToAdd);
+    addMember_client.statusCode = StatusCodes::ok;
+
+    return addMember_client;
+}

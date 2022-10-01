@@ -74,6 +74,21 @@ qint64 SQLDatabase::insertChat(const qint64 &userId, const QString &chatName)
 }
 
 
+void SQLDatabase::insertMember(const qint64 &chatId, const qint64 &memberId)
+{
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("INSERT INTO Members (MemberID, ChatID) "
+                  "VALUES (:MemberID, :ChatID)");
+    query.bindValue(":MemberID", memberId);
+    query.bindValue(":ChatID", chatId);
+
+    SQLDatabase::execQuery(query);
+}
+
+
 qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &password)
 {
     SQLDatabase::validateIsOpen();

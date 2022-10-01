@@ -87,6 +87,24 @@ public:
     }
 };
 
+class Unauthorized: public QException
+{
+private:
+    QString _what;
+
+public:
+    const char *what() const throw()
+    {
+        QByteArray ba = _what.toLocal8Bit();
+        const char *what = ba.data();
+        return what;
+    }
+
+    Unauthorized(const QString &argName)
+    {
+        Unauthorized::_what = argName;
+    }
+};
 
 }
 

@@ -43,6 +43,19 @@ struct CreateChat
 };
 
 
+struct AddMember
+{
+    QString accessToken;
+    QString memberToAddUsername;
+    QString chatName;
+
+    qint64 _userIdToAdd;
+    qint64 _chatId;
+
+    QByteArray serializeData() const;
+};
+
+
 }
 
 

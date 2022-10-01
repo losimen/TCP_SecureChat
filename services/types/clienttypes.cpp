@@ -58,7 +58,18 @@ QByteArray CreateChat::serializeData() const
 
     result = "{" ;
     result += putTagInQuotes("statusCode") + QString::number(CreateChat::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("chatID") + QString::number(CreateChat::chatId) + ",";
+    result += putTagInQuotes("chatID") + QString::number(CreateChat::chatId);
+    result += "\n}\n";
+
+    return result.toUtf8();
+}
+
+QByteArray AddMember::serializeData() const
+{
+    QString result;
+
+    result = "{" ;
+    result += putTagInQuotes("statusCode") + QString::number(AddMember::statusCode.getCurrentStatusCode());
     result += "\n}\n";
 
     return result.toUtf8();

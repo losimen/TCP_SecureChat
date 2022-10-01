@@ -52,6 +52,13 @@ void RequestHandler::run()
 
             answer = createChat_client.serializeData();
         }
+        else if (REQUEST_METHOD == RequestMethods::addMember)
+        {
+            const ServerTypes::AddMember addMember_server = RequestValidator::addMember(db, jsonObject);
+            const ClientTypes::AddMember addMember_client = RequestExecutor::addMember(db, addMember_server);
+
+            answer = addMember_client.serializeData();
+        }
         else
         {
             throw ServerErrors::NotFound("There is no such method");
@@ -76,6 +83,11 @@ void RequestHandler::run()
     catch (ServerErrors::Conflict &err)
     {
         const ClientTypes::Error conflict = RequestExecutor::error(StatusCodes::conflict, err.what());
+        answer = conflict.serializeData();
+    }
+    catch (ServerErrors::Unauthorized &err)
+    {
+        const ClientTypes::Error conflict = RequestExecutor::error(StatusCodes::unathorized, err.what());
         answer = conflict.serializeData();
     }
     catch (DBErrors::Open &err)

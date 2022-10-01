@@ -40,10 +40,19 @@ struct Error
     QByteArray serializeData() const;
 };
 
+
 struct CreateChat
 {
     StatusCodesInterface statusCode;
     qint64 chatId;
+
+    QByteArray serializeData() const;
+};
+
+
+struct AddMember
+{
+    StatusCodesInterface statusCode;
 
     QByteArray serializeData() const;
 };
