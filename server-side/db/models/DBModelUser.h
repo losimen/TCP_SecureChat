@@ -13,4 +13,7 @@ struct DBModelUser
     QString createdAt;
 };
 
+
+typedef QVector<DBModelUser> UserList;
+
 #endif // DBMODELUSER_H

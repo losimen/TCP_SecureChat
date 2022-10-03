@@ -13,4 +13,7 @@ struct DBModelChat
     QString createdAt;
 };
 
+
+typedef QVector<DBModelChat> ChatList;
+
 #endif // DBMODELCHAT_H

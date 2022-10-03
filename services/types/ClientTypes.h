@@ -4,18 +4,23 @@
 #include <QtGlobal>
 #include <QString>
 #include <QJsonObject>
+#include <QVector>
 
 #include "statuscodes.h"
+#include "dbmodelmessage.h"
+#include "dbmodeluser.h"
+#include "dbmodelchat.h"
 
 
 namespace ClientTypes
 {
-// Param with '_' at the beginning are additional information parameters
-// and not used for serialazation and parsing
-
 QString putTagInQuotes(const QString &name);
 QString putStrInQuotes(const QString &name);
 
+QString serializeMsgList(MessageList &list);
+
+// Param with '_' at the beginning are additional information parameters
+// and not used for serialazation and parsing
 
 struct LogIn
 {
@@ -64,6 +69,15 @@ struct AddMember
 struct SendMessage
 {
     StatusCodesInterface statusCode;
+
+    QByteArray serializeData() const;
+};
+
+
+struct GetMessageList
+{
+    StatusCodesInterface statusCode;
+    QVector<DBModelMessage> messageList;
 
     QByteArray serializeData() const;
 };

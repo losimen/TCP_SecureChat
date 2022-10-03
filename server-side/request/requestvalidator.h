@@ -33,6 +33,7 @@ public:
     static ServerTypes::CreateChat createChat(SQLDatabase &db, const QJsonObject &buffer);
     static ServerTypes::AddMember addMember(SQLDatabase &db, const QJsonObject &buffer);
     static ServerTypes::SendMessage sendMessage(SQLDatabase &db, const QJsonObject &buffer);
+    static ServerTypes::GetMessageList getMessageList(SQLDatabase &db, const QJsonObject &buffer);
 };
 
 #endif // REQUESTVALIDATOR_H

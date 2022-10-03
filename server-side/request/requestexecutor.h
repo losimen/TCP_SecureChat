@@ -20,6 +20,7 @@ public:
     static ClientTypes::CreateChat createChat(SQLDatabase &db, const ServerTypes::CreateChat &createChat_server);
     static ClientTypes::AddMember addMember(SQLDatabase &db, const ServerTypes::AddMember &addMember_server);
     static ClientTypes::SendMessage sendMessage(SQLDatabase &db, const ServerTypes::SendMessage &sendMessage_server);
+    static ClientTypes::GetMessageList getMessageList(SQLDatabase &db, const ServerTypes::GetMessageList &getMessageList_server);
 };
 
 #endif // REQUESTEXECUTOR_H

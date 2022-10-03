@@ -196,6 +196,7 @@ ServerTypes::CreateChat RequestValidator::createChat(SQLDatabase &db, const QJso
     return createChat_server;
 }
 
+
 ServerTypes::AddMember RequestValidator::addMember(SQLDatabase &db, const QJsonObject &buffer)
 {
     ServerTypes::AddMember addMember_server;
@@ -221,6 +222,7 @@ ServerTypes::AddMember RequestValidator::addMember(SQLDatabase &db, const QJsonO
     return addMember_server;
 }
 
+
 ServerTypes::SendMessage RequestValidator::sendMessage(SQLDatabase &db, const QJsonObject &buffer)
 {
     ServerTypes::SendMessage sendMessage_server;
@@ -242,4 +244,28 @@ ServerTypes::SendMessage RequestValidator::sendMessage(SQLDatabase &db, const QJ
     sendMessage_server._senderId = RequestValidator::validateAccessToken(db, sendMessage_server.accessToken);
 
     return sendMessage_server;
+}
+
+
+ServerTypes::GetMessageList RequestValidator::getMessageList(SQLDatabase &db, const QJsonObject &buffer)
+{
+    ServerTypes::GetMessageList getMessageList_server;
+
+    if (buffer.find("accessToken") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("accessToken");
+
+    if (buffer.find("chatId") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("chatId");
+
+    if (buffer.find("offset") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("offset");
+
+    getMessageList_server.accessToken = buffer["accessToken"].toString();
+    getMessageList_server.chatId = buffer["chatId"].toInt();
+    getMessageList_server.offset = buffer["offset"].toInt();
+
+    RequestValidator::validateAccessToken(db, getMessageList_server.accessToken);
+    RequestValidator::validateChatId(db, getMessageList_server.chatId);
+
+    return getMessageList_server;
 }

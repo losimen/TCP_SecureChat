@@ -264,9 +264,38 @@ DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
     messageModel.id = query.value(0).toInt();
     messageModel.senderId = query.value(1).toInt();
     messageModel.chatId = query.value(2).toInt();
-    messageModel.createdAt = query.value(3).toString();
+    messageModel.msgText = query.value(3).toString();
+    messageModel.createdAt = query.value(4).toString();
 
     return messageModel;
+}
+
+MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offset)
+{
+    // TODO: in future use offset
+    MessageList messageList;
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+    query.prepare("SELECT * FROM Messages WHERE ChatID = :ChatID");
+    query.bindValue(":ChatID", chatId);
+
+    SQLDatabase::execQuery(query);
+
+    while (query.next())
+    {
+        DBModelMessage messageModel;
+
+        messageModel.id = query.value(0).toInt();
+        messageModel.senderId = query.value(1).toInt();
+        messageModel.chatId = query.value(2).toInt();
+        messageModel.msgText = query.value(3).toString();
+        messageModel.createdAt = query.value(4).toString();
+
+        messageList.push_back(messageModel);
+    }
+
+    return messageList;
 }
 
 

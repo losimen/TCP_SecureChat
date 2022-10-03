@@ -86,3 +86,14 @@ ClientTypes::SendMessage RequestExecutor::sendMessage(SQLDatabase &db, const Ser
 
     return sendMessage_client;
 }
+
+ClientTypes::GetMessageList RequestExecutor::getMessageList(SQLDatabase &db, const ServerTypes::GetMessageList &getMessageList_server)
+{
+    ClientTypes::GetMessageList getMessageList_client;
+
+    getMessageList_client.statusCode = StatusCodes::ok;
+    getMessageList_client.messageList = db.getMessageList(getMessageList_server.chatId, getMessageList_server.offset);
+
+    return getMessageList_client;
+}
+

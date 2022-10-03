@@ -29,6 +29,7 @@ void RequestHandler::run()
     {
         SQLDatabase db;
         QJsonObject jsonObject = RequestValidator::format(RequestHandler::buffer);
+
         const QString REQUEST_METHOD = jsonObject["method"].toString();
 
         if (REQUEST_METHOD == RequestMethods::logIn)
@@ -65,6 +66,13 @@ void RequestHandler::run()
             const ClientTypes::SendMessage sendMessage_client = RequestExecutor::sendMessage(db, sendMessage_server);
 
             answer = sendMessage_client.serializeData();
+        }
+        else if (REQUEST_METHOD == RequestMethods::getMessageList)
+        {
+            const ServerTypes::GetMessageList getMessageList_server = RequestValidator::getMessageList(db, jsonObject);
+            const ClientTypes::GetMessageList getMessageList_client = RequestExecutor::getMessageList(db, getMessageList_server);
+
+            answer = getMessageList_client.serializeData();
         }
         else
         {

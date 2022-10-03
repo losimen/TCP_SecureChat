@@ -36,6 +36,8 @@ public:
     DBModelChat getChatInfo(const qint64 &chatId);
     DBModelMessage getMessageInfo(const qint64 &messageId);
 
+    MessageList getMessageList(const qint64 &chatId, const qint64 &offset);
+
     qint64 getChatId(const qint64 &userId, const QString &chatName);
 
     QString generateAccessToken(const qint64 userId);
