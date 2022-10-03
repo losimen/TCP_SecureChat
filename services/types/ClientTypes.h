@@ -18,6 +18,7 @@ QString putTagInQuotes(const QString &name);
 QString putStrInQuotes(const QString &name);
 
 QString serializeMsgList(MessageList &list);
+QString serializeChatList(ChatList &list);
 
 // Param with '_' at the beginning are additional information parameters
 // and not used for serialazation and parsing
@@ -78,6 +79,15 @@ struct GetMessageList
 {
     StatusCodesInterface statusCode;
     QVector<DBModelMessage> messageList;
+
+    QByteArray serializeData() const;
+};
+
+
+struct GetChatList {
+    StatusCodesInterface statusCode;
+
+    QVector<DBModelChat> chatList;
 
     QByteArray serializeData() const;
 };

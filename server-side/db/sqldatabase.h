@@ -37,6 +37,7 @@ public:
     DBModelMessage getMessageInfo(const qint64 &messageId);
 
     MessageList getMessageList(const qint64 &chatId, const qint64 &offset);
+    ChatList getChatList(const qint64 &userId, const qint64 &offset);
 
     qint64 getChatId(const qint64 &userId, const QString &chatName);
 

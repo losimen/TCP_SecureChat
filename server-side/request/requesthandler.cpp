@@ -74,6 +74,13 @@ void RequestHandler::run()
 
             answer = getMessageList_client.serializeData();
         }
+        else if (REQUEST_METHOD == RequestMethods::getChatList)
+        {
+            const ServerTypes::GetChatList getChatList_server = RequestValidator::getChatList(db, jsonObject);
+            const ClientTypes::GetChatList getChatList_client = RequestExecutor::getChatList(db, getChatList_server);
+
+            answer = getChatList_client.serializeData();
+        }
         else
         {
             throw ServerErrors::NotFound("There is no such method");

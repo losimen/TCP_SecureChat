@@ -21,6 +21,8 @@ public:
     static ClientTypes::AddMember addMember(SQLDatabase &db, const ServerTypes::AddMember &addMember_server);
     static ClientTypes::SendMessage sendMessage(SQLDatabase &db, const ServerTypes::SendMessage &sendMessage_server);
     static ClientTypes::GetMessageList getMessageList(SQLDatabase &db, const ServerTypes::GetMessageList &getMessageList_server);
+    static ClientTypes::GetChatList getChatList(SQLDatabase &db, const ServerTypes::GetChatList &getChatList_server);
+
 };
 
 #endif // REQUESTEXECUTOR_H

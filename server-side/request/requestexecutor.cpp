@@ -87,6 +87,7 @@ ClientTypes::SendMessage RequestExecutor::sendMessage(SQLDatabase &db, const Ser
     return sendMessage_client;
 }
 
+
 ClientTypes::GetMessageList RequestExecutor::getMessageList(SQLDatabase &db, const ServerTypes::GetMessageList &getMessageList_server)
 {
     ClientTypes::GetMessageList getMessageList_client;
@@ -95,5 +96,16 @@ ClientTypes::GetMessageList RequestExecutor::getMessageList(SQLDatabase &db, con
     getMessageList_client.messageList = db.getMessageList(getMessageList_server.chatId, getMessageList_server.offset);
 
     return getMessageList_client;
+}
+
+
+ClientTypes::GetChatList RequestExecutor::getChatList(SQLDatabase &db, const ServerTypes::GetChatList &getChatList_server)
+{
+    ClientTypes::GetChatList getChatList_client;
+
+    getChatList_client.statusCode = StatusCodes::ok;
+    getChatList_client.chatList = db.getChatList(getChatList_server._userId, getChatList_server.offset);
+
+    return getChatList_client;
 }
 

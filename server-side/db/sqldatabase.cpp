@@ -298,6 +298,33 @@ MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offs
     return messageList;
 }
 
+ChatList SQLDatabase::getChatList(const qint64 &userId, const qint64 &offset)
+{
+    // TODO: in future use offset
+    ChatList chatList;
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+    query.prepare("SELECT * FROM Chats c WHERE c.ID IN (SELECT m.ChatID FROM Members m WHERE m.MemberID = :MemberID)");
+    query.bindValue(":MemberID", userId);
+
+    SQLDatabase::execQuery(query);
+
+    while (query.next())
+    {
+        DBModelChat chatModel;
+
+        chatModel.id = query.value(0).toInt();
+        chatModel.creatorId = query.value(1).toInt();
+        chatModel.chatName = query.value(2).toString();
+        chatModel.createdAt = query.value(3).toString();
+
+        chatList.push_back(chatModel);
+    }
+
+    return chatList;
+}
+
 
 qint64 SQLDatabase::getChatId(const qint64 &userId, const QString &chatName)
 {

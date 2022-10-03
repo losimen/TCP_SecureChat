@@ -1,26 +1,29 @@
 #include "clienttypes.h"
 
+
 using namespace ClientTypes;
 
 
-QString ClientTypes::putTagInQuotes(const QString &name) {
+QString ClientTypes::putTagInQuotes(const QString &name)
+{
     return QString("\n\"" + name + "\": ");
 }
 
 
-QString ClientTypes::putStrInQuotes(const QString &name) {
+QString ClientTypes::putStrInQuotes(const QString &name)
+{
     return QString("\"" + name + "\"");
 }
 
 
-QString ClientTypes::serializeMsgList(MessageList &vector) {
-
+QString ClientTypes::serializeMsgList(MessageList &list)
+{
     QString result;
-    const auto VEC_END = vector.end();
-    const auto VEC_END_DEC = vector.end() - 1;
+    const auto VEC_END = list.end();
+    const auto VEC_END_DEC = list.end() - 1;
 
     result = "[";
-    for (auto it = vector.begin(); it != VEC_END; it++)
+    for (auto it = list.begin(); it != VEC_END; it++)
     {
         result += "{";
         result += putTagInQuotes("id") + QString::number(it->id);
@@ -39,6 +42,34 @@ QString ClientTypes::serializeMsgList(MessageList &vector) {
 
     return result;
 }
+
+
+QString ClientTypes::serializeChatList(ChatList &list)
+{
+    QString result;
+    const auto VEC_END = list.end();
+    const auto VEC_END_DEC = list.end() - 1;
+
+    result = "[";
+    for (auto it = list.begin(); it != VEC_END; it++)
+    {
+        result += "{";
+        result += putTagInQuotes("id") + QString::number(it->id);
+        result += putTagInQuotes("chatName") + putStrInQuotes(it->chatName);
+        result += putTagInQuotes("creatorId") + QString::number(it->creatorId);
+        result += putTagInQuotes("createdAt") + putStrInQuotes(it->createdAt);
+        result += "\r\n}";
+
+        if (it != VEC_END_DEC)
+            result += ",";
+
+        result += "\r\n";
+    }
+    result += "]\n";
+
+    return result;
+}
+
 
 
 QByteArray LogIn::serializeData() const
@@ -118,13 +149,26 @@ QByteArray GetMessageList::serializeData() const
 {
     // {"messageList": [{"data": 1, "text": "Hello"}, {"data": 1, "text": "world!"}]}
     QString result;
-    MessageList vec = messageList;
+    MessageList vec = GetMessageList::messageList;
 
     result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(GetMessageList::statusCode.getCurrentStatusCode());
+    result += putTagInQuotes("statusCode") + QString::number(GetMessageList::statusCode.getCurrentStatusCode()) + ",";
     result += putTagInQuotes("messageList") + serializeMsgList(vec);
     result += "}\n";
 
     return result.toUtf8();
 }
 
+
+QByteArray GetChatList::serializeData() const
+{
+    QString result;
+    ChatList vec = GetChatList::chatList;
+
+    result = "{";
+    result += putTagInQuotes("statusCode") + QString::number(GetChatList::statusCode.getCurrentStatusCode()) + ",";
+    result += putTagInQuotes("chatList") + serializeChatList(vec);
+    result += "}\n";
+
+    return result.toUtf8();
+}

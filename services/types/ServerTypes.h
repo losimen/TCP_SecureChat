@@ -78,6 +78,17 @@ struct GetMessageList
 };
 
 
+struct GetChatList
+{
+    QString accessToken;
+    qint64 offset;
+
+    qint64 _userId;
+
+    QByteArray serializeData() const;
+};
+
+
 }
 
 
