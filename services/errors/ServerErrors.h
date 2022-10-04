@@ -5,13 +5,16 @@
 #include <QString>
 #include <QDebug>
 
+#include "statuscodes.h"
+
+
 namespace ServerErrors
 {
 
-class InvalidFormat: public QException
-{
-private:
+class MyServerException: public QException {
+protected:
     QString _what;
+    StatusCodesInterface statusCode;
 
 public:
     const char *what() const throw()
@@ -21,89 +24,80 @@ public:
         return what;
     }
 
-    InvalidFormat(const QString &what)
+    StatusCodes getStatusCode()
     {
-        InvalidFormat::_what = what;
+        return statusCode.getCurrentStatusCode();
     }
+
+    MyServerException(const QString &what)
+    {
+        MyServerException::_what = what;
+    }
+
+};
+
+class InvalidFormat: public MyServerException
+{
+private:
+
+public:
+    InvalidFormat(const QString &what): MyServerException(what)
+    {
+        statusCode = StatusCodes::badRequest;
+    }
+
 };
 
 
-class MissingArgument: public QException
+class MissingArgument: public MyServerException
 {
 private:
-    QString argName;
 
 public:
-    const char *what() const throw()
+    MissingArgument(const QString &what): MyServerException(what)
     {
-        QByteArray ba = argName.toLocal8Bit();
-        const char *what = ba.data();
-        return what;
+        statusCode = StatusCodes::badRequest;
     }
 
-    MissingArgument(const QString &argName)
-    {
-        MissingArgument::argName = "Missing argument: " + argName;
-    }
 };
 
 
-class NotFound: public QException
+class NotFound: public MyServerException
 {
 private:
-    QString _what;
 
 public:
-    const char *what() const throw()
+    NotFound(const QString &what): MyServerException(what)
     {
-        QByteArray ba = _what.toLocal8Bit();
-        const char *what = ba.data();
-        return what;
+        statusCode = StatusCodes::notFound;
     }
 
-    NotFound(const QString &argName)
-    {
-        NotFound::_what = argName;
-    }
 };
 
 
-class Conflict: public QException
+class Conflict: public MyServerException
 {
 private:
-    QString _what;
+
 
 public:
-    const char *what() const throw()
+    Conflict(const QString &what): MyServerException(what)
     {
-        QByteArray ba = _what.toLocal8Bit();
-        const char *what = ba.data();
-        return what;
+        statusCode = StatusCodes::conflict;
     }
 
-    Conflict(const QString &argName)
-    {
-        Conflict::_what = argName;
-    }
 };
 
-class Unauthorized: public QException
+class Unauthorized: public MyServerException
 {
 private:
-    QString _what;
 
 public:
-    const char *what() const throw()
+    Unauthorized(const QString &what): MyServerException(what)
     {
-        QByteArray ba = _what.toLocal8Bit();
-        const char *what = ba.data();
-        return what;
+        statusCode = StatusCodes::conflict;
     }
 
-    Unauthorized(const QString &argName)
-    {
-        Unauthorized::_what = argName;
-    }
 };
 
 }

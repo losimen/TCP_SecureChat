@@ -87,40 +87,10 @@ void RequestHandler::run()
         }
 
     }
-    catch (ServerErrors::InvalidFormat &err)
+    catch (ServerErrors::MyServerException &err)
     {
-        const ClientTypes::Error invalidFormat_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
-        answer = invalidFormat_client.serializeData();
-    }
-    catch (ServerErrors::MissingArgument &err)
-    {
-        const ClientTypes::Error missingArgument_client = RequestExecutor::error(StatusCodes::badRequest, err.what());
-        answer = missingArgument_client.serializeData();
-    }
-    catch (ServerErrors::NotFound &err)
-    {
-        const ClientTypes::Error notFound_client = RequestExecutor::error(StatusCodes::notFound, err.what());
-        answer = notFound_client.serializeData();
-    }
-    catch (ServerErrors::Conflict &err)
-    {
-        const ClientTypes::Error conflict = RequestExecutor::error(StatusCodes::conflict, err.what());
-        answer = conflict.serializeData();
-    }
-    catch (ServerErrors::Unauthorized &err)
-    {
-        const ClientTypes::Error conflict = RequestExecutor::error(StatusCodes::unathorized, err.what());
-        answer = conflict.serializeData();
-    }
-    catch (DBErrors::Open &err)
-    {
-        const ClientTypes::Error open_client = RequestExecutor::error(StatusCodes::serviceUnavalibale, err.what());
-        answer = open_client.serializeData();
-    }
-    catch (DBErrors::Exec &err)
-    {
-        const ClientTypes::Error open_client = RequestExecutor::error(StatusCodes::serviceUnavalibale, err.what());
-        answer = open_client.serializeData();
+        const ClientTypes::Error error = RequestExecutor::error(err.getStatusCode(), err.what());
+        answer = error.serializeData();
     }
     catch (...)
     {
