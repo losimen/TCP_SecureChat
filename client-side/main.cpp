@@ -1,8 +1,10 @@
-#include <QCoreApplication>
+#include "windowmanager.h"
+
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-
-    qDebug() << "hello it is test client";
+    QApplication a(argc, argv);
+    WindowManager w;
+    return a.exec();
 }
