@@ -11,7 +11,7 @@ Listener::Listener(QObject *parent) :
 
 void Listener::startServer()
 {
-    if (Listener::listen(QHostAddress::Any, 54000))
+    if (Listener::listen(QHostAddress::LocalHost, 54000))
         qDebug() << "Server started";
     else
         qDebug() << "Server didn't start";
@@ -20,8 +20,6 @@ void Listener::startServer()
 
 void Listener::incomingConnection(qintptr handle)
 {
-    qDebug() << "New connection";
-
     ClientSocket *client = new ClientSocket(this);
     client->setSocket(handle);
 }

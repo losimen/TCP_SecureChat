@@ -19,13 +19,13 @@ void ClientSocket::setSocket(int descriptor)
    connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
    socket->setSocketDescriptor(descriptor);
-
-   qDebug() << "Created socket";
+   qDebug() << "New connection" << socket->peerAddress().toString() + ":" + QString::number(socket->peerPort());
 }
 
 
 void ClientSocket::disconnected()
 {
+    qDebug() << "Diconnected" << socket->peerAddress().toString() + ":" + QString::number(socket->peerPort());
     socket->close();
 }
 
@@ -45,6 +45,6 @@ void ClientSocket::readyRead()
 void ClientSocket::requestResult(QByteArray toSend, RequestHandler *handlerRequest)
 {
     socket->write(toSend);
-
     delete handlerRequest;
 }
+
