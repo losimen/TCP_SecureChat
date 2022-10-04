@@ -17,14 +17,9 @@ list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/listener.h
                           ${CMAKE_CURRENT_LIST_DIR}/request/requestvalidator.h
 
                           ${CMAKE_CURRENT_LIST_DIR}/db/sqldatabase.h
-                          ${CMAKE_CURRENT_LIST_DIR}/db/sqldatabase.h
-
-                          ${CMAKE_CURRENT_LIST_DIR}/db/models/dbmodelchat.h
-                          ${CMAKE_CURRENT_LIST_DIR}/db/models/dbmodeluser.h
-                          ${CMAKE_CURRENT_LIST_DIR}/db/models/dbmodelmessage.h)
+                          ${CMAKE_CURRENT_LIST_DIR}/db/sqldatabase.h)
 
 
 list(APPEND myApp_INCLUDES ${CMAKE_CURRENT_LIST_DIR}
                            ${CMAKE_CURRENT_LIST_DIR}/request
-                           ${CMAKE_CURRENT_LIST_DIR}/db
-                           ${CMAKE_CURRENT_LIST_DIR}/db/models)
+                           ${CMAKE_CURRENT_LIST_DIR}/db)
