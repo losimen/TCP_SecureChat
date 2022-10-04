@@ -1,6 +1,10 @@
 #include "login.h"
 #include "ui_login.h"
 #include "clickable_qlabel.h"
+#include "inputvalidator.h"
+#include "clienterrors.h"
+#include "servertypes.h"
+
 
 
 LogIn::LogIn(QWidget *parent) :
@@ -12,6 +16,7 @@ LogIn::LogIn(QWidget *parent) :
 
     ui->lineEdit_username->setStyleSheet("QLineEdit { border-radius: 5px; }");
     ui->lineEdit_password->setStyleSheet("QLineEdit { border-radius: 5px; }");
+    ui->label_error->setVisible(false);
 
     connect(ui->label_signUp, SIGNAL(on_mousePressed()), this, SLOT(do_labelClicked()));
     connect(ui->pushButton,  SIGNAL(clicked()), this, SLOT(do_ButtonClicked()));
@@ -32,6 +37,21 @@ void LogIn::do_labelClicked()
 
 void LogIn::do_ButtonClicked()
 {
-    qDebug() << ui->lineEdit_username->text();
-    qDebug() << ui->lineEdit_password->text();
+    ServerTypes::LogIn logIn_server;
+    try
+    {
+        logIn_server = InputValidator::logIn(ui->lineEdit_username->text(),
+                                             ui->lineEdit_password->text());
+    }
+    catch (ClientErrors::InvalidInput &err)
+    {
+        ui->label_error->setText(err.what());
+        ui->label_error->setVisible(true);
+
+        return;
+    }
+
+
+    qDebug() << logIn_server.username;
+    qDebug() << logIn_server.password;
 }

@@ -12,6 +12,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
@@ -25,6 +28,7 @@ add_subdirectory(services)
 if(BUILD_CLIENT)
     include(client-side/CMakeLists.txt)
     add_subdirectory(client-side)
+    QT6_WRAP_UI(UI_HEADERS ${UIS})
     add_executable(SecureChat ${myApp_SOURCES})
 endif()
 
@@ -36,6 +40,7 @@ endif()
 
 include_directories(${myApp_INCLUDES})
 
+target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Sql)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Network)
