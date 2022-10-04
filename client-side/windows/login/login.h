@@ -15,11 +15,12 @@ public:
     explicit LogIn(QWidget *parent = nullptr);
     ~LogIn();
 
+private slots:
+    void do_labelClicked();
+    void do_ButtonClicked();
+
 signals:
     void on_openSignUpWindow();
-
-private slots:
-    void button_clicked();
 
 private:
     Ui::LogIn *ui;

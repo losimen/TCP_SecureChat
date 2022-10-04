@@ -6,23 +6,25 @@
 WindowManager::WindowManager(QObject *parent)
     : QObject{parent}
 {
-    WindowManager::open_LogInWindow();
+    WindowManager::do_LogInWindow();
 }
 
 
-void WindowManager::open_LogInWindow()
+void WindowManager::do_LogInWindow()
 {
     currentWindow.reset(new LogIn);
-    connect(currentWindow.get(), SIGNAL(on_openSignUpWindow()), this, SLOT(open_SignUpWindow()));
+
+    connect(currentWindow.get(), SIGNAL(on_openSignUpWindow()), this, SLOT(do_SignUpWindow()));
 
     currentWindow->show();
 }
 
 
-void WindowManager::open_SignUpWindow()
+void WindowManager::do_SignUpWindow()
 {
-    qDebug() << "here in WindowManager";
-//    currentWindow = nullptr;
-//    currentWindow.reset(new SignUp);
-//    currentWindow->show();
+    currentWindow.reset(new SignUp);
+
+    connect(currentWindow.get(), SIGNAL(on_openLogInWindow()), this, SLOT(do_LogInWindow()));
+
+    currentWindow->show();
 }

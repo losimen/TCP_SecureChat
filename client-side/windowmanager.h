@@ -16,8 +16,8 @@ public:
 
 
 private slots:
-    void open_LogInWindow();
-    void open_SignUpWindow();
+    void do_LogInWindow();
+    void do_SignUpWindow();
 
 private:
     std::unique_ptr<QWidget> currentWindow;
