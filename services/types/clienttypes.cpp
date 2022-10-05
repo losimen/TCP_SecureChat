@@ -11,7 +11,7 @@ QByteArray LogIn::serializeData() const
 
     result = "{";
     result += putTagInQuotes("statusCode") + QString::number(LogIn::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("asccessToken") + putStrInQuotes(LogIn::accessToken);
+    result += putTagInQuotes("accessToken") + putStrInQuotes(LogIn::accessToken);
     result += "\n}\n";
 
     return result.toUtf8();
@@ -24,7 +24,7 @@ QByteArray SignUp::serializeData() const
 
     result = "{";
     result += putTagInQuotes("statusCode") + QString::number(SignUp::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("asccessToken") + putStrInQuotes(SignUp::accessToken);
+    result += putTagInQuotes("accessToken") + putStrInQuotes(SignUp::accessToken);
     result += "\n}\n";
 
     return result.toUtf8();
