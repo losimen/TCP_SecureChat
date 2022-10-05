@@ -22,26 +22,26 @@ private:
 public:
     SQLDatabase();
 
-    qint64 insertUser(const QString &username, const QString &password);
-    qint64 insertChat(const qint64 &userId, const QString &chatName);
+    const qint64 insertUser(const QString &username, const QString &password);
+    const qint64 insertChat(const qint64 &userId, const QString &chatName);
     void insertMember(const qint64 &chatId, const qint64 &memberId);
     void insertMessage(const qint64 &chatId, const qint64 &senderId, const QString &msgText);
 
-    qint64 getUserIdByAuth(const QString &username, const QString &password);
-    qint64 getUserIdByUsername(const QString &username);
-    qint64 getUserIdByAccessToken(const QString &accessToken);
-    QString getUserAccessToken(const qint64 userId);
+    const qint64 getUserIdByAuth(const QString &username, const QString &password);
+    const qint64 getUserIdByUsername(const QString &username);
+    const qint64 getUserIdByAccessToken(const QString &accessToken);
+    const QString getUserAccessToken(const qint64 userId);
 
-    DBModelUser getUserInfo(const qint64 &userId);
-    DBModelChat getChatInfo(const qint64 &chatId);
-    DBModelMessage getMessageInfo(const qint64 &messageId);
+    const DBModelUser getUserInfo(const qint64 &userId);
+    const DBModelChat getChatInfo(const qint64 &chatId);
+    const DBModelMessage getMessageInfo(const qint64 &messageId);
 
-    MessageList getMessageList(const qint64 &chatId, const qint64 &offset);
-    ChatList getChatList(const qint64 &userId, const qint64 &offset);
+    const MessageList getMessageList(const qint64 &chatId, const qint64 &offset);
+    const ChatList getChatList(const qint64 &userId, const qint64 &offset);
 
-    qint64 getChatId(const qint64 &userId, const QString &chatName);
+    const qint64 getChatId(const qint64 &userId, const QString &chatName);
 
-    QString generateAccessToken(const qint64 userId);
+    const QString generateAccessToken(const qint64 userId);
 
     ~SQLDatabase();
 };

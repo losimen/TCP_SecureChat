@@ -37,7 +37,7 @@ SQLDatabase::SQLDatabase()
 }
 
 
-qint64 SQLDatabase::insertUser(const QString &username, const QString &password)
+const qint64 SQLDatabase::insertUser(const QString &username, const QString &password)
 {
     SQLDatabase::validateIsOpen();
 
@@ -54,7 +54,7 @@ qint64 SQLDatabase::insertUser(const QString &username, const QString &password)
 }
 
 
-qint64 SQLDatabase::insertChat(const qint64 &userId, const QString &chatName)
+const qint64 SQLDatabase::insertChat(const qint64 &userId, const QString &chatName)
 {
     SQLDatabase::validateIsOpen();
 
@@ -102,7 +102,7 @@ void SQLDatabase::insertMessage(const qint64 &chatId, const qint64 &senderId, co
 }
 
 
-qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &password)
+const qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &password)
 {
     SQLDatabase::validateIsOpen();
 
@@ -121,7 +121,7 @@ qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString &pass
 }
 
 
-qint64 SQLDatabase::getUserIdByUsername(const QString &username)
+const qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 {
     SQLDatabase::validateIsOpen();
 
@@ -139,7 +139,7 @@ qint64 SQLDatabase::getUserIdByUsername(const QString &username)
 }
 
 
-qint64 SQLDatabase::getUserIdByAccessToken(const QString &accessToken)
+const qint64 SQLDatabase::getUserIdByAccessToken(const QString &accessToken)
 {
     SQLDatabase::validateIsOpen();
 
@@ -157,7 +157,7 @@ qint64 SQLDatabase::getUserIdByAccessToken(const QString &accessToken)
 }
 
 
-QString SQLDatabase::generateAccessToken(const qint64 userId)
+const QString SQLDatabase::generateAccessToken(const qint64 userId)
 {
     // TODO: use SHA256
     SQLDatabase::validateIsOpen();
@@ -177,7 +177,7 @@ QString SQLDatabase::generateAccessToken(const qint64 userId)
 }
 
 
-QString SQLDatabase::getUserAccessToken(const qint64 userId)
+const QString SQLDatabase::getUserAccessToken(const qint64 userId)
 {
     SQLDatabase::validateIsOpen();
 
@@ -195,7 +195,7 @@ QString SQLDatabase::getUserAccessToken(const qint64 userId)
 }
 
 
-DBModelUser SQLDatabase::getUserInfo(const qint64 &userId)
+const DBModelUser SQLDatabase::getUserInfo(const qint64 &userId)
 {
     DBModelUser userModel;
     SQLDatabase::validateIsOpen();
@@ -219,7 +219,7 @@ DBModelUser SQLDatabase::getUserInfo(const qint64 &userId)
 }
 
 
-DBModelChat SQLDatabase::getChatInfo(const qint64 &chatId)
+const DBModelChat SQLDatabase::getChatInfo(const qint64 &chatId)
 {
     DBModelChat chatModel;
     SQLDatabase::validateIsOpen();
@@ -243,7 +243,7 @@ DBModelChat SQLDatabase::getChatInfo(const qint64 &chatId)
 }
 
 
-DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
+const DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
 {
     DBModelMessage messageModel;
     SQLDatabase::validateIsOpen();
@@ -267,7 +267,7 @@ DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
     return messageModel;
 }
 
-MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offset)
+const MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offset)
 {
     // TODO: in future use offset
     MessageList messageList;
@@ -295,7 +295,8 @@ MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offs
     return messageList;
 }
 
-ChatList SQLDatabase::getChatList(const qint64 &userId, const qint64 &offset)
+
+const ChatList SQLDatabase::getChatList(const qint64 &userId, const qint64 &offset)
 {
     // TODO: in future use offset
     ChatList chatList;
@@ -323,7 +324,7 @@ ChatList SQLDatabase::getChatList(const qint64 &userId, const qint64 &offset)
 }
 
 
-qint64 SQLDatabase::getChatId(const qint64 &userId, const QString &chatName)
+const qint64 SQLDatabase::getChatId(const qint64 &userId, const QString &chatName)
 {
     SQLDatabase::validateIsOpen();
 
