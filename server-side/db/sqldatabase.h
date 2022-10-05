@@ -1,5 +1,4 @@
-#ifndef SQLDATABASE_H
-#define SQLDATABASE_H
+#pragma once
 
 #include <QtSql>
 #include <QDebug>
@@ -45,5 +44,3 @@ public:
 
     ~SQLDatabase();
 };
-
-#endif // SQLDATABASE_H

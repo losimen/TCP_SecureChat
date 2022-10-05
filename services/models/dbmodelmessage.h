@@ -1,5 +1,4 @@
-#ifndef DBMODELMESSAGE_H
-#define DBMODELMESSAGE_H
+#pragma once
 
 #include <QtGlobal>
 #include <QString>
@@ -17,5 +16,3 @@ struct DBModelMessage
 
 
 typedef QVector<DBModelMessage> MessageList;
-
-#endif // DBMODELMESSAGE_H

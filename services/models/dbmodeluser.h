@@ -1,5 +1,4 @@
-#ifndef DBMODELUSER_H
-#define DBMODELUSER_H
+#pragma once
 
 #include <QtGlobal>
 #include <QString>
@@ -15,5 +14,3 @@ struct DBModelUser
 
 
 typedef QVector<DBModelUser> UserList;
-
-#endif // DBMODELUSER_H

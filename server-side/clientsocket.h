@@ -1,5 +1,4 @@
-#ifndef CLIENTSOCKET_H
-#define CLIENTSOCKET_H
+#pragma once
 
 #include <QObject>
 #include <QTcpSocket>
@@ -26,5 +25,3 @@ private:
 
     static const qint8 AMOUNT_OT_THREADS;
 };
-
-#endif // CLIENTSOCKET_H

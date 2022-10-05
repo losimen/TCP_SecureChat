@@ -1,5 +1,4 @@
-#ifndef DBERRORS_H
-#define DBERRORS_H
+#pragma once
 
 #include <QException>
 
@@ -68,6 +67,3 @@ public:
 
 
 }
-
-
-#endif // DBERRORS_H

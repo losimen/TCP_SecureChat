@@ -1,5 +1,4 @@
-#ifndef CLIENTERRORS_H
-#define CLIENTERRORS_H
+#pragma once
 
 #include <QException>
 #include <QString>
@@ -28,5 +27,3 @@ public:
 };
 
 }
-
-#endif // CLIENTERRORS_H

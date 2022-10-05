@@ -1,5 +1,4 @@
-#ifndef SERVERTYPES_H
-#define SERVERTYPES_H
+#pragma once
 
 #include <QtGlobal>
 #include <QString>
@@ -90,8 +89,3 @@ struct GetChatList
 
 
 }
-
-
-
-
-#endif // SERVERTYPES_H

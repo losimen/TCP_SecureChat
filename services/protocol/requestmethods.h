@@ -1,5 +1,4 @@
-#ifndef REQUESTMETHODS_H
-#define REQUESTMETHODS_H
+#pragma once
 
 #include <QString>
 
@@ -15,6 +14,3 @@ struct RequestMethods
     static const QString getChatList;
 
 };
-
-
-#endif // REQUESTMETHODS_H

@@ -1,5 +1,4 @@
-#ifndef STATUSCODES_H
-#define STATUSCODES_H
+#pragma once
 
 #include <QString>
 #include <QMap>
@@ -29,5 +28,3 @@ public:
 
     StatusCodesWorker operator=(const StatusCodes &toSet);
 };
-
-#endif // STATUSCODES_H

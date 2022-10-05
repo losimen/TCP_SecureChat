@@ -1,5 +1,4 @@
-#ifndef CLIENTTYPES_H
-#define CLIENTTYPES_H
+#pragma once
 
 #include <QtGlobal>
 #include <QString>
@@ -93,5 +92,3 @@ struct GetChatList {
 };
 
 }
-
-#endif // CLIENTTYPES_H

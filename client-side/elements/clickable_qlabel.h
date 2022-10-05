@@ -1,5 +1,4 @@
-#ifndef SIGNUP_QLABEL_H
-#define SIGNUP_QLABEL_H
+#pragma once
 
 #include <QLabel>
 #include <QObject>
@@ -20,5 +19,3 @@ signals:
     void on_mousePressed();
 
 };
-
-#endif // SIGNUP_QLABEL_H

@@ -1,5 +1,4 @@
-#ifndef WINDOWMANAGER_H
-#define WINDOWMANAGER_H
+#pragma once
 
 #include <QObject>
 
@@ -23,5 +22,3 @@ private:
     std::unique_ptr<QWidget> currentWindow;
 
 };
-
-#endif // WINDOWMANAGER_H

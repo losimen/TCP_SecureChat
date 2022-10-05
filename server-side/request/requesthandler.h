@@ -1,5 +1,4 @@
-#ifndef HANDLERREQUEST_H
-#define HANDLERREQUEST_H
+#pragma once
 
 #include <QRunnable>
 #include <QObject>
@@ -25,5 +24,3 @@ protected:
 private:
     QByteArray buffer;
 };
-
-#endif // HANDLERREQUEST_H

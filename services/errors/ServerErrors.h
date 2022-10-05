@@ -1,5 +1,4 @@
-#ifndef SERVERERRORS_H
-#define SERVERERRORS_H
+#pragma once
 
 #include <QException>
 #include <QString>
@@ -101,7 +100,3 @@ public:
 };
 
 }
-
-
-
-#endif // SERVERERRORS_H

@@ -1,5 +1,4 @@
-#ifndef LISTENER_H
-#define LISTENER_H
+#pragma once
 
 #include <QTcpServer>
 
@@ -16,5 +15,3 @@ protected:
     void incomingConnection(qintptr handle);
 
 };
-
-#endif // LISTENER_H

@@ -1,5 +1,4 @@
-#ifndef DBMODELCHAT_H
-#define DBMODELCHAT_H
+#pragma once
 
 #include <QtGlobal>
 #include <QString>
@@ -15,5 +14,3 @@ struct DBModelChat
 
 
 typedef QVector<DBModelChat> ChatList;
-
-#endif // DBMODELCHAT_H

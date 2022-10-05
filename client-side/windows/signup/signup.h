@@ -1,5 +1,4 @@
-#ifndef SIGNUP_H
-#define SIGNUP_H
+#pragma once
 
 #include <QWidget>
 
@@ -25,5 +24,3 @@ signals:
 private:
     Ui::SignUp *ui;
 };
-
-#endif // SIGNUP_H

@@ -1,5 +1,4 @@
-#ifndef REQUESTVALIDATOR_H
-#define REQUESTVALIDATOR_H
+#pragma once
 
 #include <QDebug>
 #include <QJsonObject>
@@ -37,5 +36,3 @@ public:
     static ServerTypes::GetChatList getChatList(SQLDatabase &db, const QJsonObject &buffer);
 
 };
-
-#endif // REQUESTVALIDATOR_H

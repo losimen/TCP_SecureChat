@@ -1,5 +1,4 @@
-#ifndef REQUESTEXECUTOR_H
-#define REQUESTEXECUTOR_H
+#pragma once
 
 #include <QString>
 
@@ -25,4 +24,3 @@ public:
 
 };
 
-#endif // REQUESTEXECUTOR_H
