@@ -2,8 +2,6 @@
 #define LISTENER_H
 
 #include <QTcpServer>
-#include <QObject>
-#include <QThreadPool>
 
 
 class Listener : public QTcpServer
