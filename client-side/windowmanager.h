@@ -4,6 +4,7 @@
 
 #include "login.h"
 #include "signup.h"
+#include "serversocket.h"
 
 
 class WindowManager : public QObject
@@ -12,7 +13,6 @@ class WindowManager : public QObject
 
 public:
     explicit WindowManager(QObject *parent = nullptr);
-
 
 private slots:
     void do_LogInWindow();

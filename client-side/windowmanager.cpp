@@ -1,11 +1,14 @@
 #include "windowmanager.h"
 #include "login.h"
 #include "signup.h"
+#include "serversocket.h"
 
 
 WindowManager::WindowManager(QObject *parent)
     : QObject{parent}
 {
+    ServerSocket::getInstance().connectToHost("127.0.0.1", qint16(54000));
+
     WindowManager::do_LogInWindow();
 }
 

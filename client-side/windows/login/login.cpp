@@ -4,7 +4,7 @@
 #include "inputvalidator.h"
 #include "clienterrors.h"
 #include "servertypes.h"
-
+#include "serversocket.h"
 
 
 LogIn::LogIn(QWidget *parent) :
@@ -38,6 +38,7 @@ void LogIn::do_labelClicked()
 void LogIn::do_ButtonClicked()
 {
     ServerTypes::LogIn logIn_server;
+
     try
     {
         logIn_server = InputValidator::logIn(ui->lineEdit_username->text(),
@@ -50,8 +51,16 @@ void LogIn::do_ButtonClicked()
 
         return;
     }
+//    qDebug() << logIn_server.username;
+//    qDebug() << logIn_server.password;
+
+    connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
+
+    ServerSocket::getInstance().write(logIn_server.username.toUtf8());
+}
 
 
-    qDebug() << logIn_server.username;
-    qDebug() << logIn_server.password;
+void LogIn::do_parseResponce(QByteArray buffer)
+{
+    qDebug() << buffer;
 }

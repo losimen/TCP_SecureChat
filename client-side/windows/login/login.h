@@ -18,6 +18,8 @@ private slots:
     void do_labelClicked();
     void do_ButtonClicked();
 
+    void do_parseResponce(QByteArray buffer);
+
 signals:
     void on_openSignUpWindow();
 
