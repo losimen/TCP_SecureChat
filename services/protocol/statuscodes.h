@@ -27,7 +27,6 @@ public:
     void setCurrentStatusCode(StatusCodes &toSet);
     const StatusCodes &getCurrentStatusCode() const;
 
-    StatusCodesWorker operator=(StatusCodes &toSet);
     StatusCodesWorker operator=(const StatusCodes &toSet);
 };
 
