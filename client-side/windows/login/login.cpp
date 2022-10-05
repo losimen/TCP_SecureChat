@@ -75,5 +75,4 @@ void LogIn::do_parseResponce(QByteArray buffer)
         ui->label_error->setText(jsonObject["msg"].toString());
         ui->label_error->setVisible(true);
     }
-
 }

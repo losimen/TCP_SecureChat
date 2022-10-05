@@ -1,17 +1,38 @@
 #include "servertypes.h"
+#include "requestmethods.h"
 
 using namespace ServerTypes;
 
 
 QByteArray LogIn::serializeData() const
 {
-    return QByteArray();
+    QString result;
+
+    result = QString("{\n"
+                     "\"method\": %1,\n"
+                     "\"username\": %2,\n"
+                     "\"password\": %3\n"
+                     "}").arg(putStrInQuotes(RequestMethods::logIn),
+                              putStrInQuotes(username),
+                              putStrInQuotes(password));
+
+    return result.toUtf8();
 }
 
 
 QByteArray SignUp::serializeData() const
 {
-    return QByteArray();
+    QString result;
+
+    result = QString("{\n"
+                     "\"method\": %1,\n"
+                     "\"username\": %2,\n"
+                     "\"password\": %3\n"
+                     "}").arg(putStrInQuotes(RequestMethods::signUp),
+                              putStrInQuotes(username),
+                              putStrInQuotes(password));
+
+    return result.toUtf8();
 }
 
 

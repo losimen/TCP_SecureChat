@@ -16,7 +16,7 @@ void WindowManager::do_LogInWindow()
     currentWindow.reset(new LogIn);
 
     connect(currentWindow.get(), SIGNAL(on_openSignUpWindow()), this, SLOT(do_SignUpWindow()));
-    connect(currentWindow.get(), SIGNAL(on_openMainWindow()), this, SLOT(do_SignUpWindow()));
+    connect(currentWindow.get(), SIGNAL(on_openMainWindow()), this, SLOT(do_MainWindow()));
 
     currentWindow->show();
 }
@@ -27,7 +27,7 @@ void WindowManager::do_SignUpWindow()
     currentWindow.reset(new SignUp);
 
     connect(currentWindow.get(), SIGNAL(on_openLogInWindow()), this, SLOT(do_LogInWindow()));
-    connect(currentWindow.get(), SIGNAL(on_openMainWindow()), this, SLOT(on_MainWindow()));
+    connect(currentWindow.get(), SIGNAL(on_openMainWindow()), this, SLOT(do_MainWindow()));
 
     currentWindow->show();
 }
@@ -35,9 +35,8 @@ void WindowManager::do_SignUpWindow()
 
 void WindowManager::do_MainWindow()
 {
+    qDebug() << "here";
     currentWindow.reset(new MainWindow);
-
-    connect();
 
     currentWindow->show();
 }

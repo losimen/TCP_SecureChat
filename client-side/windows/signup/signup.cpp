@@ -3,6 +3,7 @@
 #include "inputvalidator.h"
 #include "clienterrors.h"
 #include "servertypes.h"
+#include "serversocket.h"
 
 
 SignUp::SignUp(QWidget *parent) :
@@ -22,18 +23,22 @@ SignUp::SignUp(QWidget *parent) :
     this->setWindowTitle("Sign up");
 }
 
+
 SignUp::~SignUp()
 {
     delete ui;
 }
+
 
 void SignUp::do_labelClicked()
 {
     emit SignUp::on_openLogInWindow();
 }
 
+
 void SignUp::do_ButtonClicked()
 {
+    ui->label_error->setVisible(false);
     ServerTypes::SignUp signUp_server;
 
     try
@@ -50,7 +55,26 @@ void SignUp::do_ButtonClicked()
         return;
     }
 
+    connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
+    ServerSocket::getInstance().write(signUp_server.serializeData());
+}
 
-    qDebug() << signUp_server.username;
-    qDebug() << signUp_server.password;
+
+
+void SignUp::do_parseResponce(QByteArray buffer)
+{
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(buffer);
+    QJsonObject jsonObject = jsonDocument.object();
+
+    qint64 value = jsonObject["statusCode"].toInt();
+
+    if (value == StatusCodes::ok)
+    {
+        emit on_openMainWindow();
+    }
+    else
+    {
+        ui->label_error->setText(jsonObject["msg"].toString());
+        ui->label_error->setVisible(true);
+    }
 }

@@ -13,6 +13,9 @@ namespace ClientTypes
 
 struct LogIn: public IType
 {
+    LogIn() = default;
+    LogIn(QJsonObject &obj);
+
     StatusCodesWorker statusCode;
     QString accessToken;
 

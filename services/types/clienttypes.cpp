@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "clienttypes.h"
 
 using namespace ClientTypes;
@@ -33,10 +35,11 @@ QByteArray Error::serializeData() const
 {
     QString result;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(Error::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("msg") + putStrInQuotes(what);
-    result += "\n}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"msg\": %2\n"
+                     "}").arg(QString::number(Error::statusCode.getCurrentStatusCode()),
+                              putStrInQuotes(what));
 
     return result.toUtf8();
 }
