@@ -1,15 +1,13 @@
 #pragma once
 
-#include <QWidget>
-#include <QJsonObject>
-#include <QJsonDocument>
+#include "iwindow.h"
 
 
 namespace Ui {
 class LogIn;
 }
 
-class LogIn : public QWidget
+class LogIn : public IWindow
 {
     Q_OBJECT
 
@@ -17,15 +15,11 @@ public:
     explicit LogIn(QWidget *parent = nullptr);
     ~LogIn();
 
-private slots:
+protected slots:
     void do_labelClicked();
     void do_ButtonClicked();
 
     void do_parseResponce(QByteArray buffer);
-
-signals:
-    void on_openSignUpWindow();
-    void on_openMainWindow();
 
 private:
     Ui::LogIn *ui;

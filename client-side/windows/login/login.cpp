@@ -9,7 +9,7 @@
 
 
 LogIn::LogIn(QWidget *parent) :
-    QWidget(parent),
+    IWindow(parent),
     ui(new Ui::LogIn)
 {
     ui->setupUi(this);

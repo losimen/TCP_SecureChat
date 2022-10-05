@@ -2,6 +2,7 @@ list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/main.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/windowmanager.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/serversocket.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/inputvalidator.cpp
+                          ${CMAKE_CURRENT_LIST_DIR}/windows/iwindow.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/windows/login/login.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/windows/signup/signup.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/windows/mainwindow/mainwindow.cpp
@@ -11,6 +12,7 @@ list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/main.cpp
 list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/windowmanager.h
                           ${CMAKE_CURRENT_LIST_DIR}/serversocket.h
                           ${CMAKE_CURRENT_LIST_DIR}/inputvalidator.h
+                          ${CMAKE_CURRENT_LIST_DIR}/windows/iwindow.h
                           ${CMAKE_CURRENT_LIST_DIR}/windows/login/login.h
                           ${CMAKE_CURRENT_LIST_DIR}/windows/signup/signup.h
                           ${CMAKE_CURRENT_LIST_DIR}/windows/mainwindow/mainwindow.h
