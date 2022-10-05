@@ -23,10 +23,10 @@ QString IType::serializeMsgList(MessageList &list) const
     for (auto it = list.begin(); it != VEC_END; it++)
     {
         result += "{";
-        result += putTagInQuotes("id") + QString::number(it->id);
-        result += putTagInQuotes("senderId") + QString::number(it->senderId);
-        result += putTagInQuotes("chatId") + QString::number(it->chatId);
-        result += putTagInQuotes("msgText") + putStrInQuotes(it->msgText);
+        result += putTagInQuotes("id") + QString::number(it->id) + ",";
+        result += putTagInQuotes("senderId") + QString::number(it->senderId) + ",";
+        result += putTagInQuotes("chatId") + QString::number(it->chatId) + ",";
+        result += putTagInQuotes("msgText") + putStrInQuotes(it->msgText) + ",";
         result += putTagInQuotes("createdAt") + putStrInQuotes(it->createdAt);
         result += "\r\n}";
 
@@ -51,9 +51,9 @@ QString IType::serializeChatList(ChatList &list) const
     for (auto it = list.begin(); it != VEC_END; it++)
     {
         result += "{";
-        result += putTagInQuotes("id") + QString::number(it->id);
-        result += putTagInQuotes("chatName") + putStrInQuotes(it->chatName);
-        result += putTagInQuotes("creatorId") + QString::number(it->creatorId);
+        result += putTagInQuotes("id") + QString::number(it->id) + ",";
+        result += putTagInQuotes("chatName") + putStrInQuotes(it->chatName) + ",";
+        result += putTagInQuotes("creatorId") + QString::number(it->creatorId) + ",";
         result += putTagInQuotes("createdAt") + putStrInQuotes(it->createdAt);
         result += "\r\n}";
 
