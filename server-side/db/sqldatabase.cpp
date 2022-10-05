@@ -1,6 +1,3 @@
-#include <QThread>
-#include <QString>
-
 #include "sqldatabase.h"
 #include "dberrors.h"
 
