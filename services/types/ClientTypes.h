@@ -5,90 +5,80 @@
 #include <QJsonObject>
 #include <QVector>
 
-#include "statuscodes.h"
-#include "dbmodelmessage.h"
-#include "dbmodeluser.h"
-#include "dbmodelchat.h"
+#include "itype.h"
 
 
 namespace ClientTypes
 {
-QString putTagInQuotes(const QString &name);
-QString putStrInQuotes(const QString &name);
 
-QString serializeMsgList(MessageList &list);
-QString serializeChatList(ChatList &list);
-
-// Param with '_' at the beginning are additional information parameters
-// and not used for serialazation and parsing
-
-struct LogIn
+struct LogIn: public IType
 {
     StatusCodesWorker statusCode;
     QString accessToken;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct SignUp
+struct SignUp: public IType
 {
     StatusCodesWorker statusCode;
     QString accessToken;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct Error
+struct Error: public IType
 {
     StatusCodesWorker statusCode;
     QString what;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct CreateChat
+struct CreateChat: public IType
 {
     StatusCodesWorker statusCode;
     qint64 chatId;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct AddMember
+struct AddMember: public IType
 {
     StatusCodesWorker statusCode;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct SendMessage
+struct SendMessage: public IType
 {
     StatusCodesWorker statusCode;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct GetMessageList
+struct GetMessageList: public IType
 {
     StatusCodesWorker statusCode;
     QVector<DBModelMessage> messageList;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 
-struct GetChatList {
+struct GetChatList : public IType
+{
     StatusCodesWorker statusCode;
 
     QVector<DBModelChat> chatList;
 
-    QByteArray serializeData() const;
+    QByteArray serializeData() const override;
 };
 
 }

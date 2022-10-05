@@ -1,5 +1,6 @@
 list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/types/servertypes.h
                           ${CMAKE_CURRENT_LIST_DIR}/types/clienttypes.h
+                          ${CMAKE_CURRENT_LIST_DIR}/types/itype.h
                           ${CMAKE_CURRENT_LIST_DIR}/errors/servererrors.h
                           ${CMAKE_CURRENT_LIST_DIR}/errors/dberrors.h
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/requestmethods.h
@@ -10,6 +11,7 @@ list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/types/servertypes.h
 
 list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/types/servertypes.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/types/clienttypes.cpp
+                          ${CMAKE_CURRENT_LIST_DIR}/types/itype.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/requestmethods.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/statuscodes.cpp)
 
