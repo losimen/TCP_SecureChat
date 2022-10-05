@@ -14,7 +14,7 @@ namespace ServerErrors
 class MyServerException: public QException {
 protected:
     QString _what;
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
 
 public:
     const char *what() const throw()

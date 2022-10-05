@@ -16,19 +16,19 @@ enum StatusCodes {
 };
 
 
-class StatusCodesInterface
+class StatusCodesWorker
 {
 private:
     StatusCodes currentStatusCode;
 
 public:
-    StatusCodesInterface();
+    StatusCodesWorker();
 
     void setCurrentStatusCode(StatusCodes &toSet);
     const StatusCodes &getCurrentStatusCode() const;
 
-    StatusCodesInterface operator=(StatusCodes &toSet);
-    StatusCodesInterface operator=(const StatusCodes &toSet);
+    StatusCodesWorker operator=(StatusCodes &toSet);
+    StatusCodesWorker operator=(const StatusCodes &toSet);
 };
 
 #endif // STATUSCODES_H

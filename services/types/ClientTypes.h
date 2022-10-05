@@ -25,7 +25,7 @@ QString serializeChatList(ChatList &list);
 
 struct LogIn
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
     QString accessToken;
 
     QByteArray serializeData() const;
@@ -34,7 +34,7 @@ struct LogIn
 
 struct SignUp
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
     QString accessToken;
 
     QByteArray serializeData() const;
@@ -43,7 +43,7 @@ struct SignUp
 
 struct Error
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
     QString what;
 
     QByteArray serializeData() const;
@@ -52,7 +52,7 @@ struct Error
 
 struct CreateChat
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
     qint64 chatId;
 
     QByteArray serializeData() const;
@@ -61,7 +61,7 @@ struct CreateChat
 
 struct AddMember
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
 
     QByteArray serializeData() const;
 };
@@ -69,7 +69,7 @@ struct AddMember
 
 struct SendMessage
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
 
     QByteArray serializeData() const;
 };
@@ -77,7 +77,7 @@ struct SendMessage
 
 struct GetMessageList
 {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
     QVector<DBModelMessage> messageList;
 
     QByteArray serializeData() const;
@@ -85,7 +85,7 @@ struct GetMessageList
 
 
 struct GetChatList {
-    StatusCodesInterface statusCode;
+    StatusCodesWorker statusCode;
 
     QVector<DBModelChat> chatList;
 

@@ -1,34 +1,34 @@
 #include "statuscodes.h"
 
 
-StatusCodesInterface::StatusCodesInterface()
+StatusCodesWorker::StatusCodesWorker()
 {
-    StatusCodesInterface::currentStatusCode = StatusCodes::notFound;
+    StatusCodesWorker::currentStatusCode = StatusCodes::notFound;
 }
 
 
-void StatusCodesInterface::setCurrentStatusCode(StatusCodes &toSet)
+void StatusCodesWorker::setCurrentStatusCode(StatusCodes &toSet)
 {
-    StatusCodesInterface::currentStatusCode = toSet;
+    StatusCodesWorker::currentStatusCode = toSet;
 }
 
 
-const StatusCodes &StatusCodesInterface::getCurrentStatusCode() const
+const StatusCodes &StatusCodesWorker::getCurrentStatusCode() const
 {
-    return StatusCodesInterface::currentStatusCode;
+    return StatusCodesWorker::currentStatusCode;
 }
 
-StatusCodesInterface StatusCodesInterface::operator=(StatusCodes &toSet)
+StatusCodesWorker StatusCodesWorker::operator=(StatusCodes &toSet)
 {
-    StatusCodesInterface::currentStatusCode = toSet;
+    StatusCodesWorker::currentStatusCode = toSet;
 
     return *this;
 }
 
 
-StatusCodesInterface StatusCodesInterface::operator=(const StatusCodes &toSet)
+StatusCodesWorker StatusCodesWorker::operator=(const StatusCodes &toSet)
 {
-    StatusCodesInterface::currentStatusCode = toSet;
+    StatusCodesWorker::currentStatusCode = toSet;
 
     return *this;
 }
