@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QWidget>
+#include <QJsonObject>
+#include <QJsonDocument>
+
 
 namespace Ui {
 class LogIn;
@@ -22,6 +25,7 @@ private slots:
 
 signals:
     void on_openSignUpWindow();
+    void on_openMainWindow();
 
 private:
     Ui::LogIn *ui;

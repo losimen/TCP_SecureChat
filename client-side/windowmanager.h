@@ -4,6 +4,8 @@
 
 #include "login.h"
 #include "signup.h"
+#include "mainwindow.h"
+
 #include "serversocket.h"
 
 
@@ -17,6 +19,7 @@ public:
 private slots:
     void do_LogInWindow();
     void do_SignUpWindow();
+    void do_MainWindow();
 
 private:
     std::unique_ptr<QWidget> currentWindow;

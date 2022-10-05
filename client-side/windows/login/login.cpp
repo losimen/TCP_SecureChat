@@ -5,6 +5,7 @@
 #include "clienterrors.h"
 #include "servertypes.h"
 #include "serversocket.h"
+#include "statuscodes.h"
 
 
 LogIn::LogIn(QWidget *parent) :
@@ -31,12 +32,13 @@ LogIn::~LogIn()
 
 void LogIn::do_labelClicked()
 {
-    emit LogIn::on_openSignUpWindow();
+    emit on_openSignUpWindow();
 }
 
 
 void LogIn::do_ButtonClicked()
 {
+    ui->label_error->setVisible(false);
     ServerTypes::LogIn logIn_server;
 
     try
@@ -51,16 +53,27 @@ void LogIn::do_ButtonClicked()
 
         return;
     }
-//    qDebug() << logIn_server.username;
-//    qDebug() << logIn_server.password;
 
     connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
-
-    ServerSocket::getInstance().write(logIn_server.username.toUtf8());
+    ServerSocket::getInstance().write(logIn_server.serializeData());
 }
 
 
 void LogIn::do_parseResponce(QByteArray buffer)
 {
-    qDebug() << buffer;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(buffer);
+    QJsonObject jsonObject = jsonDocument.object();
+
+    qint64 value = jsonObject["statusCode"].toInt();
+
+    if (value == StatusCodes::ok)
+    {
+        emit on_openMainWindow();
+    }
+    else
+    {
+        ui->label_error->setText(jsonObject["msg"].toString());
+        ui->label_error->setVisible(true);
+    }
+
 }
