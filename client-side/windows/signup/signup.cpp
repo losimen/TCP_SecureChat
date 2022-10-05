@@ -4,6 +4,7 @@
 #include "clienterrors.h"
 #include "servertypes.h"
 #include "serversocket.h"
+#include "cacheemulator.h"
 
 
 SignUp::SignUp(QWidget *parent) :
@@ -70,6 +71,7 @@ void SignUp::do_parseResponce(QByteArray buffer)
 
     if (value == StatusCodes::ok)
     {
+        CacheEmulator::getInstance().setAccessToken(jsonObject["accessToken"].toString());
         emit on_openMainWindow();
     }
     else

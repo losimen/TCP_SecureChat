@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonArray>
 
 
 class IWindow : public QWidget

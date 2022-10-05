@@ -2,6 +2,7 @@
 
 #include <QtGlobal>
 #include <QString>
+#include <QVector>
 
 
 struct DBModelChat

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "iwindow.h"
+#include <QListWidgetItem>
 
 
 namespace Ui {
@@ -17,8 +18,15 @@ public:
 
 protected slots:
     void do_parseResponce(QByteArray buffer);
+    void onListItemClickes(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
 
+    enum RequestTypes {
+        getChats,
+        getMessages
+    };
+
+    RequestTypes currentRequestType;
 };

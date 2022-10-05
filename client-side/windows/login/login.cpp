@@ -6,6 +6,7 @@
 #include "servertypes.h"
 #include "serversocket.h"
 #include "statuscodes.h"
+#include "cacheemulator.h"
 
 
 LogIn::LogIn(QWidget *parent) :
@@ -68,6 +69,7 @@ void LogIn::do_parseResponce(QByteArray buffer)
 
     if (value == StatusCodes::ok)
     {
+        CacheEmulator::getInstance().setAccessToken(jsonObject["accessToken"].toString());
         emit on_openMainWindow();
     }
     else

@@ -35,7 +35,6 @@ void WindowManager::do_SignUpWindow()
 
 void WindowManager::do_MainWindow()
 {
-    qDebug() << "here";
     currentWindow.reset(new MainWindow);
 
     currentWindow->show();
