@@ -3,25 +3,25 @@
 
 StatusCodesWorker::StatusCodesWorker()
 {
-    StatusCodesWorker::currentStatusCode = StatusCodes::notFound;
+    currentStatusCode = StatusCodes::notFound;
 }
 
 
 void StatusCodesWorker::setCurrentStatusCode(StatusCodes &toSet)
 {
-    StatusCodesWorker::currentStatusCode = toSet;
+    currentStatusCode = toSet;
 }
 
 
 const StatusCodes &StatusCodesWorker::getCurrentStatusCode() const
 {
-    return StatusCodesWorker::currentStatusCode;
+    return currentStatusCode;
 }
 
 
 StatusCodesWorker StatusCodesWorker::operator=(const StatusCodes &toSet)
 {
-    StatusCodesWorker::currentStatusCode = toSet;
+    currentStatusCode = toSet;
 
     return *this;
 }
