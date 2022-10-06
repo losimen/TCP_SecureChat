@@ -18,9 +18,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Quick)
 
 set(BUILD_SERVER FALSE)
-set(BUILD_CLIENT FALSE)
+set(BUILD_CLIENT TRUE)
 
 include(services/CMakeLists.txt)
 add_subdirectory(services)
@@ -44,7 +45,7 @@ target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Sql)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Network)
-
+target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Quick)
 
 install(TARGETS SecureChat
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

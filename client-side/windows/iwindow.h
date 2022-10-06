@@ -22,5 +22,6 @@ signals:
     void on_openLogInWindow();
     void on_openMainWindow();
     void on_openSignUpWindow();
+    void on_write(QByteArray);
 
 };

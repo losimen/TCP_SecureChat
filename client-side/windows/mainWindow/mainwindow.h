@@ -19,6 +19,7 @@ protected slots:
     void do_parseResponce(QByteArray buffer);
     void do_listItemClicked(QListWidgetItem *item);
     void do_sendClicked();
+    void do_newMessage(std::unique_ptr<DBMessageList> &msgList);
 
 private:
     Ui::MainWindow *ui;
@@ -34,6 +35,5 @@ private:
     // TODO: in future list of pending messages
 //    typedef std::map<std::string, QListWidgetItem*> MyMap;
 //    typedef std::pair<std::string, QListWidgetItem*> MyPair;
-
     QMap<QString, QListWidgetItem*> messageQueue;
 };

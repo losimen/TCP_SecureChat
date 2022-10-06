@@ -57,7 +57,8 @@ void SignUp::do_ButtonClicked()
     }
 
     connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
-    ServerSocket::getInstance().write(signUp_server.serializeData());
+    connect(this, SIGNAL(on_write(QByteArray)), &ServerSocket::getInstance(), SLOT(write(QByteArray)));
+    emit on_write(signUp_server.serializeData());
 }
 
 

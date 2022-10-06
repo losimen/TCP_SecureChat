@@ -19,6 +19,12 @@ const QString CacheEmulator::getCurrentUsername()
 }
 
 
+const qint64 CacheEmulator::getLastMessageId()
+{
+    return lastMessageId;
+}
+
+
 void CacheEmulator::setAccessToken(const QString &accessToken)
 {
     this->accessToken = accessToken;
@@ -28,6 +34,12 @@ void CacheEmulator::setAccessToken(const QString &accessToken)
 void CacheEmulator::setCurrentUsername(const QString &username)
 {
     this->currentUser.username = username;
+}
+
+
+void CacheEmulator::setLastMessageId(const qint64 &lastMessageId)
+{
+    this->lastMessageId = lastMessageId;
 }
 
 
@@ -56,4 +68,7 @@ const qint64 CacheEmulator::getChatIdFromFullName(const QString &buffer)
 }
 
 
-CacheEmulator::CacheEmulator() { }
+CacheEmulator::CacheEmulator()
+{
+    lastMessageId = 0;
+}

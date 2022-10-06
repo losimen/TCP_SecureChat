@@ -35,9 +35,7 @@ void ServerSocket::connectToHost(const QString &IPv4, const qint16 &port)
 
 void ServerSocket::write(const QByteArray &buffer)
 {
-    // TODO: queue of pending requests
-    if (isBusy)
-        return;
+    qDebug() << buffer;
 
     _socket.write(buffer);
     isBusy = true;
@@ -65,6 +63,8 @@ void ServerSocket::do_errorOccured()
 
 void ServerSocket::do_onReadyRead()
 {
-    isBusy = false;
-    emit on_respond(_socket.readAll());
+    QByteArray arr = _socket.readAll();
+    qDebug() << arr;
+
+    emit on_respond(arr);
 }

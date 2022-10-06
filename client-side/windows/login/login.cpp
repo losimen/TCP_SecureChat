@@ -58,7 +58,8 @@ void LogIn::do_ButtonClicked()
     CacheEmulator::getInstance().setCurrentUsername(logIn_server.username);
 
     connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
-    ServerSocket::getInstance().write(logIn_server.serializeData());
+    connect(this, SIGNAL(on_write(QByteArray)), &ServerSocket::getInstance(), SLOT(write(QByteArray)));
+    emit on_write(logIn_server.serializeData());
 }
 
 

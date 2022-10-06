@@ -3,6 +3,7 @@
 #include "servertypes.h"
 #include "cacheemulator.h"
 #include "ui_mainwindow.h"
+#include "backgroundworker.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,16 +12,22 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(&BackGroundWorker::getInstance(), SIGNAL(on_newMessages(std::unique_ptr<DBMessageList>&)),
+            this, SLOT(do_newMessage(std::unique_ptr<DBMessageList>&)));
+    QThreadPool::globalInstance()->start(&BackGroundWorker::getInstance());
+
     ServerTypes::GetChatList data;
     data.accessToken = CacheEmulator::getInstance().getAccessToken();
     data.offset = 0;
 
     connect(ui->list_chats, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(do_listItemClicked(QListWidgetItem*)));
-    connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
     connect(ui->button_send,  SIGNAL(clicked()), this, SLOT(do_sendClicked()));
 
     currentRequestType = RequestTypes::getChats;
-    ServerSocket::getInstance().write(data.serializeData());
+    connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
+
+    connect(this, SIGNAL(on_write(QByteArray)), &ServerSocket::getInstance(), SLOT(write(QByteArray)));
+    emit on_write(data.serializeData());
 }
 
 
@@ -37,9 +44,12 @@ void MainWindow::do_parseResponce(QByteArray buffer)
 
     if (jsonObject["statusCode"].toInt() != StatusCodes::ok)
     {
-       // TODO: print error
+       // TODO: print UI error
        return;
     }
+
+    if (jsonObject.find("isUpdate") != jsonObject.constEnd())
+         return;
 
     if (currentRequestType == RequestTypes::getChats)
     {
@@ -62,6 +72,7 @@ void MainWindow::do_parseResponce(QByteArray buffer)
     else if (currentRequestType == RequestTypes::getMessages)
     {
         QJsonArray arr = jsonObject["messageList"].toArray();
+        qint64 lastId = 0;
 
         for (auto el: arr)
         {
@@ -79,7 +90,10 @@ void MainWindow::do_parseResponce(QByteArray buffer)
 
             item->setBackground(QBrush(QColor::fromRgbF(77, 120, 180, 0.7)));
             ui->list_messages->addItem(item);
+            lastId = message.id;
         }
+
+        CacheEmulator::getInstance().setLastMessageId(lastId);
     }
     else if (currentRequestType == RequestTypes::sendMessage)
     {
@@ -101,7 +115,7 @@ void MainWindow::do_listItemClicked(QListWidgetItem *item)
 
     currentRequestType = RequestTypes::getMessages;
 
-    ServerSocket::getInstance().write(data.serializeData());
+    emit on_write(data.serializeData());
 }
 
 
@@ -113,7 +127,8 @@ void MainWindow::do_sendClicked()
 
     currentRequestType = RequestTypes::sendMessage;
 
-    ServerSocket::getInstance().write(data.serializeData());
+    emit on_write(data.serializeData());
+
     ui->lineEdit->clear();
 
     QListWidgetItem *item = new QListWidgetItem();
@@ -121,4 +136,25 @@ void MainWindow::do_sendClicked()
 
     messageQueue[data.msgText]->setText("sending...");
     ui->list_messages->addItem(messageQueue[data.msgText]);
+}
+
+
+void MainWindow::do_newMessage(std::unique_ptr<DBMessageList> &msgList)
+{
+    qint64 lastId = 0;
+    CacheEmulator::getInstance().setLastMessageId(lastId);
+
+    for (auto &message: msgList->toList())
+    {
+        qDebug() << "newMs:" << message.msgText;
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText(QString("%1: %2").arg(message.sendeUsername,
+                                            message.msgText));
+
+        item->setBackground(QBrush(QColor::fromRgbF(77, 120, 180, 0.7)));
+        ui->list_messages->addItem(item);
+        lastId = message.id;
+    }
+
+    CacheEmulator::getInstance().setLastMessageId(lastId);
 }

@@ -27,7 +27,9 @@ void RequestHandler::run()
     try
     {
         SQLDatabase db;
+        qDebug() << buffer << "\n\n";
         QJsonObject jsonObject = RequestValidator::format(RequestHandler::buffer);
+
 
         const QString REQUEST_METHOD = jsonObject["method"].toString();
 

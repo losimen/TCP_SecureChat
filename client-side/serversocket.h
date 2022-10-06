@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QThread>
+#include <QMutex>
 
 
 class ServerSocket : public QObject
@@ -13,7 +14,6 @@ class ServerSocket : public QObject
 public:
     static ServerSocket &getInstance();
     void connectToHost(const QString &IPv4, const qint16 &port);
-    void write(const QByteArray &buffer);
 
 signals:
     void on_respond(QByteArray buffer);
@@ -22,11 +22,13 @@ private slots:
     void do_connected();
     void do_errorOccured();
     void do_onReadyRead();
+    void write(const QByteArray &buffer);
 
 private:
     QTcpSocket _socket;
     QString IPv4;
     qint16 port;
+    QMutex mutex;
 
     bool isBusy;
 

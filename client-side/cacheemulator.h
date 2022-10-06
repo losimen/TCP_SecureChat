@@ -15,9 +15,11 @@ public:
 
     const QString getAccessToken();
     const QString getCurrentUsername();
+    const qint64 getLastMessageId();
 
     void setAccessToken(const QString &accessToken);
     void setCurrentUsername(const QString &username);
+    void setLastMessageId(const qint64 &lastMessageId);
 
     void insertChat(const DBModelChat &chat);
     void insertMessage(const DBModelMessage &message);
@@ -31,6 +33,7 @@ private:
     QString accessToken;
 
     DBModelUser currentUser;
+    qint64 lastMessageId;
 
     DBChatList chatList;
     DBMessageList messageList;

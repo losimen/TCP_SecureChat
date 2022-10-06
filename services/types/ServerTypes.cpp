@@ -101,5 +101,17 @@ QByteArray GetChatList::serializeData() const
 
 QByteArray GetUpdates::serializeData() const
 {
-    return QByteArray();
+    QString result;
+
+    result = QString("{\n"
+                     "\"method\": \"%1\",\n"
+                     "\"accessToken\": \"%2\",\n"
+                     "\"offset\": %3,\n"
+                     "\"lastMessageId\": %4\n"
+                     "}").arg(RequestMethods::getUpdates,
+                              accessToken,
+                              QString::number(0),
+                              QString::number(lastMessageId));
+
+    return result.toUtf8();
 }
