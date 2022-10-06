@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QThread>
 
 
 class ServerSocket : public QObject
@@ -24,6 +25,9 @@ private slots:
 
 private:
     QTcpSocket _socket;
+    QString IPv4;
+    qint16 port;
+
     bool isBusy;
 
     explicit ServerSocket(QObject *parent = nullptr);
