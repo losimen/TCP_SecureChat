@@ -15,11 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
     data.accessToken = CacheEmulator::getInstance().getAccessToken();
     data.offset = 0;
 
-    connect(ui->list_chats, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(onListItemClickes(QListWidgetItem*)));
+    connect(ui->list_chats, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(do_listItemClicked(QListWidgetItem*)));
     connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
 
-    ServerSocket::getInstance().write(data.serializeData());
     currentRequestType = RequestTypes::getChats;
+    ServerSocket::getInstance().write(data.serializeData());
 }
 
 
@@ -34,15 +34,15 @@ void MainWindow::do_parseResponce(QByteArray buffer)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(buffer);
     QJsonObject jsonObject = jsonDocument.object();
 
-    QJsonArray arr = jsonObject["chatList"].toArray();
+    qDebug() << "here";
 
     if (currentRequestType == RequestTypes::getChats)
     {
+        QJsonArray arr = jsonObject["chatList"].toArray();
+
         for (auto el: arr)
         {
-            ui->list_chats->insertItem(0, el.toObject()["chatName"].toString() + "#" + QString::number(el.toObject()["id"].toInt()));
-
-            DBModelChat chat;
+            ClientModelChat chat;
 
             chat.id = el.toObject()["id"].toInt();
             chat.chatName = el.toObject()["chatName"].toString();
@@ -50,14 +50,40 @@ void MainWindow::do_parseResponce(QByteArray buffer)
             chat.creatorId = el.toObject()["creatorId"].toInt();
 
             CacheEmulator::getInstance().insertChat(chat);
+
+            ui->list_chats->insertItem(0, chat.getFullName());
         }
     }
+    else if (currentRequestType == RequestTypes::getMessages)
+    {
+        QJsonArray arr = jsonObject["messageList"].toArray();
 
+        for (auto el = arr.end(); el != arr.begin()-1; el--)
+        {
+            ClientModelMessage message;
+
+            message.id = el->toObject()["id"].toInt();
+            message.msgText = el->toObject()["msgText"].toString();
+            message.createdAt = el->toObject()["createdAt"].toString();
+            message.chatId = el->toObject()["chatId"].toInteger();
+
+            qDebug() << message.id;
+            ui->list_messages->insertItem(0, message.msgText);
+        }
+    }
 
 }
 
 
-void MainWindow::onListItemClickes(QListWidgetItem *item)
+void MainWindow::do_listItemClicked(QListWidgetItem *item)
 {
-    qDebug() << item->text();
+    ui->list_messages->clear();
+    ServerTypes::GetMessageList data;
+    data.accessToken = CacheEmulator::getInstance().getAccessToken();
+    data.offset = 0;
+    data.chatId = ClientModelChat::getChatIdFromFullName(item->text());
+
+    currentRequestType = RequestTypes::getMessages;
+
+    ServerSocket::getInstance().write(data.serializeData());
 }

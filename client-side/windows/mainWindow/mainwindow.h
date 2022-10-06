@@ -18,7 +18,7 @@ public:
 
 protected slots:
     void do_parseResponce(QByteArray buffer);
-    void onListItemClickes(QListWidgetItem *item);
+    void do_listItemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

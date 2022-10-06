@@ -56,8 +56,19 @@ QByteArray SendMessage::serializeData() const
 
 QByteArray GetMessageList::serializeData() const
 {
-    return QByteArray();
-}
+    QString result;
+
+    result = QString("{\n"
+                     "\"method\": %1,\n"
+                     "\"accessToken\": %2,\n"
+                     "\"chatId\": %3,\n"
+                     "\"offset\": %4\n"
+                     "}").arg(putStrInQuotes(RequestMethods::getMessageList),
+                              putStrInQuotes(accessToken),
+                              QString::number(chatId),
+                              QString::number(offset));
+
+    return result.toUtf8();}
 
 
 QByteArray GetChatList::serializeData() const

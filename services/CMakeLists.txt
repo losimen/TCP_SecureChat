@@ -7,13 +7,19 @@ list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/types/servertypes.h
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/statuscodes.h
                           ${CMAKE_CURRENT_LIST_DIR}/models/dbmodelchat.h
                           ${CMAKE_CURRENT_LIST_DIR}/models/dbmodelmessage.h
-                          ${CMAKE_CURRENT_LIST_DIR}/models/dbmodeluser.h)
+                          ${CMAKE_CURRENT_LIST_DIR}/models/dbmodeluser.h
+                          ${CMAKE_CURRENT_LIST_DIR}/models/clientmodelchat.h
+                          ${CMAKE_CURRENT_LIST_DIR}/models/clientmodelmessage.h)
+
 
 list(APPEND myApp_SOURCES ${CMAKE_CURRENT_LIST_DIR}/types/servertypes.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/types/clienttypes.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/types/itype.cpp
                           ${CMAKE_CURRENT_LIST_DIR}/protocol/requestmethods.cpp
-                          ${CMAKE_CURRENT_LIST_DIR}/protocol/statuscodes.cpp)
+                          ${CMAKE_CURRENT_LIST_DIR}/protocol/statuscodes.cpp
+                          ${CMAKE_CURRENT_LIST_DIR}/models/clientmodelchat.cpp
+                          ${CMAKE_CURRENT_LIST_DIR}/models/clientmodelmessage.cpp)
+
 
 list(APPEND myApp_INCLUDES ${CMAKE_CURRENT_LIST_DIR}
                            ${CMAKE_CURRENT_LIST_DIR}/types

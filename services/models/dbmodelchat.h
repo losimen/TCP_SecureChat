@@ -14,4 +14,4 @@ struct DBModelChat
 };
 
 
-typedef QVector<DBModelChat> ChatList;
+typedef QVector<DBModelChat> DBChatList;

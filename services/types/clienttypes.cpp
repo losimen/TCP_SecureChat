@@ -82,7 +82,7 @@ QByteArray GetMessageList::serializeData() const
 {
     // {"messageList": [{"data": 1, "text": "Hello"}, {"data": 1, "text": "world!"}]}
     QString result;
-    MessageList vec = GetMessageList::messageList;
+    DBMessageList vec = GetMessageList::messageList;
 
     result = "{";
     result += putTagInQuotes("statusCode") + QString::number(GetMessageList::statusCode.getCurrentStatusCode()) + ",";
@@ -96,7 +96,7 @@ QByteArray GetMessageList::serializeData() const
 QByteArray GetChatList::serializeData() const
 {
     QString result;
-    ChatList vec = GetChatList::chatList;
+    DBChatList vec = GetChatList::chatList;
 
     result = "{";
     result += putTagInQuotes("statusCode") + QString::number(GetChatList::statusCode.getCurrentStatusCode()) + ",";

@@ -13,4 +13,4 @@ struct DBModelUser
 };
 
 
-typedef QVector<DBModelUser> UserList;
+typedef QVector<DBModelUser> DBUserList;

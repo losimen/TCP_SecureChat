@@ -3,7 +3,8 @@
 #include <QtGlobal>
 #include <QString>
 
-#include "dbmodelchat.h"
+#include "clientmodelchat.h"
+#include "clientmodelmessage.h"
 
 
 class CacheEmulator
@@ -13,13 +14,14 @@ public:
 
     const QString getAccessToken();
     void setAccessToken(const QString &accessToken);
-
-    void insertChat(const DBModelChat &chat);
+    void insertChat(const ClientModelChat &chat);
+    void insertMessage(const ClientModelMessage &message);
 
 private:
     CacheEmulator();
 
     QString accessToken;
-    ChatList chatList;
 
+    ClientChatList chatList;
+    ClientMessageList messageList;
 };

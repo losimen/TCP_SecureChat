@@ -16,6 +16,6 @@ public:
     QString putTagInQuotes(const QString &name) const;
     QString putStrInQuotes(const QString &name) const;
 
-    QString serializeMsgList(MessageList &list) const;
-    QString serializeChatList(ChatList &list) const;
+    QString serializeMsgList(DBMessageList &list) const;
+    QString serializeChatList(DBChatList &list) const;
 };

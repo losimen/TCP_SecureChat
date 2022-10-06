@@ -20,13 +20,16 @@ void CacheEmulator::setAccessToken(const QString &accessToken)
 }
 
 
-void CacheEmulator::insertChat(const DBModelChat &chat)
+void CacheEmulator::insertChat(const ClientModelChat &chat)
 {
     chatList.push_back(chat);
 }
 
 
-CacheEmulator::CacheEmulator()
+void CacheEmulator::insertMessage(const ClientModelMessage &message)
 {
-
+    messageList.push_back(message);
 }
+
+
+CacheEmulator::CacheEmulator() { }

@@ -15,4 +15,4 @@ struct DBModelMessage
 };
 
 
-typedef QVector<DBModelMessage> MessageList;
+typedef QVector<DBModelMessage> DBMessageList;

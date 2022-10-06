@@ -13,7 +13,7 @@ QString IType::putStrInQuotes(const QString &name) const
 }
 
 
-QString IType::serializeMsgList(MessageList &list) const
+QString IType::serializeMsgList(DBMessageList &list) const
 {
     QString result;
     const auto VEC_END = list.end();
@@ -41,7 +41,7 @@ QString IType::serializeMsgList(MessageList &list) const
 }
 
 
-QString IType::serializeChatList(ChatList &list) const
+QString IType::serializeChatList(DBChatList &list) const
 {
     QString result;
     const auto VEC_END = list.end();
