@@ -58,17 +58,17 @@ void MainWindow::do_parseResponce(QByteArray buffer)
     {
         QJsonArray arr = jsonObject["messageList"].toArray();
 
-        for (auto el = arr.end(); el != arr.begin()-1; el--)
+        for (auto el: arr)
         {
             ClientModelMessage message;
 
-            message.id = el->toObject()["id"].toInt();
-            message.msgText = el->toObject()["msgText"].toString();
-            message.createdAt = el->toObject()["createdAt"].toString();
-            message.chatId = el->toObject()["chatId"].toInteger();
+            message.id = el.toObject()["id"].toInt();
+            message.msgText = el.toObject()["msgText"].toString();
+            message.sendeUsername = el.toObject()["senderUsername"].toString();
+            message.createdAt = el.toObject()["createdAt"].toString();
+            message.chatId = el.toObject()["chatId"].toInteger();
 
-            qDebug() << message.id;
-            ui->list_messages->insertItem(0, message.msgText);
+           ui->list_messages->addItem(message.sendeUsername + ": " + message.msgText);
         }
     }
 
