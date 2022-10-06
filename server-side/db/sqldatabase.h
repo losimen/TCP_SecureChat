@@ -35,8 +35,8 @@ public:
     const DBModelChat getChatInfo(const qint64 &chatId);
     const DBModelMessage getMessageInfo(const qint64 &messageId);
 
-    const MessageList getMessageList(const qint64 &chatId, const qint64 &offset);
-    const ChatList getChatList(const qint64 &userId, const qint64 &offset);
+    const DBMessageList getMessageList(const qint64 &chatId, const qint64 &offset);
+    const DBChatList getChatList(const qint64 &userId, const qint64 &offset);
 
     const qint64 getChatId(const qint64 &userId, const QString &chatName);
 

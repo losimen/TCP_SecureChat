@@ -5,7 +5,6 @@
 #include "servertypes.h"
 #include "servererrors.h"
 #include "statuscodes.h"
-#include "dberrors.h"
 #include "sqldatabase.h"
 
 

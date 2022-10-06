@@ -267,14 +267,16 @@ const DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
     return messageModel;
 }
 
-const MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offset)
+const DBMessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offset)
 {
     // TODO: in future use offset
-    MessageList messageList;
+    DBMessageList messageList;
     SQLDatabase::validateIsOpen();
 
     QSqlQuery query(SQLDatabase::db);
-    query.prepare("SELECT * FROM Messages WHERE ChatID = :ChatID");
+    query.prepare("SELECT m.ID, m.SenderID, m.ChatID, m.MsgText, m.Created, u.Username FROM Messages m "
+                  "JOIN Users u ON u.ID = m.SenderID "
+                  "WHERE m.ChatID = :ChatID");
     query.bindValue(":ChatID", chatId);
 
     SQLDatabase::execQuery(query);
@@ -288,6 +290,7 @@ const MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64
         messageModel.chatId = query.value(2).toInt();
         messageModel.msgText = query.value(3).toString();
         messageModel.createdAt = query.value(4).toString();
+        messageModel.sendeUsername = query.value(5).toString();
 
         messageList.push_back(messageModel);
     }
@@ -296,10 +299,10 @@ const MessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64
 }
 
 
-const ChatList SQLDatabase::getChatList(const qint64 &userId, const qint64 &offset)
+const DBChatList SQLDatabase::getChatList(const qint64 &userId, const qint64 &offset)
 {
     // TODO: in future use offset
-    ChatList chatList;
+    DBChatList chatList;
     SQLDatabase::validateIsOpen();
 
     QSqlQuery query(SQLDatabase::db);

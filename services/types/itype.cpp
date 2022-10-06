@@ -25,6 +25,7 @@ QString IType::serializeMsgList(DBMessageList &list) const
         result += "{";
         result += putTagInQuotes("id") + QString::number(it->id) + ",";
         result += putTagInQuotes("senderId") + QString::number(it->senderId) + ",";
+        result += putTagInQuotes("senderUsername") + putStrInQuotes(it->sendeUsername) + ",";
         result += putTagInQuotes("chatId") + QString::number(it->chatId) + ",";
         result += putTagInQuotes("msgText") + putStrInQuotes(it->msgText) + ",";
         result += putTagInQuotes("createdAt") + putStrInQuotes(it->createdAt);
