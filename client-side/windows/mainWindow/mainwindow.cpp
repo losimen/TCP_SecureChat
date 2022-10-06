@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->list_chats, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(do_listItemClicked(QListWidgetItem*)));
     connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
+    connect(ui->button_send,  SIGNAL(clicked()), this, SLOT(do_sendClicked()));
 
     currentRequestType = RequestTypes::getChats;
     ServerSocket::getInstance().write(data.serializeData());
@@ -33,8 +34,6 @@ void MainWindow::do_parseResponce(QByteArray buffer)
 {
     QJsonDocument jsonDocument = QJsonDocument::fromJson(buffer);
     QJsonObject jsonObject = jsonDocument.object();
-
-    qDebug() << "here";
 
     if (currentRequestType == RequestTypes::getChats)
     {
@@ -68,8 +67,18 @@ void MainWindow::do_parseResponce(QByteArray buffer)
             message.createdAt = el.toObject()["createdAt"].toString();
             message.chatId = el.toObject()["chatId"].toInteger();
 
-           ui->list_messages->addItem(message.sendeUsername + ": " + message.msgText);
+            QListWidgetItem *item = new QListWidgetItem();
+            item->setText(QString("%1: %2").arg(message.sendeUsername,
+                                               message.msgText));
+
+            item->setBackground(QBrush(QColor::fromRgbF(77, 120, 180, 0.7)));
+            ui->list_messages->addItem(item);
         }
+    }
+    else if (currentRequestType == RequestTypes::sendMessage)
+    {
+        ui->list_messages->addItem(ui->lineEdit->text());
+        ui->lineEdit->clear();
     }
 
 }
@@ -84,6 +93,18 @@ void MainWindow::do_listItemClicked(QListWidgetItem *item)
     data.chatId = ClientModelChat::getChatIdFromFullName(item->text());
 
     currentRequestType = RequestTypes::getMessages;
+
+    ServerSocket::getInstance().write(data.serializeData());
+}
+
+
+void MainWindow::do_sendClicked()
+{
+    ServerTypes::SendMessage data = InputValidator::sendMessage(ui->lineEdit->text());
+    data.accessToken = CacheEmulator::getInstance().getAccessToken();
+    data.chatId = ClientModelChat::getChatIdFromFullName(ui->list_chats->currentItem()->text());
+
+    currentRequestType = RequestTypes::sendMessage;
 
     ServerSocket::getInstance().write(data.serializeData());
 }

@@ -56,3 +56,16 @@ ServerTypes::SignUp InputValidator::signUp(const QString &username, const QStrin
 
     return signUp_server;
 }
+
+
+ServerTypes::SendMessage InputValidator::sendMessage(const QString &msgText)
+{
+    ServerTypes::SendMessage sendMessage_server;
+
+    if (msgText.length() == 0)
+        throw ClientErrors::InvalidInput("Empty msgText");
+
+    sendMessage_server.msgText = msgText;
+
+    return sendMessage_server;
+}

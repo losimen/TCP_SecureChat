@@ -19,13 +19,15 @@ public:
 protected slots:
     void do_parseResponce(QByteArray buffer);
     void do_listItemClicked(QListWidgetItem *item);
+    void do_sendClicked();
 
 private:
     Ui::MainWindow *ui;
 
     enum RequestTypes {
         getChats,
-        getMessages
+        getMessages,
+        sendMessage
     };
 
     RequestTypes currentRequestType;

@@ -4,6 +4,9 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QListWidgetItem>
+
+#include "inputvalidator.h"
 
 
 class IWindow : public QWidget

@@ -50,7 +50,19 @@ QByteArray AddMember::serializeData() const
 
 QByteArray SendMessage::serializeData() const
 {
-    return QByteArray();
+    QString result;
+
+    result = QString("{\n"
+                     "\"method\": %1,\n"
+                     "\"accessToken\": %2,\n"
+                     "\"chatId\": %3,\n"
+                     "\"msgText\": %4\n"
+                     "}").arg(putStrInQuotes(RequestMethods::sendMessage),
+                              putStrInQuotes(accessToken),
+                              QString::number(chatId),
+                              putStrInQuotes(msgText));
+
+    return result.toUtf8();
 }
 
 
