@@ -287,3 +287,25 @@ ServerTypes::GetChatList RequestValidator::getChatList(SQLDatabase &db, const QJ
 
     return getChatList_server;
 }
+
+
+ServerTypes::GetUpdates RequestValidator::getUpdates(SQLDatabase &db, const QJsonObject &buffer)
+{
+    ServerTypes::GetUpdates getUpdates_server;
+
+    if (buffer.find("accessToken") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("accessToken");
+
+    if (buffer.find("lastMessageId") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("lastMessageId");
+
+    if (buffer.find("offset") == buffer.constEnd())
+        throw ServerErrors::MissingArgument("offset");
+
+    getUpdates_server.accessToken = buffer["accessToken"].toString();
+    getUpdates_server.offset = buffer["offset"].toInteger();
+    getUpdates_server.lastMessageId = buffer["lastMessageId"].toInteger();
+    getUpdates_server._userId = RequestValidator::validateAccessToken(db, getUpdates_server.accessToken);
+
+    return getUpdates_server;
+}

@@ -267,6 +267,43 @@ const DBModelMessage SQLDatabase::getMessageInfo(const qint64 &messageId)
     return messageModel;
 }
 
+
+const DBMessageList SQLDatabase::getUpdates(const qint64 &userId, const qint64 &lastMessageId)
+{
+    DBMessageList messageList;
+    SQLDatabase::validateIsOpen();
+
+    QSqlQuery query(SQLDatabase::db);
+
+    query.prepare("SELECT m.ID, m.SenderID, m.ChatID, m.MsgText, m.Created, u.Username FROM Messages m "
+                  "JOIN Users u ON u.ID = m.SenderID "
+                  "WHERE m.ID > :LastMessageID AND "
+                  "m.ChatID IN (SELECT m.ChatID FROM Members m WHERE m.MemberID = :UserID) AND "
+                  "m.SenderID != :UserID "
+                  "ORDER BY m.Created");
+    query.bindValue(":LastMessageID", lastMessageId);
+    query.bindValue(":UserID", userId);
+
+    SQLDatabase::execQuery(query);
+
+    while (query.next())
+    {
+        DBModelMessage messageModel;
+
+        messageModel.id = query.value(0).toInt();
+        messageModel.senderId = query.value(1).toInt();
+        messageModel.chatId = query.value(2).toInt();
+        messageModel.msgText = query.value(3).toString();
+        messageModel.createdAt = query.value(4).toString();
+        messageModel.sendeUsername = query.value(5).toString();
+
+        messageList.push_back(messageModel);
+    }
+
+    return messageList;
+}
+
+
 const DBMessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint64 &offset)
 {
     // TODO: in future use offset

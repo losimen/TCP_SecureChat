@@ -80,6 +80,13 @@ void RequestHandler::run()
 
             answer = getChatList_client.serializeData();
         }
+        else if (REQUEST_METHOD == RequestMethods::getUpdates)
+        {
+            const ServerTypes::GetUpdates getUpdates_server = RequestValidator::getUpdates(db, jsonObject);
+            const ClientTypes::GetUpdates getUpdates_client = RequestExecutor::getUpdates(db, getUpdates_server);
+
+            answer = getUpdates_client.serializeData();
+        }
         else
         {
             throw ServerErrors::NotFound("There is no such method");

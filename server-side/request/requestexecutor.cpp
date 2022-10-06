@@ -109,3 +109,13 @@ ClientTypes::GetChatList RequestExecutor::getChatList(SQLDatabase &db, const Ser
     return getChatList_client;
 }
 
+
+ClientTypes::GetUpdates RequestExecutor::getUpdates(SQLDatabase &db, const ServerTypes::GetUpdates &getUpdates_server)
+{
+    ClientTypes::GetUpdates getUpdates_client;
+
+    getUpdates_client.statusCode = StatusCodes::ok;
+    getUpdates_client.messageList = db.getUpdates(getUpdates_server._userId, getUpdates_server.lastMessageId);
+
+    return getUpdates_client;
+}

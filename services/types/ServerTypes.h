@@ -89,4 +89,16 @@ struct GetChatList: public IType
 };
 
 
+struct GetUpdates: public IType
+{
+    QString accessToken;
+    qint64 lastMessageId;
+    qint64 offset;
+
+    qint64 _userId;
+
+    QByteArray serializeData() const override;
+};
+
+
 }

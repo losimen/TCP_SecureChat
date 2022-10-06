@@ -34,5 +34,5 @@ public:
     static ServerTypes::SendMessage sendMessage(SQLDatabase &db, const QJsonObject &buffer);
     static ServerTypes::GetMessageList getMessageList(SQLDatabase &db, const QJsonObject &buffer);
     static ServerTypes::GetChatList getChatList(SQLDatabase &db, const QJsonObject &buffer);
-
+    static ServerTypes::GetUpdates getUpdates(SQLDatabase &db, const QJsonObject &buffer);
 };

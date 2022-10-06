@@ -84,4 +84,16 @@ struct GetChatList : public IType
     QByteArray serializeData() const override;
 };
 
+
+struct GetUpdates : public IType
+{
+    StatusCodesWorker statusCode;
+    bool isBackground;
+
+    QVector<DBModelMessage> messageList;
+
+    QByteArray serializeData() const override;
+};
+
+
 }

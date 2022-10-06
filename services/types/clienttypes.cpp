@@ -109,3 +109,20 @@ QByteArray GetChatList::serializeData() const
 
     return result.toUtf8();
 }
+
+
+QByteArray GetUpdates::serializeData() const
+{
+    QString result;
+    DBMessageList vec = messageList;
+
+    result = QString("{\n"
+                     "\"statusCode:\": %1,\n"
+                     "\"isUpdate\": %2,\n"
+                     "\"chatList\": [%3]\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              QString::number(1),
+                              serializeMsgList(vec));
+
+    return result.toUtf8();
+}

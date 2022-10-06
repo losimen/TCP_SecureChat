@@ -97,3 +97,9 @@ QByteArray GetChatList::serializeData() const
 
     return result.toUtf8();
 }
+
+
+QByteArray GetUpdates::serializeData() const
+{
+    return QByteArray();
+}
