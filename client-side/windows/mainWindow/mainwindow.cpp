@@ -47,7 +47,7 @@ void MainWindow::do_parseResponce(QByteArray buffer)
 
         for (auto el: arr)
         {
-            ClientModelChat chat;
+            DBModelChat chat;
 
             chat.id = el.toObject()["id"].toInt();
             chat.chatName = el.toObject()["chatName"].toString();
@@ -56,7 +56,7 @@ void MainWindow::do_parseResponce(QByteArray buffer)
 
             CacheEmulator::getInstance().insertChat(chat);
 
-            ui->list_chats->insertItem(0, chat.getFullName());
+            ui->list_chats->insertItem(0, CacheEmulator::getChatFullName(chat.chatName, chat.id));
         }
     }
     else if (currentRequestType == RequestTypes::getMessages)
@@ -65,7 +65,7 @@ void MainWindow::do_parseResponce(QByteArray buffer)
 
         for (auto el: arr)
         {
-            ClientModelMessage message;
+            DBModelMessage message;
 
             message.id = el.toObject()["id"].toInt();
             message.msgText = el.toObject()["msgText"].toString();
@@ -97,7 +97,7 @@ void MainWindow::do_listItemClicked(QListWidgetItem *item)
     ServerTypes::GetMessageList data;
     data.accessToken = CacheEmulator::getInstance().getAccessToken();
     data.offset = 0;
-    data.chatId = ClientModelChat::getChatIdFromFullName(item->text());
+    data.chatId = CacheEmulator::getChatIdFromFullName(item->text());
 
     currentRequestType = RequestTypes::getMessages;
 
@@ -109,7 +109,7 @@ void MainWindow::do_sendClicked()
 {
     ServerTypes::SendMessage data = InputValidator::sendMessage(ui->lineEdit->text());
     data.accessToken = CacheEmulator::getInstance().getAccessToken();
-    data.chatId = ClientModelChat::getChatIdFromFullName(ui->list_chats->currentItem()->text());
+    data.chatId = CacheEmulator::getChatIdFromFullName(ui->list_chats->currentItem()->text());
 
     currentRequestType = RequestTypes::sendMessage;
 

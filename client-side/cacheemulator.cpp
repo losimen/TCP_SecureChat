@@ -31,15 +31,28 @@ void CacheEmulator::setCurrentUsername(const QString &username)
 }
 
 
-void CacheEmulator::insertChat(const ClientModelChat &chat)
+void CacheEmulator::insertChat(const DBModelChat &chat)
 {
     chatList.push_back(chat);
 }
 
 
-void CacheEmulator::insertMessage(const ClientModelMessage &message)
+void CacheEmulator::insertMessage(const DBModelMessage &message)
 {
     messageList.push_back(message);
+}
+
+
+const QString CacheEmulator::getChatFullName(const QString &chatName, const qint64 chatId)
+{
+    return QString("%1#%2").arg(chatName,
+                                QString::number(chatId));
+}
+
+
+const qint64 CacheEmulator::getChatIdFromFullName(const QString &buffer)
+{
+    return buffer.split('#')[1].toULongLong();
 }
 
 

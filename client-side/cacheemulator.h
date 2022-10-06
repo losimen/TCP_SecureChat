@@ -3,9 +3,9 @@
 #include <QtGlobal>
 #include <QString>
 
-#include "clientmodelchat.h"
-#include "clientmodelmessage.h"
-#include "clientmodeluser.h"
+#include "dbmodelchat.h"
+#include "dbmodelmessage.h"
+#include "dbmodeluser.h"
 
 
 class CacheEmulator
@@ -19,17 +19,19 @@ public:
     void setAccessToken(const QString &accessToken);
     void setCurrentUsername(const QString &username);
 
-    void insertChat(const ClientModelChat &chat);
-    void insertMessage(const ClientModelMessage &message);
+    void insertChat(const DBModelChat &chat);
+    void insertMessage(const DBModelMessage &message);
 
+    static const QString getChatFullName(const QString &chatName, const qint64 chatId);
+    static const qint64 getChatIdFromFullName(const QString &buffer);
 
 private:
     CacheEmulator();
 
     QString accessToken;
 
-    ClientModelUser currentUser;
+    DBModelUser currentUser;
 
-    ClientChatList chatList;
-    ClientMessageList messageList;
+    DBChatList chatList;
+    DBMessageList messageList;
 };
