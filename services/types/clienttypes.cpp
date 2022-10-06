@@ -9,10 +9,11 @@ QByteArray LogIn::serializeData() const
 {
     QString result;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(LogIn::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("accessToken") + putStrInQuotes(LogIn::accessToken);
-    result += "\n}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"accessToken\": \"%2\"\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              accessToken);
 
     return result.toUtf8();
 }
@@ -22,10 +23,11 @@ QByteArray SignUp::serializeData() const
 {
     QString result;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(SignUp::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("accessToken") + putStrInQuotes(SignUp::accessToken);
-    result += "\n}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"accessToken\": \"%2\"\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              accessToken);
 
     return result.toUtf8();
 }
@@ -37,9 +39,9 @@ QByteArray Error::serializeData() const
 
     result = QString("{\n"
                      "\"statusCode\": %1,\n"
-                     "\"msg\": %2\n"
-                     "}").arg(QString::number(Error::statusCode.getCurrentStatusCode()),
-                              putStrInQuotes(what));
+                     "\"msg\": \"%2\"\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              what);
 
     return result.toUtf8();
 }
@@ -48,10 +50,11 @@ QByteArray CreateChat::serializeData() const
 {
     QString result;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(CreateChat::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("chatID") + QString::number(CreateChat::chatId);
-    result += "\n}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"chatID\": %2\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              QString::number(chatId));
 
     return result.toUtf8();
 }
@@ -60,9 +63,9 @@ QByteArray AddMember::serializeData() const
 {
     QString result;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(AddMember::statusCode.getCurrentStatusCode());
-    result += "\n}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()));
 
     return result.toUtf8();
 }
@@ -71,23 +74,23 @@ QByteArray SendMessage::serializeData() const
 {
     QString result;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(SendMessage::statusCode.getCurrentStatusCode());
-    result += "\n}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()));
 
     return result.toUtf8();
 }
 
 QByteArray GetMessageList::serializeData() const
 {
-    // {"messageList": [{"data": 1, "text": "Hello"}, {"data": 1, "text": "world!"}]}
     QString result;
     DBMessageList vec = GetMessageList::messageList;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(GetMessageList::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("messageList") + serializeMsgList(vec);
-    result += "}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"messageList\": [%2]\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              serializeMsgList(vec));
 
     return result.toUtf8();
 }
@@ -98,10 +101,11 @@ QByteArray GetChatList::serializeData() const
     QString result;
     DBChatList vec = GetChatList::chatList;
 
-    result = "{";
-    result += putTagInQuotes("statusCode") + QString::number(GetChatList::statusCode.getCurrentStatusCode()) + ",";
-    result += putTagInQuotes("chatList") + serializeChatList(vec);
-    result += "}\n";
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"chatList\": [%2]\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                              serializeChatList(vec));
 
     return result.toUtf8();
 }

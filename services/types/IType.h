@@ -13,9 +13,6 @@ struct IType {
 public:
     virtual QByteArray serializeData() const = 0;
 
-    QString putTagInQuotes(const QString &name) const;
-    QString putStrInQuotes(const QString &name) const;
-
     QString serializeMsgList(DBMessageList &list) const;
     QString serializeChatList(DBChatList &list) const;
 };
