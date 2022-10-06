@@ -9,12 +9,12 @@ QByteArray LogIn::serializeData() const
     QString result;
 
     result = QString("{\n"
-                     "\"method\": %1,\n"
-                     "\"username\": %2,\n"
-                     "\"password\": %3\n"
-                     "}").arg(putStrInQuotes(RequestMethods::logIn),
-                              putStrInQuotes(username),
-                              putStrInQuotes(password));
+                     "\"method\": \"%1\",\n"
+                     "\"username\": \"%2\",\n"
+                     "\"password\": \"%3\"\n"
+                     "}").arg(RequestMethods::logIn,
+                              username,
+                              password);
 
     return result.toUtf8();
 }
@@ -25,12 +25,12 @@ QByteArray SignUp::serializeData() const
     QString result;
 
     result = QString("{\n"
-                     "\"method\": %1,\n"
-                     "\"username\": %2,\n"
-                     "\"password\": %3\n"
-                     "}").arg(putStrInQuotes(RequestMethods::signUp),
-                              putStrInQuotes(username),
-                              putStrInQuotes(password));
+                     "\"method\": \"%1\",\n"
+                     "\"username\": \"%2\",\n"
+                     "\"password\": \"%3\"\n"
+                     "}").arg(RequestMethods::signUp,
+                              username,
+                              password);
 
     return result.toUtf8();
 }
@@ -53,14 +53,14 @@ QByteArray SendMessage::serializeData() const
     QString result;
 
     result = QString("{\n"
-                     "\"method\": %1,\n"
-                     "\"accessToken\": %2,\n"
+                     "\"method\": \"%1\",\n"
+                     "\"accessToken\": \"%2\",\n"
                      "\"chatId\": %3,\n"
-                     "\"msgText\": %4\n"
-                     "}").arg(putStrInQuotes(RequestMethods::sendMessage),
-                              putStrInQuotes(accessToken),
+                     "\"msgText\": \"%4\"\n"
+                     "}").arg(RequestMethods::sendMessage,
+                              accessToken,
                               QString::number(chatId),
-                              putStrInQuotes(msgText));
+                              msgText);
 
     return result.toUtf8();
 }
@@ -71,12 +71,12 @@ QByteArray GetMessageList::serializeData() const
     QString result;
 
     result = QString("{\n"
-                     "\"method\": %1,\n"
-                     "\"accessToken\": %2,\n"
+                     "\"method\": \"%1\",\n"
+                     "\"accessToken\": \"%2\",\n"
                      "\"chatId\": %3,\n"
                      "\"offset\": %4\n"
-                     "}").arg(putStrInQuotes(RequestMethods::getMessageList),
-                              putStrInQuotes(accessToken),
+                     "}").arg(RequestMethods::getMessageList,
+                              accessToken,
                               QString::number(chatId),
                               QString::number(offset));
 
@@ -88,11 +88,11 @@ QByteArray GetChatList::serializeData() const
     QString result;
 
     result = QString("{\n"
-                     "\"method\": %1,\n"
-                     "\"accessToken\": %2,\n"
+                     "\"method\": \"%1\",\n"
+                     "\"accessToken\": \"%2\",\n"
                      "\"offset\": %3\n"
-                     "}").arg(putStrInQuotes(RequestMethods::getChatList),
-                              putStrInQuotes(accessToken),
+                     "}").arg(RequestMethods::getChatList,
+                              accessToken,
                               QString::number(offset));
 
     return result.toUtf8();

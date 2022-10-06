@@ -1,7 +1,6 @@
 #pragma once
 
 #include "iwindow.h"
-#include <QListWidgetItem>
 
 
 namespace Ui {
@@ -31,4 +30,10 @@ private:
     };
 
     RequestTypes currentRequestType;
+
+    // TODO: in future list of pending messages
+//    typedef std::map<std::string, QListWidgetItem*> MyMap;
+//    typedef std::pair<std::string, QListWidgetItem*> MyPair;
+
+    QMap<QString, QListWidgetItem*> messageQueue;
 };

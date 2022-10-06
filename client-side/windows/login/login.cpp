@@ -55,6 +55,8 @@ void LogIn::do_ButtonClicked()
         return;
     }
 
+    CacheEmulator::getInstance().setCurrentUsername(logIn_server.username);
+
     connect(&ServerSocket::getInstance(), SIGNAL(on_respond(QByteArray)), this, SLOT(do_parseResponce(QByteArray)));
     ServerSocket::getInstance().write(logIn_server.serializeData());
 }
@@ -66,6 +68,12 @@ void LogIn::do_parseResponce(QByteArray buffer)
     QJsonObject jsonObject = jsonDocument.object();
 
     qint64 value = jsonObject["statusCode"].toInt();
+
+    if (jsonObject["statusCode"].toInt() != StatusCodes::ok)
+    {
+       // TODO: print error
+       return;
+    }
 
     if (value == StatusCodes::ok)
     {

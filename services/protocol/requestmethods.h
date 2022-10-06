@@ -12,5 +12,6 @@ struct RequestMethods
     static const QString sendMessage;
     static const QString getMessageList;
     static const QString getChatList;
+    static const QString getUserInfo;
 
 };

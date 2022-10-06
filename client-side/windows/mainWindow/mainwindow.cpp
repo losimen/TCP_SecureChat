@@ -35,6 +35,12 @@ void MainWindow::do_parseResponce(QByteArray buffer)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(buffer);
     QJsonObject jsonObject = jsonDocument.object();
 
+    if (jsonObject["statusCode"].toInt() != StatusCodes::ok)
+    {
+       // TODO: print error
+       return;
+    }
+
     if (currentRequestType == RequestTypes::getChats)
     {
         QJsonArray arr = jsonObject["chatList"].toArray();
@@ -77,8 +83,9 @@ void MainWindow::do_parseResponce(QByteArray buffer)
     }
     else if (currentRequestType == RequestTypes::sendMessage)
     {
-        ui->list_messages->addItem(ui->lineEdit->text());
-        ui->lineEdit->clear();
+        messageQueue.begin().value()->setText(QString("%1: %2").arg(CacheEmulator::getInstance().getCurrentUsername(),
+                                                                    messageQueue.begin().key()));
+        messageQueue.remove(messageQueue.begin().key());
     }
 
 }
@@ -107,4 +114,11 @@ void MainWindow::do_sendClicked()
     currentRequestType = RequestTypes::sendMessage;
 
     ServerSocket::getInstance().write(data.serializeData());
+    ui->lineEdit->clear();
+
+    QListWidgetItem *item = new QListWidgetItem();
+    messageQueue[data.msgText] = item;
+
+    messageQueue[data.msgText]->setText("sending...");
+    ui->list_messages->addItem(messageQueue[data.msgText]);
 }

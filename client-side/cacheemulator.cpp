@@ -13,10 +13,21 @@ const QString CacheEmulator::getAccessToken()
     return accessToken;
 }
 
+const QString CacheEmulator::getCurrentUsername()
+{
+    return currentUser.username;
+}
+
 
 void CacheEmulator::setAccessToken(const QString &accessToken)
 {
     this->accessToken = accessToken;
+}
+
+
+void CacheEmulator::setCurrentUsername(const QString &username)
+{
+    this->currentUser.username = username;
 }
 
 
