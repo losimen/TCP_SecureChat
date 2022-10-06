@@ -276,7 +276,8 @@ const DBMessageList SQLDatabase::getMessageList(const qint64 &chatId, const qint
     QSqlQuery query(SQLDatabase::db);
     query.prepare("SELECT m.ID, m.SenderID, m.ChatID, m.MsgText, m.Created, u.Username FROM Messages m "
                   "JOIN Users u ON u.ID = m.SenderID "
-                  "WHERE m.ChatID = :ChatID");
+                  "WHERE m.ChatID = :ChatID "
+                  "ORDER BY m.Created");
     query.bindValue(":ChatID", chatId);
 
     SQLDatabase::execQuery(query);
