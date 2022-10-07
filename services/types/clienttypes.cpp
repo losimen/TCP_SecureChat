@@ -117,7 +117,7 @@ QByteArray GetUpdates::serializeData() const
     DBMessageList vec = messageList;
 
     result = QString("{\n"
-                     "\"statusCode:\": %1,\n"
+                     "\"statusCode\": %1,\n"
                      "\"isUpdate\": %2,\n"
                      "\"chatList\": [%3]\n"
                      "}").arg(QString::number(statusCode.getCurrentStatusCode()),
