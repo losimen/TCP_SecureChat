@@ -1,5 +1,5 @@
 #include "security.h"
-#include <string>
+
 
 Security::Security(const QString &filename)
 {
@@ -172,6 +172,82 @@ void Security::generateKeyPair()
 
     RSA_free(pRSA);
     fclose(fp);
+}
+
+
+std::string Security::SHA256generatorRandom()
+{
+    auto* input = reinterpret_cast<unsigned char*>(const_cast<char*>(Security::_getRandomString().c_str()));
+    unsigned char md[SHA256_DIGEST_LENGTH];
+
+    std::string result ("none");
+    SHA256_CTX context;
+
+    if(!SHA256_Init(&context))
+        return result;
+
+    if(!SHA256_Update(&context, (unsigned char*)input, strlen((char*)input)))
+        return result;
+
+    if(!SHA256_Final(md, &context))
+        return result;
+
+    result.clear();
+    for (unsigned char i : md) {
+        char buffer [4];
+        snprintf ( buffer, 4, "%02x", i );
+
+        result += buffer;
+    }
+
+    return result;
+}
+
+std::string Security::SHA256generator(const std::string &input_)
+{
+    auto* input = reinterpret_cast<unsigned char*>(const_cast<char*>(input_.c_str()));
+    unsigned char md[SHA256_DIGEST_LENGTH];
+
+    std::string result ("none");
+    SHA256_CTX context;
+
+    if(!SHA256_Init(&context))
+        return result;
+
+    if(!SHA256_Update(&context, (unsigned char*)input, strlen((char*)input)))
+        return result;
+
+    if(!SHA256_Final(md, &context))
+        return result;
+
+    result.clear();
+    for (unsigned char i : md) {
+        char buffer [4];
+        snprintf ( buffer, 4, "%02x", i );
+
+        result += buffer;
+    }
+
+    return result;
+}
+
+
+const std::string Security::_getRandomString()
+{
+    const int length = 1000;
+    std::string result;
+    std::string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/][';.,=+-_)(*&^%$#@!~`";
+
+    // get random number C++11
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, int(chars.length()) - 1);
+
+    for (int i = 0; i < length; i++) {
+        result += chars[dis(gen)];
+    }
+
+    return result;
 }
 
 
