@@ -22,6 +22,7 @@ public:
     static ClientTypes::GetMessageList getMessageList(SQLDatabase &db, const ServerTypes::GetMessageList &getMessageList_server);
     static ClientTypes::GetChatList getChatList(SQLDatabase &db, const ServerTypes::GetChatList &getChatList_server);
     static ClientTypes::GetUpdates getUpdates(SQLDatabase &db, const ServerTypes::GetUpdates &getUpdates_server);
+    static ClientTypes::GetPubKey getPubKey(SQLDatabase &db, const ServerTypes::GetPubKey &getPubKey_server);
 
 };
 

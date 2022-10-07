@@ -309,3 +309,11 @@ ServerTypes::GetUpdates RequestValidator::getUpdates(SQLDatabase &db, const QJso
 
     return getUpdates_server;
 }
+
+
+ServerTypes::GetPubKey RequestValidator::getPubKey(SQLDatabase &db, const QJsonObject &buffer)
+{
+    ServerTypes::GetPubKey getPubKey_server;
+
+    return getPubKey_server;
+}

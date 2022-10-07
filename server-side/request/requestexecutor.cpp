@@ -3,6 +3,8 @@
 #include "clienttypes.h"
 #include "statuscodes.h"
 #include "sqldatabase.h"
+#include "security.h"
+#include "base64.h"
 
 
 RequestExecutor::RequestExecutor()
@@ -118,4 +120,16 @@ ClientTypes::GetUpdates RequestExecutor::getUpdates(SQLDatabase &db, const Serve
     getUpdates_client.messageList = db.getUpdates(getUpdates_server._userId, getUpdates_server.lastMessageId);
 
     return getUpdates_client;
+}
+
+
+ClientTypes::GetPubKey RequestExecutor::getPubKey(SQLDatabase &db, const ServerTypes::GetPubKey &getPubKey_server)
+{
+    Security security("keys/server");
+    ClientTypes::GetPubKey getPubKey_client;
+
+    getPubKey_client.statusCode = StatusCodes::ok;
+    getPubKey_client.pubKey = security.getPubKey();
+
+    return getPubKey_client;
 }

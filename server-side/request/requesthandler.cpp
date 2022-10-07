@@ -89,6 +89,13 @@ void RequestHandler::run()
 
             answer = getUpdates_client.serializeData();
         }
+        else if (REQUEST_METHOD == RequestMethods::getPubKey)
+        {
+            const ServerTypes::GetPubKey getPubKey_server = RequestValidator::getPubKey(db, jsonObject);
+            const ClientTypes::GetPubKey getPubKey_client = RequestExecutor::getPubKey(db, getPubKey_server);
+
+            answer = getPubKey_client.serializeData();
+        }
         else
         {
             throw ServerErrors::NotFound("There is no such method");
