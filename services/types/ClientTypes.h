@@ -96,4 +96,13 @@ struct GetUpdates : public IType
 };
 
 
+struct GetPubKey : public IType
+{
+    StatusCodesWorker statusCode;
+    QString pubKey;
+
+    QByteArray serializeData() const override;
+};
+
+
 }

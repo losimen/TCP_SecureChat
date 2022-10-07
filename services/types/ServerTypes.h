@@ -101,4 +101,10 @@ struct GetUpdates: public IType
 };
 
 
+struct GetPubKey: public IType
+{
+    QByteArray serializeData() const override;
+};
+
+
 }

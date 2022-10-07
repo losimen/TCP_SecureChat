@@ -126,3 +126,17 @@ QByteArray GetUpdates::serializeData() const
 
     return result.toUtf8();
 }
+
+
+QByteArray GetPubKey::serializeData() const
+{
+    QString result;
+
+    result = QString("{\n"
+                     "\"statusCode\": %1,\n"
+                     "\"pubKey\": \"%2\"\n"
+                     "}").arg(QString::number(statusCode.getCurrentStatusCode()),
+                                                  pubKey);
+
+    return result.toUtf8();
+}

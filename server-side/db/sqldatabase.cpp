@@ -1,5 +1,7 @@
 #include "sqldatabase.h"
 #include "dberrors.h"
+#include "security.h"
+#include "base64.h"
 
 
 void SQLDatabase::validateIsOpen()
@@ -41,13 +43,14 @@ const qint64 SQLDatabase::insertUser(const QString &username, const QString &pas
 {
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query(SQLDatabase::db);
+    Security security("server");
+    auto shaPass = QString::fromUtf8(security.decryptPrivateMSG(base64_decode(password.toStdString())).c_str());
 
+    QSqlQuery query(SQLDatabase::db);
     query.prepare("INSERT INTO Users (Username, Password) "
                   "VALUES (:Username, :Password)");
     query.bindValue(":Username", username);
-    query.bindValue(":Password", password);
-
+    query.bindValue(":Password", shaPass);
     SQLDatabase::execQuery(query);
 
     return SQLDatabase::getUserIdByUsername(username);
@@ -108,9 +111,12 @@ const qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString
 
     QSqlQuery query(SQLDatabase::db);
 
+    Security security("server");
+    auto shaPass = QString::fromUtf8(security.decryptPrivateMSG(base64_decode(password.toStdString())).c_str());
+
     query.prepare("SELECT ID FROM Users WHERE Username = :Username AND Password = :Password");
     query.bindValue(":Username", username);
-    query.bindValue(":Password", password);
+    query.bindValue(":Password", shaPass);
 
     SQLDatabase::execQuery(query);
 
@@ -159,21 +165,21 @@ const qint64 SQLDatabase::getUserIdByAccessToken(const QString &accessToken)
 
 const QString SQLDatabase::generateAccessToken(const qint64 userId)
 {
-    // TODO: use SHA256
     SQLDatabase::validateIsOpen();
 
-    QSqlQuery query(SQLDatabase::db);
-    QString accessToken = "accessToken_" + QString::number(userId);
+    Security security("server");
+    auto accessTokenSTD = security.SHA256generatorRandom();
+    QString accessTokenQT = QString::fromUtf8(accessTokenSTD.c_str());
+    auto key = base64_encode(security.encryptPrivateMSG(accessTokenSTD));
 
+    QSqlQuery query(SQLDatabase::db);
     query.prepare("INSERT INTO AccessTokens (AccessToken, UserID) "
                   "VALUES (:AccessToken, :UserID)");
-
-    query.bindValue(":AccessToken", accessToken);
+    query.bindValue(":AccessToken", accessTokenQT);
     query.bindValue(":UserID", userId);
 
     SQLDatabase::execQuery(query);
-
-    return accessToken;
+    return QString::fromUtf8(key.c_str());
 }
 
 

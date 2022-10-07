@@ -14,5 +14,6 @@ struct RequestMethods
     static const QString getChatList;
     static const QString getUserInfo;
     static const QString getUpdates;
+    static const QString getPubKey;
 
 };

@@ -115,3 +115,15 @@ QByteArray GetUpdates::serializeData() const
 
     return result.toUtf8();
 }
+
+
+QByteArray GetPubKey::serializeData() const
+{
+    QString result;
+
+    result = QString("{\n"
+                     "\"method\": \"%1\"\n"
+                     "}").arg(RequestMethods::getPubKey);
+
+    return result.toUtf8();
+}
