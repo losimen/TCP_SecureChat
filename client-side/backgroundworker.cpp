@@ -29,7 +29,7 @@ void BackGroundWorker::run()
     {
         if (CacheEmulator::getInstance().getLastMessageId() == 0)
         {
-            QThread::msleep(1500);
+            QThread::msleep(150);
             continue;
         }
 
@@ -38,7 +38,7 @@ void BackGroundWorker::run()
 
         emit Write(data.serializeData());
 
-        QThread::msleep(1500);
+        QThread::msleep(150);
     }
 }
 
@@ -48,22 +48,21 @@ void BackGroundWorker::do_parseResponce(QByteArray buffer)
     QJsonDocument jsonDocument = QJsonDocument::fromJson(buffer);
     QJsonObject jsonObject = jsonDocument.object();
 
-    const qint16 statusCode = jsonObject["statusCode"].toInt();
+    const qint64 statusCode = jsonObject["statusCode"].toInteger();
 
     // TODO: show error in UI
     if (statusCode != StatusCodes::ok)
         return;
 
-    if (jsonObject.find("isUpdate") != jsonObject.constEnd())
-         return;
+    if (jsonObject.find("isUpdate") == jsonObject.constEnd())
+        return;
 
     auto arr = jsonObject["messageList"].toArray();
 
     if (arr.isEmpty())
         return;
 
-    std::unique_ptr<DBMessageList> msgList;
-    msgList.reset(new DBMessageList());
+    DBMessageList msgList;
 
     for (auto el: arr)
     {
@@ -75,7 +74,7 @@ void BackGroundWorker::do_parseResponce(QByteArray buffer)
         message.createdAt = el.toObject()["createdAt"].toString();
         message.chatId = el.toObject()["chatId"].toInteger();
 
-        msgList->push_back(message);
+        msgList.push_back(message);
     }
 
     emit on_newMessages(msgList);

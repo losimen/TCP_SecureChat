@@ -119,7 +119,7 @@ QByteArray GetUpdates::serializeData() const
     result = QString("{\n"
                      "\"statusCode\": %1,\n"
                      "\"isUpdate\": %2,\n"
-                     "\"chatList\": [%3]\n"
+                     "\"messageList\": [%3]\n"
                      "}").arg(QString::number(statusCode.getCurrentStatusCode()),
                               QString::number(1),
                               serializeMsgList(vec));

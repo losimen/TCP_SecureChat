@@ -24,7 +24,7 @@ protected:
     void run();
 
 signals:
-    void on_newMessages(std::unique_ptr<DBMessageList>&);
+    void on_newMessages(DBMessageList&);
     void Write(QByteArray);
 
 protected slots:

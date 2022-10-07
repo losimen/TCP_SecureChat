@@ -21,7 +21,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Quick)
 
 set(BUILD_SERVER FALSE)
-set(BUILD_CLIENT TRUE)
+set(BUILD_CLIENT FALSE)
 
 include(services/CMakeLists.txt)
 add_subdirectory(services)

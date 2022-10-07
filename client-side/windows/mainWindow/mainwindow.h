@@ -19,7 +19,7 @@ protected slots:
     void do_parseResponce(QByteArray buffer);
     void do_listItemClicked(QListWidgetItem *item);
     void do_sendClicked();
-    void do_newMessage(std::unique_ptr<DBMessageList> &msgList);
+    void do_newMessage(DBMessageList &msgList);
 
 private:
     Ui::MainWindow *ui;

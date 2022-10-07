@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(&BackGroundWorker::getInstance(), SIGNAL(on_newMessages(std::unique_ptr<DBMessageList>&)),
-            this, SLOT(do_newMessage(std::unique_ptr<DBMessageList>&)));
+    connect(&BackGroundWorker::getInstance(), SIGNAL(on_newMessages(DBMessageList&)),
+            this, SLOT(do_newMessage(DBMessageList&)));
     QThreadPool::globalInstance()->start(&BackGroundWorker::getInstance());
 
     ServerTypes::GetChatList data;
@@ -139,12 +139,14 @@ void MainWindow::do_sendClicked()
 }
 
 
-void MainWindow::do_newMessage(std::unique_ptr<DBMessageList> &msgList)
+void MainWindow::do_newMessage(DBMessageList &msgList)
 {
     qint64 lastId = 0;
     CacheEmulator::getInstance().setLastMessageId(lastId);
 
-    for (auto &message: msgList->toList())
+    qDebug() << "in func: " << msgList.length();
+
+    for (auto &message: msgList)
     {
         qDebug() << "newMs:" << message.msgText;
         QListWidgetItem *item = new QListWidgetItem();
