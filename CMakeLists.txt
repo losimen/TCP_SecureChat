@@ -8,8 +8,14 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+set(OPENSSL_INCLUDE_DIR /opt/homebrew/opt/openssl@3/include)
+set(OPENSSL_LIBRARIES /opt/homebrew/opt/openssl@3/lib)
+
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(OpenSSL REQUIRED)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
@@ -19,6 +25,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Quick)
+
 
 set(BUILD_SERVER FALSE)
 set(BUILD_CLIENT FALSE)
@@ -46,6 +53,6 @@ target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Sql)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Network)
 target_link_libraries(SecureChat Qt${QT_VERSION_MAJOR}::Quick)
+target_link_libraries(SecureChat OpenSSL::SSL OpenSSL::Crypto)
 
-install(TARGETS SecureChat
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS SecureChat LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

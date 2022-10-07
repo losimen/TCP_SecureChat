@@ -1,5 +1,8 @@
 #include "inputvalidator.h"
 #include "clienterrors.h"
+#include "base64.h"
+#include "security.h"
+
 
 InputValidator::InputValidator()
 {
@@ -33,7 +36,7 @@ ServerTypes::LogIn InputValidator::logIn(const QString &username, const QString 
 ServerTypes::SignUp InputValidator::signUp(const QString &username, const QString &password_1, const QString &password_2)
 {
     ServerTypes::SignUp signUp_server;
-
+    Security security_client("keys/client");
 
     if (username.length() == 0 || username.length() < 3)
         throw ClientErrors::InvalidInput("Username has to be at least 3 characters");
@@ -52,7 +55,10 @@ ServerTypes::SignUp InputValidator::signUp(const QString &username, const QStrin
         throw ClientErrors::InvalidInput("To long password");
 
     signUp_server.username = username;
-    signUp_server.password = password_1;
+    auto stdSHA256 = security_client.SHA256generator(password_1.toStdString());
+
+    // TODO encrypt:
+//    signUp_server.password = security_client.encryptPublicMSG();
 
     return signUp_server;
 }

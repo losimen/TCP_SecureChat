@@ -27,10 +27,14 @@ public:
     static const QString getChatFullName(const QString &chatName, const qint64 chatId);
     static const qint64 getChatIdFromFullName(const QString &buffer);
 
+    const QString &getServerPubKey() const;
+    void setServerPubKey(const QString &newServerPubKey);
+
 private:
     CacheEmulator();
 
     QString accessToken;
+    QString serverPubKey;
 
     DBModelUser currentUser;
     qint64 lastMessageId;

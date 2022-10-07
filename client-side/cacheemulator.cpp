@@ -72,3 +72,13 @@ CacheEmulator::CacheEmulator()
 {
     lastMessageId = 0;
 }
+
+const QString &CacheEmulator::getServerPubKey() const
+{
+    return serverPubKey;
+}
+
+void CacheEmulator::setServerPubKey(const QString &newServerPubKey)
+{
+    serverPubKey = newServerPubKey;
+}

@@ -43,8 +43,9 @@ const qint64 SQLDatabase::insertUser(const QString &username, const QString &pas
 {
     SQLDatabase::validateIsOpen();
 
-    Security security("server");
+    Security security("keys/server");
     auto shaPass = QString::fromUtf8(security.decryptPrivateMSG(base64_decode(password.toStdString())).c_str());
+    qDebug() << "shaPass in insertUser:" << shaPass;
 
     QSqlQuery query(SQLDatabase::db);
     query.prepare("INSERT INTO Users (Username, Password) "
@@ -111,8 +112,10 @@ const qint64 SQLDatabase::getUserIdByAuth(const QString &username, const QString
 
     QSqlQuery query(SQLDatabase::db);
 
-    Security security("server");
+    Security security("keys/server");
     auto shaPass = QString::fromUtf8(security.decryptPrivateMSG(base64_decode(password.toStdString())).c_str());
+
+    qDebug() << "shaPass in gatUserIdByAuth:" << shaPass;
 
     query.prepare("SELECT ID FROM Users WHERE Username = :Username AND Password = :Password");
     query.bindValue(":Username", username);
@@ -167,7 +170,7 @@ const QString SQLDatabase::generateAccessToken(const qint64 userId)
 {
     SQLDatabase::validateIsOpen();
 
-    Security security("server");
+    Security security("keys/server");
     auto accessTokenSTD = security.SHA256generatorRandom();
     QString accessTokenQT = QString::fromUtf8(accessTokenSTD.c_str());
     auto key = base64_encode(security.encryptPrivateMSG(accessTokenSTD));

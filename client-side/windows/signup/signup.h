@@ -23,4 +23,11 @@ private slots:
 
 private:
     Ui::SignUp *ui;
+
+    enum RequestTypes {
+        signUp,
+        getPubKey
+    };
+
+    RequestTypes currentRequestType;
 };
