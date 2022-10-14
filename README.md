@@ -22,7 +22,7 @@ SecureChat is my demo-messenger for GL Task 2. Fast and secure (not yet honestly
 - move UI to QML
 
 ## Additional info
-Demo communication in chat: https://drive.google.com/file/d/1snOvuYLF5QgINrvTP8_LU5u31ck4tQWf/view?usp=sharing
-DB structure: https://drive.google.com/file/d/1jsPZ32kusdecY1ROqPwJrld7gMKfOrmU/view?usp=sharing
-UML: in progress..
+- Demo communication in chat: https://drive.google.com/file/d/1snOvuYLF5QgINrvTP8_LU5u31ck4tQWf/view?usp=sharing
+- DB structure: https://drive.google.com/file/d/1jsPZ32kusdecY1ROqPwJrld7gMKfOrmU/view?usp=sharing
+- UML: in progress..
 
